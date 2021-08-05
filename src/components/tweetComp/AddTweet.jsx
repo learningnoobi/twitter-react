@@ -1,6 +1,7 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
-
+import 'emoji-mart/css/emoji-mart.css'
+import { Picker } from 'emoji-mart'
 import {
   AiOutlinePicture,
   AiOutlineGif,
@@ -9,6 +10,20 @@ import {
   AiOutlineBarChart,
 } from "react-icons/ai";
 const AddTweet = () => {
+  const [tweetInput, setTweetInput] = useState('')
+  const [showEmoji, setShowEmoji] = useState('none')
+  const addEmoji = (emoji) => {
+    // console.log(emoji.native)
+    setTweetInput(prev => prev + emoji.native)
+  }
+  const showEmojiFunc = () => {
+   if(showEmoji === "none"){
+     setShowEmoji("block")
+   }
+   if(showEmoji === "block"){
+     setShowEmoji("none")
+   }
+  }
   return (
     <div className="add-tweet">
       <span className="add-tweet-image">
@@ -19,6 +34,7 @@ const AddTweet = () => {
             className="rounded-circle profile-image"
             width="60px"
             height="60px"
+
           />
         </Link>
       </span>
@@ -27,18 +43,21 @@ const AddTweet = () => {
           <textarea
             type="text"
             rows="3"
+            value={tweetInput}
+            onChange={e=>setTweetInput(e.target.value)}
             cols="50"
             placeholder=" What's happening ?"
           ></textarea>
         
         <div>
+       
           <ul className="add-tweet-icon">
             <div className="add-icon">
               <li className="side-icon">
                 <AiOutlinePicture />
               </li>
               <li className="side-icon">
-                <AiOutlineSmile />
+                <AiOutlineSmile onClick={showEmojiFunc}/>
               </li>
               <li className="side-icon">
                 <AiOutlineBarChart />
@@ -55,6 +74,17 @@ const AddTweet = () => {
               <span>Tweet</span>
             </li>
           </ul>
+          <Picker 
+          set='twitter' 
+          showPreview={true}
+          onSelect={addEmoji}
+          style={{
+            position:'absolute',
+            marginTop:-18,
+            display:`${showEmoji}`,
+            zIndex:10
+        }}
+          />
         </div>
       </div>
     </div>

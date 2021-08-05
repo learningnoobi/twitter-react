@@ -1,10 +1,12 @@
 import React from 'react'
+import { Row, Col ,Slider,DatePicker} from 'antd';
 
 const Login = () => {
     return (
-        <div>
-            <h2> Login Page</h2>
-        </div>
+        <div style={{background:'red'}}> 
+     
+      
+      </div>
     )
 }
 
