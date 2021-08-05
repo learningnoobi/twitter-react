@@ -1,38 +1,496 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Flamenco&family=Montserrat&display=swap");
+
+:root {
+  --black: #15202b;
+  --white: white;
+  --text: white;
+  --flamenco: "Flamenco", cursive;
+  --monst: "Montserrat", sans-serif;
+  --trend: rgb(25, 39, 52);
+  --light-gray: lightgray;
+  --border: rgb(62, 64, 82);
+  --info: lightgray;
+  --red: #e0245e;
+  --text-color: var(--text);
+  --background: var(--black);
+}
+.lightmode {
+  --white: white;
+  --text: black;
+  --trend: #f5f8fa;
+  --border: lightgray;
+  --info: gray;
+  --text-color: var(--text);
+  --background: var(--white);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#nav::-webkit-scrollbar {
+  width: 5px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Track */
+#nav::-webkit-scrollbar-track {
+  background: var(--border);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Handle */
+#nav::-webkit-scrollbar-thumb {
+  background: rgb(136, 136, 136);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Handle on hover */
+#nav::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+a:hover {
+  color: var(--text-color);
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+body {
+  background-color: var(--background);
+  color: var(--text-color);
+  font-size: 1rem;
+  font-family: var(--monst);
+  overflow-x: hidden;
+}
+#nav::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+#nav::-webkit-scrollbar-track {
+  background: var(--border);
+}
+
+/* Handle */
+#nav::-webkit-scrollbar-thumb {
+  background: rgb(136, 136, 136);
+}
+
+/* Handle on hover */
+#nav::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.mains {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+}
+
+.nav {
+  margin: 0;
+  padding: 1rem;
+  width: 300px;
+  background-color: var(--background);
+  float: left;
+  height: 100%;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+.navbar-nav {
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+.navbar-nav li {
+  font-weight: bolder;
+  margin-top: 5px;
+}
+.navbar-nav li:nth-child(10) {
+  background-color: var(--red);
+  border-radius: 30px;
+  margin-top: 10px;
+}
+.navbar-nav li:last-child {
+  margin-top: 20px;
+}
+.navbar-nav li:hover {
+  background-color: var(--red);
+  color: var(--red) !important;
+  border-radius: 30px;
+}
+.navbar-nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  transition: 400ms ease-in-out;
+  padding: 10px;
+  height: 3rem;
+}
+/* .navbar-nav a:hover{
+  
+} */
+.nav i {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 1.4rem;
+  margin: 0 1.5rem;
+}
+.bottom-menu {
+  display: none;
+}
+.second {
+  /* margin-left: 290px; */
+  padding: 0;
+  display: flex;
+}
+.second-tweet {
+  width: 60%;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.tweet-header {
+  position: sticky;
+  display: flex;
+  align-items: center;
+  top: 0;
+  justify-content: space-between;
+  background-color: var(--background);
+  padding: 10px;
+  font-weight: 2800;
+  z-index: 1;
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+}
+.tweet-header button {
+  display: none;
+}
+.btns {
+  background-color: transparent;
+  padding: 5px 10px;
+  font-size: 22px;
+  color: white;
+  border: none;
+  outline: 0 !important;
+  cursor: pointer;
+}
+.add-tweet {
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin: auto;
+  padding: 1rem;
+  border-bottom: 9px solid #50626e;
+}
+.add-tweet-input {
+  position: relative;
+  width: 100%;
+  margin-left: 20px;
+}
+.add-icon {
+  display: flex;
+  cursor: pointer;
+}
+.add-tweet-icon {
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.side-icon {
+  margin-left: 20px;
+  color: var(--red);
+  font-size: 20px;
+}
+.add-tweet-input textarea {
+  padding: 7px;
+  border: none;
+  outline: 0;
+  background-color: transparent;
+  color: rgb(177, 196, 235);
+  width: 100%;
+}
+.add-tweet-input textarea::placeholder {
+  color: rgb(177, 196, 235);
+}
+.link-tweet {
+  background-color: var(--red);
+  border-radius: 30px;
+  padding: 10px 20px;
+}
+.link-tweet:hover {
+  background-color: var(--red);
+}
+.actual-tweet {
+  display: flex;
+
+  border-top: 1px solid var(--border);
+  padding: 1rem;
+}
+.actual-tweet:hover {
+  background-color: #1a2530;
+}
+.tweet-content {
+  margin-left: 5%;
+}
+.image {
+  border-radius: 20px;
+  max-height: 400px;
+  object-fit: cover;
+  width: 520px;
+}
+.side-name {
+  color: gray;
+}
+.second-trend {
+  padding-top: 6px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 40%;
+}
+#search-bar {
+  margin-left: 20px;
+  background: var(--trend);
+  border-radius: 25px;
+  border: none;
+  outline: 0;
+  padding: 8px;
+  width: 80%;
+  filter: brightness(1.3);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+#search-bar:focus {
+  border: 1px solid var(--red);
+}
+.searchicon {
+  position: absolute;
+  right: 20%;
+  z-index: 2;
+  margin-top: 10px;
+}
+.trend {
+  border-radius: 22px;
+  background: var(--trend);
+  width: 80%;
+  margin: auto;
+  height: 250px;
+  color: var(--text-color);
+  margin-top: 30px;
+}
+.follow {
+  color: var(--text-color);
+  border-radius: 22px;
+  background: var(--trend);
+  width: 80%;
+  margin: auto;
+  height: 200px;
+  margin-top: 10px;
+}
+.bottom-menu {
+  display: none;
+}
+.h4-title {
+  font-weight: bolder;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border);
+  padding: 13px;
+  font-style: var(--monst);
+}
+.trend-div {
+  border-bottom: 1px solid var(--border);
+}
+.trend-title {
+  color: var(--text-color);
+}
+.trendlist {
+  display: flex;
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.left-20 {
+  margin-left: 20px;
+}
+.follow-line {
+  position: absolute;
+  margin-top: -20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.close {
+  position: absolute;
+  right: 40px;
+  color: var(--red);
+  display: none;
+}
+@media only screen and (max-width: 1150px) {
+  .nav {
+    width: 100px;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 30px;
+    z-index: 2;
   }
-  to {
-    transform: rotate(360deg);
+  .image {
+    max-height: 300px;
+    width: 400px;
+  }
+
+  .nav i {
+    margin-left: 5px;
+  }
+  .nav span {
+    display: none;
+  }
+  .second {
+    margin-left: 0;
+  }
+
+  .second-trend {
+    display: block;
+    width: 40%;
+  }
+  .second-tweet {
+    width: 60%;
+  }
+  .tweet-header {
+    width: 100%;
+  }
+
+  .tweet-header button {
+    display: block;
+  }
+  .tweet-header h4 {
+    position: relative;
+    margin-left: 50px;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .second-tweet {
+    width: 100%;
+  }
+  .second-trend {
+    display: none;
+  }
+  .image {
+    max-height: 290px;
+    width: 450px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .nav {
+    width: 0;
+    z-index: 1;
+    top: 0;
+    position: fixed;
+    margin-left: -100px;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 30px;
+    z-index: 2;
+  }
+  .add-tweet-input {
+    width: 90%;
+    margin-left: 10px;
+  }
+  .link-tweet {
+    border-radius: 30px;
+    padding: 5px 10px;
+    margin-left: 5px;
+  }
+  .image {
+    max-height: 280px;
+    width: 350px;
+  }
+  .nav span {
+    display: block;
+  }
+  .nav li{
+    margin-left: 40px;
+  }
+  /* .add-tweet {
+    margin-left: 0px;
+    width: 100%;
+  }
+  .actual-tweet {
+    margin-left: 0px;
+    width: 100%;
+  } */
+  .second {
+    margin-left: 0;
+  }
+  .sidebar {
+    width: 380px;
+  }
+  .second-trend {
+    display: none;
+  }
+  .close {
+    display: block;
+  }
+  .tweet-header button {
+    display: block;
+  }
+  .tweet-header h4 {
+    position: relative;
+    margin-left: 50px;
+  }
+  .navbar-nav li:hover {
+    background-color: transparent;
+    color: var(--red);
+  }
+  .link-tweet:hover {
+    background-color: var(--red);
+  }
+  .bottom-menu {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: var(--background);
+    border-top: 1px solid var(--border);
+    transition: 400ms ease;
+  }
+  .bottom-menu ul {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .bottom-menu i {
+    color: gray;
+    font-size: 21px;
+    margin-top: 20px;
+  }
+  .bottom-menu i:hover {
+    color: var(--red);
+  }
+}
+@media only screen and (max-width: 450px) {
+  .image {
+    max-height: 230px;
+    width: 300px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .image {
+    max-height: 230px;
+    width: 240px;
+  }
+}
+@media only screen and (max-width: 250px) {
+  .image {
+    max-height: 200px;
+    width: 140px;
   }
 }
