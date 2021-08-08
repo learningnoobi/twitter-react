@@ -1,7 +1,8 @@
-import React,{useState} from "react";
-import { Link } from "react-router-dom";
+import React,{useState,useEffect} from "react";
+import { Link ,useHistory} from "react-router-dom";
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
+import { useSelector } from "react-redux";
 import {
   AiOutlinePicture,
   AiOutlineGif,
@@ -10,12 +11,17 @@ import {
   AiOutlineBarChart,
 } from "react-icons/ai";
 const AddTweet = () => {
+  const isAuthenticated = useSelector(state => state.userReducer.isAuthenticated)
   const [tweetInput, setTweetInput] = useState('')
   const [showEmoji, setShowEmoji] = useState('none')
+  const history = useHistory()
   const addEmoji = (emoji) => {
     // console.log(emoji.native)
     setTweetInput(prev => prev + emoji.native)
   }
+  useEffect(() => {
+
+  },[])
   const showEmojiFunc = () => {
    if(showEmoji === "none"){
      setShowEmoji("block")
@@ -25,8 +31,12 @@ const AddTweet = () => {
    }
   }
   return (
+    
     <div className="add-tweet">
-      <span className="add-tweet-image">
+      {!isAuthenticated?
+      <h4>Login To See</h4>
+      :
+        <><span className="add-tweet-image">
         <Link>
           <img
             alt="img"
@@ -87,6 +97,7 @@ const AddTweet = () => {
           />
         </div>
       </div>
+      </>}
     </div>
   );
 };

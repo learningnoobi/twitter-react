@@ -3,7 +3,7 @@ import {BiUserPlus,BiEditAlt,BiBlock} from 'react-icons/bi'
 import {AiOutlineDelete} from 'react-icons/ai'
 const DropDown = () => {
     return (
-        <div class="dropdownMenu">
+        <div className="dropdownMenu">
             <p><BiUserPlus /> <span>Unfollow Rayon</span></p>
             <p><BiBlock /><span>Block</span></p>
             <p><AiOutlineDelete /><span>Delete Post</span></p>
