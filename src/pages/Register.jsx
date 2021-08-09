@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useForm from "../hooks/useForm";
 import { useDispatch,useSelector } from "react-redux";
-import { register } from "../redux/slices/userSlice";
+import { register } from "../redux/asyncActions/UserAsync";
 import {useHistory} from 'react-router-dom'
 const Register = () => {
   const [values, handleChange, disabled] = useForm()

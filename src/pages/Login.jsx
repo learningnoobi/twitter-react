@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import useForm from "../hooks/useForm";
 import { useDispatch,useSelector } from "react-redux";
-import { checkAuthenticated, login } from "../redux/slices/userSlice";
+import { checkAuthenticated, login } from "../redux/asyncActions/UserAsync";
 import {useHistory} from 'react-router-dom'
 const Login = () => {
   const user = useSelector(state => state.userReducer)

@@ -149,6 +149,24 @@ body {
   padding: 0;
   display: flex;
 }
+.tweet-bottom-active{
+  display: flex;
+  justify-content: space-around
+}
+.tweetIcons{
+  font-size: large;
+  color: rgb(168, 157, 157);
+}
+.tweetIcons:hover{
+  color:var(--red)
+}
+.editArea{
+  background: #131d27;
+  color: white;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+}
 .second-tweet {
   width: 60%;
   border-left: 1px solid var(--border);
@@ -222,17 +240,26 @@ body {
   background-color: var(--red);
   border-radius: 30px;
   padding: 10px 20px;
+  border: none;
+  color: #fff;
+  outline: 0 !important;
+  cursor: pointer;
 }
 .link-tweet:hover {
-  background-color: var(--red);
+  background-color: #c21149;
+ }
+.link-tweet:disabled{
+  background-color: #7c4053;
+  cursor:not-allowed;
 }
+
 .actual-tweet {
   display: flex;
-
   border-top: 1px solid var(--border);
   padding: 1rem;
 }
-.actual-tweet:hover {
+
+.tweetCard:hover {
   background-color: #1a2530;
 }
 .tweet-content {
@@ -241,9 +268,9 @@ body {
 }
 .image {
   border-radius: 20px;
-  max-height: 400px;
+  max-height: 300px;
   object-fit: cover;
-  width: 520px;
+  width: 480px;
 }
 .side-name {
   color: gray;
@@ -257,21 +284,21 @@ body {
 }
 .dropdownMenu {
   position: absolute;
+  z-index: 10;
   border-radius: 5px;
   background: linear-gradient(45deg, #131d27, #16222e);
-  box-shadow:  5px -5px 10px #080d11,
-               -5px 5px 10px #223345;
- padding-top:10px;
+  box-shadow: 5px -5px 10px #080d11, -5px 5px 10px #223345;
+  padding-top: 10px;
   right: 10px;
   top: 20px;
 }
-.dropdownMenu p{
-  padding: 5px 10px ;
+.dropdownMenu p {
+  padding: 5px 10px;
 }
-.dropdownMenu p span{
+.dropdownMenu p span {
   margin-left: 6px;
 }
-.dropdownMenu p:hover{
+.dropdownMenu p:hover {
   background-color: #374f68;
   cursor: pointer;
 }
@@ -289,6 +316,7 @@ body {
 #search-bar:focus {
   border: 1px solid var(--red);
 }
+
 .searchicon {
   position: absolute;
   right: 20%;

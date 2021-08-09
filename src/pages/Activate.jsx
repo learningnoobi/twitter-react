@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { verify } from "../redux/slices/userSlice";
+import { verify } from "../redux/asyncActions/UserAsync";
 
 const Activate = ({ match }) => {
   const [verified, setVerified] = useState(false);

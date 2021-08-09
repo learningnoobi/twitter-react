@@ -1,6 +1,8 @@
 import React,{useEffect,useState} from 'react'
-import { load_user } from '../redux/slices/userSlice'
+import { load_user } from "../redux/asyncActions/UserAsync";
 import { useDispatch,useSelector } from 'react-redux'
+import Sidebar from '../components/Sidebar';
+import Second from '../components/Second';
 
 const Profile = () => {
     const userInfo = useSelector(state => state.userReducer)
@@ -9,10 +11,13 @@ const Profile = () => {
     useEffect(() => {
         dispatch(load_user())
     }, [])
-    console.log(user)
+   
     return (
         <div>
-            {user? <h2>{user.email}</h2>:'no user'} 
+            <Sidebar />
+            <Second>
+                {user && user.email}
+            </Second>
             
             
         </div>

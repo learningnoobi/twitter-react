@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Activate from './pages/Activate';
 import Profile from './pages/Profile';
+import TweetDetail from './pages/TweetDetail';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
      <Route path="/login" component={Login}/>
      <Route path="/register" component={Register}/>
      <Route path="/profile" component={Profile}/>
+     <Route path="/:author/:id" component={TweetDetail}/>
      <Route path="/activate/:uid/:token" component={Activate}/>
    </Switch>
    </BrowserRouter>

@@ -1,24 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import AddTweet from "./tweetComp/AddTweet";
 import BottomTab from "./tweetComp/BottomTab";
 import TrendBar from "./tweetComp/TrendBar";
-import TweetCard from "./tweetComp/TweetCard";
-import TweetHeader from "./tweetComp/tweetHeader";
 
-const Second = () => {
+
+const Second = (props) => {
   return (
     <div className="second" id="second">
       <div className="second-tweet">
-        <TweetHeader />
-        <AddTweet />
-        <TweetCard />
+        {props.children}
       </div>
-
       <TrendBar />
       <BottomTab />
     </div>
   );
 };
 
-export default Second;
+export default React.memo(Second);

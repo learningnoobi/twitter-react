@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link,useHistory,NavLink } from "react-router-dom";
 import { showSidebar } from "../redux/slices/simpleState";
 import {
   RiHome7Fill,
@@ -10,20 +10,22 @@ import {
 } from "react-icons/ri";
 import { BiBell, BiBookmark, BiUser, BiLogIn } from "react-icons/bi";
 import { CgMoreO } from "react-icons/cg";
-import { logMeOut,checkAuthenticated } from "../redux/slices/userSlice";
+import { checkAuthenticated,logoutAct } from "../redux/asyncActions/UserAsync";
+
+
 const Sidebar = () => {
   const isAuthenticated = useSelector(state => state.userReducer.isAuthenticated)
   const sidebarClass = useSelector((state) => state.changeClass.myclass);
   const dispatch = useDispatch();
-
+  const history = useHistory()
   const logout = () =>{
     if(window.confirm("Are you sure you want to logout?")){
-      dispatch(logMeOut())
+      dispatch(logoutAct())
       dispatch(checkAuthenticated())
     }
-    
+   
   }
-
+ 
   return (
     <div className={`nav ${sidebarClass}`} id="nav">
       <ul className="navbar-nav">
@@ -41,12 +43,13 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to='/'>
+          <NavLink to='/' activeStyle={{color:'#f44'}}>
             <i>
-              <RiHome7Fill />
+              <RiHome7Fill color="#f44"/>
             </i>
             <span className="link-text">Home</span>
-          </Link>
+          
+          </NavLink>
         </li>
         <li>
           <Link to='/'>
@@ -87,14 +90,14 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to="profile">
+          <Link to="profile" activeStyle={{color:'#f44'}}>
             <i>
               <BiUser />
             </i>
             <span className="link-text">Profile</span>
           </Link>
         </li>
-        <li>
+        <li data-toggle="tooltip" data-placement="top" title="More">
           <Link to="/register">
             <i>
               <CgMoreO />
@@ -103,20 +106,26 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="link-tweets">
-          <Link to='/'>
+          <Link to='/'
+          data-toggle="tooltip" data-placement="top" title="Add Tweet"
+          >
             <i className="fa fa-plus"></i>
             <span className="link-text">Tweet</span>
           </Link>
         </li>
         <li>
           {isAuthenticated?
-          <Link onClick={logout}>
+          <Link onClick={logout}
+          data-toggle="tooltip" data-placement="top" title="Log Out"
+          >
           <i>
             <BiLogIn />
           </i>
           <span className="link-text">Logout</span>
         </Link>
-          :<Link to="/login">
+          :<Link to="/login"
+          data-toggle="tooltip" data-placement="top" title="Log In"
+          >
             <i>
               <BiLogIn />
             </i>
