@@ -37,7 +37,7 @@ const TweetDetail = () => {
       <Sidebar />
       {tweet.author && (
         <Second>
-          <TweetHeader />
+          <TweetHeader headerName="Detail"/>
           <div className="tweetCard">
           <div key={tweet.id} className="actual-tweet">
             <span className="add-tweet-image">

@@ -27,6 +27,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+ 
 }
 #nav::-webkit-scrollbar {
   width: 5px;
@@ -87,6 +88,21 @@ body {
   display: flex;
 }
 
+.setPublic{
+  color:var(--red);
+  display: none;
+  font-weight: bolder;
+  border-bottom: 1px solid rgb(50, 114, 138);
+  
+}
+
+.addTweetTitle:focus + .setPublic{
+display: block;
+}
+.setPublic:hover{
+  cursor: pointer;
+  background: rgb(51, 76, 85);
+}
 .nav {
   margin: 0;
   padding: 1rem;
@@ -108,6 +124,7 @@ body {
 .navbar-nav li {
   font-weight: bolder;
   margin-top: 5px;
+   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 .navbar-nav li:nth-child(10) {
   background-color: var(--red);
@@ -214,6 +231,7 @@ body {
   display: flex;
   cursor: pointer;
 }
+
 .add-tweet-icon {
   width: 100%;
   display: flex;
@@ -224,6 +242,14 @@ body {
   margin-left: 20px;
   color: var(--red);
   font-size: 20px;
+  transition: 300ms ease-in-out;
+}
+.side-icon:hover {
+  font-size: 21px;
+  color: #bb748a;
+}
+.active-link{
+  color: #f44;
 }
 .add-tweet-input textarea {
   padding: 7px;
@@ -255,6 +281,7 @@ body {
 
 .actual-tweet {
   display: flex;
+  position: relative;
   border-top: 1px solid var(--border);
   padding: 1rem;
 }
@@ -265,6 +292,7 @@ body {
 .tweet-content {
   margin-left: 5%;
   position: relative;
+ 
 }
 .image {
   border-radius: 20px;
@@ -290,7 +318,7 @@ body {
   box-shadow: 5px -5px 10px #080d11, -5px 5px 10px #223345;
   padding-top: 10px;
   right: 10px;
-  top: 20px;
+  top: 40px;
 }
 .dropdownMenu p {
   padding: 5px 10px;

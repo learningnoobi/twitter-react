@@ -10,6 +10,7 @@ import {
   AiOutlineBarChart,
   AiOutlineCloseCircle,
 } from "react-icons/ai";
+import {FaGlobeAfrica} from 'react-icons/fa'
 import { useSelector,useDispatch } from "react-redux";
 import { addTweet } from "../../redux/asyncActions/TweetAsync";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -23,25 +24,19 @@ const AddTweet = () => {
   const isAuthenticated = useSelector(
     (state) => state.userReducer.isAuthenticated
   );
-  const isLoading = useSelector(state =>state.tweetReducer.isLoading)
+  const uploading = useSelector(state =>state.tweetReducer.uploading)
   const [tweetInput, setTweetInput] = useState("");
   const [PrevImage, setPrevImage] = useState(null);
   const [tweetImage, setTweetImage] = useState(null)
-  const [showEmoji, setShowEmoji] = useState("none");
+  const [showEmoji, setShowEmoji] = useState(false);
+ 
   const history = useHistory();
   const dispatch = useDispatch()
   const inputOpenFileRef = useRef(null);
   const addEmoji = (emoji) => {
     setTweetInput((prev) => prev + emoji.native);
   };
-  const showEmojiFunc = () => {
-    if (showEmoji === "none") {
-      setShowEmoji("block");
-    }
-    if (showEmoji === "block") {
-      setShowEmoji("none");
-    }
-  };
+
   const showOpenFileDlg = () => {
     inputOpenFileRef.current.click();
     console.log("opening");
@@ -86,11 +81,16 @@ const AddTweet = () => {
               value={tweetInput}
               onChange={(e) => setTweetInput(e.target.value)}
               cols="50"
+              className="addTweetTitle"
               placeholder=" What's happening ?"
             ></textarea>
-
+            <div className="setPublic mx-3">
+              <FaGlobeAfrica />
+              <span className="mx-2">Set As public</span>
+              </div>
             <div>
               <div>
+              
                 {PrevImage && (
                   <span style={{ position: "relative" }}>
                     <img
@@ -127,7 +127,7 @@ const AddTweet = () => {
                     <AiOutlinePicture onClick={showOpenFileDlg} />
                   </li>
                   <li className="side-icon">
-                    <AiOutlineSmile onClick={showEmojiFunc} />
+                    <AiOutlineSmile onClick={()=>setShowEmoji(!showEmoji)} />
                   </li>
                   <li className="side-icon">
                     <AiOutlineBarChart />
@@ -142,23 +142,23 @@ const AddTweet = () => {
                 </div>
 
                 <button disabled={!tweetInput} onClick={()=>submitTweet()} className="link-tweet">
-                 {isLoading?
+                 {uploading?
                  <ClipLoader color="white" loading={true} css={override} size={16} />
                  : 'Tweet'
                  }
                 </button>
               </ul>
-              <Picker
-                set="twitter"
-                showPreview={true}
-                onSelect={addEmoji}
-                style={{
-                  position: "absolute",
-                  marginTop: -18,
-                  display: `${showEmoji}`,
-                  zIndex: 10,
-                }}
-              />
+            {showEmoji && <Picker
+              set="twitter"
+              showPreview={true}
+              onSelect={addEmoji}
+              style={{
+                position: "absolute",
+                marginTop: -18,
+                display: `${showEmoji}`,
+                zIndex: 10,
+              }}
+            />}
             </div>
           </div>
         </>

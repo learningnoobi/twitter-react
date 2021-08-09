@@ -1,6 +1,6 @@
 import axios from "axios";
 import { axiosInstance } from "../../index";
-import { tweetSuccess, setLoading,tweetAdded,tweetFail,deletedSuccess, tweetDetail } from "../slices/tweetSlice";
+import { tweetSuccess, setLoading,tweetAdded,tweetFail,deletedSuccess, tweetDetail,setUploading } from "../slices/tweetSlice";
 
 export const load_tweet = () => async (dispatch) => {
   dispatch(setLoading(true));
@@ -28,12 +28,14 @@ export const tweet_detail = (id) => async (dispatch) => {
   }
 };
 export const addTweet = (uploadData) => async (dispatch) => {
-  dispatch(setLoading(true));
+ 
+  dispatch(setUploading(true))
   try {
     const res = await axiosInstance.post(`tweets/`,
       uploadData
     );
-    dispatch(setLoading(false));
+ 
+    dispatch(setUploading(false))
     dispatch(tweetAdded(res.data));
     console.log('res  ',res.data)
   } catch (err) {

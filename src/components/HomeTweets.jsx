@@ -7,7 +7,7 @@ import TweetHeader from './tweetComp/tweetHeader'
 const HomeTweets = () => {
     return (
      <Second>
-         <TweetHeader />
+         <TweetHeader headerName="Home"/>
          <AddTweet />
          <TweetCard />
      </Second>

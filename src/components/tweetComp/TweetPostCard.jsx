@@ -9,7 +9,23 @@ const TweetPostCard = ({tweet}) => {
     return (
       <div className="tweetCard">
         <div key={tweet.id} className="actual-tweet">
+        <span>
+                <FiMoreHorizontal
+                  onClick={() =>
+                    setSelected(selected === tweet.id ? null : tweet.id)
+                  }
+                  style={{
+                    position:'absolute',
+                    right:10,
+                    color: "gray",
+                    fontSize: 23,
+                    cursor: "pointer",
+                  }}
+                />
+                {tweet.id === selected && <DropDown tweetId={tweet.id} />}
+              </span>
           <span className="add-tweet-image">
+            
             <Link to="/">
               <img
                 alt="img"
@@ -30,19 +46,7 @@ const TweetPostCard = ({tweet}) => {
                   @ {tweet.author.first_name}| 14 hrs
                 </span>
               </span>
-              <span>
-                <FiMoreHorizontal
-                  onClick={() =>
-                    setSelected(selected === tweet.id ? null : tweet.id)
-                  }
-                  style={{
-                    color: "gray",
-                    fontSize: 23,
-                    cursor: "pointer",
-                  }}
-                />
-                {tweet.id === selected && <DropDown tweetId={tweet.id} />}
-              </span>
+             
             </div>
             <p>
               {tweet.title} {tweet.body}

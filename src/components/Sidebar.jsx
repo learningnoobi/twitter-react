@@ -43,9 +43,9 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <NavLink to='/' activeStyle={{color:'#f44'}}>
+          <NavLink to='/' exact activeStyle={{color:'#f44'}}>
             <i>
-              <RiHome7Fill color="#f44"/>
+              <RiHome7Fill/>
             </i>
             <span className="link-text">Home</span>
           

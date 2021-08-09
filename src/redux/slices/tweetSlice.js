@@ -3,7 +3,8 @@ const initialState = {
   tweets: [],
   isLoading: false,
   error: null,
-  singleTweet:{}
+  singleTweet:{},
+  uploading:false
 };
 export const tweetReducer = createSlice({
   name: "tweetReducer",
@@ -11,6 +12,10 @@ export const tweetReducer = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.isLoading = action.payload;
+      state.error = null;
+    },
+    setUploading: (state, action) => {
+      state.uploading = action.payload;
       state.error = null;
     },
     tweetSuccess: (state, { payload }) => {
@@ -40,5 +45,6 @@ export const {
   tweetFail,
   deletedSuccess,
   tweetDetail,
+  setUploading
 } = tweetReducer.actions;
 export default tweetReducer.reducer;
