@@ -13,8 +13,8 @@ const TrendBar = () => {
               <h4 className="h4-title">Trending Posts</h4>
        <div className="trend-div">
                <div className="left-20"> 
-           <Link><small className="trend-title">Bishal</small></Link>
-             <Link>
+           <Link to="/"><small className="trend-title">Bishal</small></Link>
+             <Link to="/">
               <p className="trend-list"># Nie boy</p>
             </Link>
            </div>
@@ -25,10 +25,10 @@ const TrendBar = () => {
 
            <span className="trendlist">
                   <span>
-                      <Link>
+                      <Link to="/">
                       <img alt="img" src="dabi.jpg" className="rounded-circle profile-image" width="50px" height="50px"/></Link></span>
                       <span className="left-20">
-                        <Link>
+                        <Link to="/">
                               <p className="user-list">Rayon | <span className="side-name">@Raee</span></p>
                          </Link>
                           <span className="follow-line"> I am famous !</span>

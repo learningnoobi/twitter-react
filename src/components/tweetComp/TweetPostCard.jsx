@@ -1,52 +1,43 @@
-import React,{useState} from 'react'
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiMoreHorizontal,FiShare } from "react-icons/fi";
-import { AiOutlineHeart,AiOutlineComment ,AiOutlineRetweet,} from "react-icons/ai";
+import { FiMoreHorizontal } from "react-icons/fi";
 import DropDown from "./DropDown";
+import { TweetOperation } from "../SimpleComponents";
 
-const TweetPostCard = ({tweet}) => {
+
+const TweetPostCard = ({ tweet }) => {
   const [selected, setSelected] = useState(null);
-    return (
-      <div className="tweetCard">
-        <div key={tweet.id} className="actual-tweet">
+  return (
+    <div className="tweetCard">
+      <div className="actual-tweet">
         <span>
-                <FiMoreHorizontal
-                  onClick={() =>
-                    setSelected(selected === tweet.id ? null : tweet.id)
-                  }
-                  style={{
-                    position:'absolute',
-                    right:10,
-                    color: "gray",
-                    fontSize: 23,
-                    cursor: "pointer",
-                  }}
-                />
-                {tweet.id === selected && <DropDown tweetId={tweet.id} />}
-              </span>
-          <span className="add-tweet-image">
-            
-            <Link to="/">
-              <img
-                alt="img"
-                src={tweet.author.avatar}
-                className="rounded-circle profile-image"
-                width="60px"
-                height="60px"
-              /> 
-            </Link>
-          </span>
-          <Link to={`${tweet.author.first_name}/${tweet.id}`}>
-          <div  className="tweet-content">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span>
+          <FiMoreHorizontal
+            onClick={() => setSelected(selected === tweet.id ? null : tweet.id)}
+            className="dropdownIcon"
+          />
+          {tweet.id === selected && <DropDown tweetId={tweet.id} />}
+        </span>
+        <span className="add-tweet-image">
+          <Link to="/">
+            <img
+              alt="img"
+              src={tweet.author.avatar}
+              className="rounded-circle profile-image"
+              width="60px"
+              height="60px"
+            />
+          </Link>
+        </span>
+        <Link to={`${tweet.author.first_name}/${tweet.id}`}>
+          <div className="tweet-content">
+            <div>
+              <span className="d-flex">
                 {tweet.author.first_name}
 
-                <span className="side-name">
+                <span className="side-name d-flex">
                   @ {tweet.author.first_name}| 14 hrs
                 </span>
               </span>
-             
             </div>
             <p>
               {tweet.title} {tweet.body}
@@ -55,17 +46,12 @@ const TweetPostCard = ({tweet}) => {
               <img alt="img" src={tweet.image} className="image" />
             )}
           </div>
-          </Link>
          
-        </div>
-        <div className="tweet-bottom-active">
-          <i className="tweetIcons"> <AiOutlineComment/></i>
-            <i className="tweetIcons"><AiOutlineRetweet /></i>
-            <i className="tweetIcons"><AiOutlineHeart /></i>
-            <i className="tweetIcons"><FiShare /></i>
-          </div>
-        </div>
-    )
-}
+        </Link>
+      </div>
+      <TweetOperation />
+    </div>
+  );
+};
 
-export default TweetPostCard
+export default TweetPostCard;

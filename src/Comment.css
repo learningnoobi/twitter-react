@@ -1,0 +1,45 @@
+.comment-list{
+    border-top: 1px solid rgb(62, 66, 94);
+}
+.comment-card{
+    display: flex;
+    border-bottom: 1px solid rgb(51, 55, 77);
+    padding: 10px;
+}
+.side-names {
+    color: gray;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+  }
+.authorImage{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.comment-info{
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+.commentDiv{
+    display: flex;
+    border-bottom: 9px solid rgb(62, 66, 94);
+    align-items: center;
+    padding: 20px;
+    justify-content: space-around;
+}
+.commentInput{
+    width: 100%;
+    outline: 0;
+    background-color: #15202b;
+    border: none;
+    padding: 10px 10px;
+    color: rgb(145, 148, 185);
+}
+.commentInput::placeholder{
+    color: rgb(145, 148, 185);
+    letter-spacing: 1px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

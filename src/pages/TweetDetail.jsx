@@ -1,126 +1,140 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { tweet_detail, deleteTweet, editTweet } from "../redux/asyncActions/TweetAsync";
+import { tweet_detail, deleteTweet } from "../redux/asyncActions/TweetAsync";
 import Sidebar from "../components/Sidebar";
 import Second from "../components/Second";
 import TweetHeader from "../components/tweetComp/tweetHeader";
 import { Link } from "react-router-dom";
-import { FiMoreHorizontal,FiShare } from "react-icons/fi";
-import { AiOutlineHeart,AiOutlineComment ,AiOutlineRetweet,} from "react-icons/ai";
-// import ImageViewer from "react-simple-image-viewer";
-import { BiUserPlus, BiEditAlt, BiBlock } from "react-icons/bi";
+import { FiMoreHorizontal } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
+import { BiUserPlus, BiEditAlt, BiBlock } from "react-icons/bi";
+import { removeMesage } from "../redux/slices/tweetSlice";
+import AlertMessage from "../components/alertMessage";
+import { TweetOperation } from "../components/SimpleComponents";
+import { TweetContent } from "../components/tweetComp/TweetContent";
+import CommentCard from "../components/CommentCard";
+import { addComment, tweet_comments } from "../redux/asyncActions/CommentAsync";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const TweetDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
-  const [editTitle, setEditTitle] = useState('')
+  const [editTitle, setEditTitle] = useState("");
   const tweet = useSelector((state) => state.tweetReducer.singleTweet);
+  const [commentInput, setCommentInput] = useState('')
   const { author, id } = useParams();
+
+  const message = useSelector((state) => state.tweetReducer.message);
+  const comments = useSelector((state) => state.commentReducer);
   useEffect(() => {
     dispatch(tweet_detail(id));
+   
+    dispatch(tweet_comments(id));
+    console.log(comments);
   }, []);
+
   const editpost = () => {
     setEdit((prev) => !prev);
     setIsOpen(!isOpen);
-    setEditTitle(tweet.title)
+    setEditTitle(tweet.title);
   };
+const commentAdd = () => {
+  dispatch(addComment(id,commentInput))
 
-  const sendEditPost = () => {
-      dispatch(editTweet(id,editTitle))
-      setEdit(false)
-  }
+}
   return (
     <div>
       <Sidebar />
+      {/* alert message during tweet operations */}
+      {message && (
+        <AlertMessage
+          removeMesage={removeMesage}
+          dispatch={dispatch}
+          message={message}
+        />
+      )}
+      {/* tweet card */}
       {tweet.author && (
         <Second>
-          <TweetHeader headerName="Detail"/>
+          <TweetHeader headerName="Detail" />
           <div className="tweetCard">
-          <div key={tweet.id} className="actual-tweet">
-            <span className="add-tweet-image">
-              <Link to="/">
-                <img
-                  alt="img"
-                  src={tweet.author.avatar}
-                  className="rounded-circle profile-image"
-                  width="60px"
-                  height="60px"
+            <div className="actual-tweet">
+              <span>
+                <FiMoreHorizontal
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="dropdownIcon"
                 />
-              </Link>
-            </span>
-
-            <div className="tweet-content">
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span>
-                  {tweet.author.first_name}
-
-                  <span className="side-name">
-                    @ {tweet.author.first_name}| 14 hrs
-                  </span>
-                </span>
-                <span>
-                  <FiMoreHorizontal
-                    onClick={() => setIsOpen(!isOpen)}
-                    style={{
-                      color: "gray",
-                      fontSize: 23,
-                      cursor: "pointer",
-                    }}
-                  />
-                  {isOpen && (
-                    <div className="dropdownMenu">
-                      <p>
-                        <BiUserPlus /> <span>Unfollow Rayos</span>
-                      </p>
-                      <p>
-                        <BiBlock />
-                        <span>Block</span>
-                      </p>
-                      <p onClick={() => dispatch(deleteTweet(tweet.id))}>
-                        <AiOutlineDelete />
-                        <span>Delete Post</span>
-                      </p>
-                      <p onClick={editpost}>
-                        <BiEditAlt />
-                        <span>Edit Post</span>
-                      </p>
-                    </div>
-                  )}
-                </span>
-              </div>
-              <p>
-                {edit ? (
-                  <>
-                    <textarea
-                     value={editTitle}  
-                     onChange={e=>setEditTitle(e.target.value)}
-                     className="editArea"></textarea> <br />
-                    <button onClick={sendEditPost} className="btn btn-primary">Edit</button>
-                    <button
-                      className="btn btn-danger mx-2"
-                      onClick={() => setEdit(false)}
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  tweet.title
+                {isOpen && (
+                  <div className="dropdownMenu">
+                    <p>
+                      <BiUserPlus /> <span>Unfollow Rayos</span>
+                    </p>
+                    <p>
+                      <BiBlock />
+                      <span>Block</span>
+                    </p>
+                    <p onClick={() => dispatch(deleteTweet(tweet.id))}>
+                      <AiOutlineDelete />
+                      <span>Delete Post</span>
+                    </p>
+                    <p onClick={editpost}>
+                      <BiEditAlt />
+                      <span>Edit Post</span>
+                    </p>
+                  </div>
                 )}
-              </p>
-              {tweet.image && (
-                <img alt="img" src={tweet.image} className="image" />
-              )}
+              </span>
+              <span className="add-tweet-image">
+                <Link to="/">
+                  <img
+                    alt="img"
+                    src={tweet.author.avatar}
+                    className="rounded-circle profile-image"
+                    width="60px"
+                    height="60px"
+                  />
+                </Link>
+              </span>
+              {/* Tweet content component which shows tweet info - title,images,viewer */}
+              <TweetContent
+                tweet={tweet}
+                editTitle={editTitle}
+                setEditTitle={setEditTitle}
+                edit={edit}
+                setEdit={setEdit}
+                id={tweet.id}
+                dispatch={dispatch}
+              />
             </div>
+            <TweetOperation />
           </div>
-          <div className="tweet-bottom-active">
-          <i className="tweetIcons"> <AiOutlineComment/></i>
-            <i className="tweetIcons"><AiOutlineRetweet /></i>
-            <i className="tweetIcons"><AiOutlineHeart /></i>
-            <i className="tweetIcons"><FiShare /></i>
-          </div>
+          {/* comment lists */}
+          <div className="comment-list">
+            <div className="commentDiv">
+              <img
+                src={`http://127.0.0.1:8000/media/zenitsu.jpg`}
+                alt="comment-author"
+                className="authorImage"
+              />
+              <textarea
+              value={commentInput}
+              onChange={(e)=>setCommentInput(e.target.value)}
+                className="commentInput"
+                placeholder="Tweet your Reply"
+              ></textarea>
+              <button onClick={commentAdd} className="link-tweet">Reply</button>
+            </div>
+            {comments && comments.isLoading ? (
+              <span className="d-flex justify-content-center mt-4">
+                <ClipLoader color="#f44" loading={true} size={23} />
+              </span>
+            ) : (
+              comments.commentList.map((comment) => (
+                <CommentCard comment={comment} key={comment.id} />
+              ))
+            )}
           </div>
         </Second>
       )}

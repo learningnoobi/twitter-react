@@ -14,12 +14,7 @@ import {FaGlobeAfrica} from 'react-icons/fa'
 import { useSelector,useDispatch } from "react-redux";
 import { addTweet } from "../../redux/asyncActions/TweetAsync";
 import ClipLoader from "react-spinners/ClipLoader";
-import { css } from "@emotion/react";
 
-const override = css`
-
-  
-`;
 const AddTweet = () => {
   const isAuthenticated = useSelector(
     (state) => state.userReducer.isAuthenticated
@@ -129,21 +124,33 @@ const AddTweet = () => {
                   <li className="side-icon">
                     <AiOutlineSmile onClick={()=>setShowEmoji(!showEmoji)} />
                   </li>
-                  <li className="side-icon">
+              {!PrevImage?
+               <><li className="side-icon">
+               <AiOutlineBarChart />
+             </li>
+             <li className="side-icon">
+               <AiOutlineGif />
+             </li>
+             <li className="side-icon">
+               <AiOutlineSchedule />
+             </li></>
+              :
+              <><li className="side-icon disabled">
                     <AiOutlineBarChart />
                   </li>
-                  <li className="side-icon">
+                  <li className="side-icon disabled">
                     <AiOutlineGif />
                   </li>
-                  <li className="side-icon">
+                  <li className="side-icon disabled">
                     <AiOutlineSchedule />
-                  </li>
+                  </li></>
+                  }
                  
                 </div>
 
                 <button disabled={!tweetInput} onClick={()=>submitTweet()} className="link-tweet">
                  {uploading?
-                 <ClipLoader color="white" loading={true} css={override} size={16} />
+                 <ClipLoader color="white" loading={true}  size={16} />
                  : 'Tweet'
                  }
                 </button>

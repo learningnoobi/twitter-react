@@ -43,7 +43,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <NavLink to='/' exact activeStyle={{color:'#f44'}}>
+          <NavLink to='/'>
             <i>
               <RiHome7Fill/>
             </i>
@@ -74,7 +74,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link>
+          <Link to="/">
             <i>
               <BiBookmark />
             </i>
@@ -82,7 +82,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to='/'>
+          <Link to="/">
             <i>
               <RiFileListLine />
             </i>
@@ -90,7 +90,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to="profile" activeStyle={{color:'#f44'}}>
+          <Link to="/profile">
             <i>
               <BiUser />
             </i>
@@ -105,17 +105,15 @@ const Sidebar = () => {
             <span className="link-text">More</span>
           </Link>
         </li>
-        <li className="link-tweets">
-          <Link to='/'
-          data-toggle="tooltip" data-placement="top" title="Add Tweet"
-          >
+        <li className="link-tweets" data-toggle="tooltip" data-placement="top" title="Add Tweet">
+          <Link to="/">
             <i className="fa fa-plus"></i>
             <span className="link-text">Tweet</span>
           </Link>
         </li>
         <li>
           {isAuthenticated?
-          <Link onClick={logout}
+          <Link to="/" onClick={logout}
           data-toggle="tooltip" data-placement="top" title="Log Out"
           >
           <i>

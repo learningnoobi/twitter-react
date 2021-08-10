@@ -27,6 +27,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  max-width: 1600px;
  
 }
 #nav::-webkit-scrollbar {
@@ -90,18 +91,23 @@ body {
 
 .setPublic{
   color:var(--red);
-  display: none;
   font-weight: bolder;
   border-bottom: 1px solid rgb(50, 114, 138);
   
 }
 
-.addTweetTitle:focus + .setPublic{
-display: block;
-}
+
 .setPublic:hover{
   cursor: pointer;
   background: rgb(51, 76, 85);
+}
+.dropdownIcon{
+    position:absolute;
+    right:10px;
+    color: gray;
+    font-size: 23px;
+    cursor: pointer;
+
 }
 .nav {
   margin: 0;
@@ -171,7 +177,7 @@ display: block;
   justify-content: space-around
 }
 .tweetIcons{
-  font-size: large;
+  font-size: 22px;
   color: rgb(168, 157, 157);
 }
 .tweetIcons:hover{
@@ -241,12 +247,17 @@ display: block;
 .side-icon {
   margin-left: 20px;
   color: var(--red);
+  cursor: pointer;
   font-size: 20px;
   transition: 300ms ease-in-out;
 }
 .side-icon:hover {
   font-size: 21px;
   color: #bb748a;
+}
+.disabled{
+  color: rgb(131, 50, 74);
+  cursor:not-allowed;
 }
 .active-link{
   color: #f44;
@@ -264,21 +275,36 @@ display: block;
 }
 .link-tweet {
   background-color: var(--red);
-  border-radius: 30px;
-  padding: 10px 20px;
+  border-radius: 34px;
+  min-width: 70px;
+  padding: 8px 16px;
   border: none;
   color: #fff;
   outline: 0 !important;
   cursor: pointer;
 }
-.link-tweet:hover {
-  background-color: #c21149;
- }
 .link-tweet:disabled{
   background-color: #7c4053;
   cursor:not-allowed;
 }
+.link-tweet:hover {
+  background-color: #c21149;
+ }
 
+.messageAlert{
+  position: fixed;
+  bottom:80px;
+  right:40%;
+  width: 210px;
+  background-color: rgb(15, 5, 34);
+  padding:10px;
+  border-radius: 4px;
+  border-left: 6px solid #e0245e;
+  display: flex;
+  align-items: center;
+  transition: 1000ms ease-in-out;
+  justify-content: space-between;
+}
 .actual-tweet {
   display: flex;
   position: relative;
@@ -302,6 +328,10 @@ display: block;
 }
 .side-name {
   color: gray;
+  display: flex;
+  align-items: center;
+
+  
 }
 .second-trend {
   padding-top: 6px;
