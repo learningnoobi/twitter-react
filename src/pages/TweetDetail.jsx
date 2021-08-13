@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { tweet_detail, deleteTweet } from "../redux/asyncActions/TweetAsync";
+import {
+  tweet_detail,
+  deleteTweet,
+  likeTweet,
+} from "../redux/asyncActions/TweetAsync";
 import Sidebar from "../components/Sidebar";
 import Second from "../components/Second";
 import TweetHeader from "../components/tweetComp/tweetHeader";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiUserPlus, BiEditAlt, BiBlock } from "react-icons/bi";
@@ -16,34 +20,42 @@ import { TweetContent } from "../components/tweetComp/TweetContent";
 import CommentCard from "../components/CommentCard";
 import { addComment, tweet_comments } from "../redux/asyncActions/CommentAsync";
 import ClipLoader from "react-spinners/ClipLoader";
+import useUserInfo from "../hooks/useUserInfo";
 
 const TweetDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
+
+  const history = useHistory();
   const [editTitle, setEditTitle] = useState("");
   const tweet = useSelector((state) => state.tweetReducer.singleTweet);
-  const [commentInput, setCommentInput] = useState('')
-  const { author, id } = useParams();
-
+  const [commentInput, setCommentInput] = useState("");
+  const { username, id } = useParams();
+  const { user } = useUserInfo();
   const message = useSelector((state) => state.tweetReducer.message);
   const comments = useSelector((state) => state.commentReducer);
   useEffect(() => {
     dispatch(tweet_detail(id));
-   
     dispatch(tweet_comments(id));
-    console.log(comments);
   }, []);
+  const likeTweetD = (id) => {
+    dispatch(likeTweet(id));
+  };
+  message &&
+    setTimeout(() => {
+      dispatch(removeMesage());
+    }, 3000);
 
   const editpost = () => {
     setEdit((prev) => !prev);
     setIsOpen(!isOpen);
     setEditTitle(tweet.title);
   };
-const commentAdd = () => {
-  dispatch(addComment(id,commentInput))
-
-}
+  const commentAdd = () => {
+    dispatch(addComment(id, commentInput));
+    setCommentInput("");
+  };
   return (
     <div>
       <Sidebar />
@@ -75,19 +87,28 @@ const commentAdd = () => {
                       <BiBlock />
                       <span>Block</span>
                     </p>
-                    <p onClick={() => dispatch(deleteTweet(tweet.id))}>
-                      <AiOutlineDelete />
-                      <span>Delete Post</span>
-                    </p>
-                    <p onClick={editpost}>
-                      <BiEditAlt />
-                      <span>Edit Post</span>
-                    </p>
+                    {user.email === tweet.author.email && (
+                      <>
+                        <p onClick={editpost}>
+                          <BiEditAlt />
+                          <span>Edit Post</span>
+                        </p>
+                        <p
+                          onClick={() => {
+                            dispatch(deleteTweet(tweet.id));
+                            history.push("/");
+                          }}
+                        >
+                          <AiOutlineDelete color="#e0245e" />
+                          <span style={{ color: "#e0245e" }}>Delete Post</span>
+                        </p>
+                      </>
+                    )}
                   </div>
                 )}
               </span>
               <span className="add-tweet-image">
-                <Link to="/">
+                <Link to={`/${tweet.author.username}`}>
                   <img
                     alt="img"
                     src={tweet.author.avatar}
@@ -108,23 +129,41 @@ const commentAdd = () => {
                 dispatch={dispatch}
               />
             </div>
-            <TweetOperation />
+            <TweetOperation
+              id={parseInt(id)}
+              liked={tweet.iliked}
+              likeTweetD={likeTweetD}
+              like_count={tweet.like_count}
+            />
           </div>
           {/* comment lists */}
           <div className="comment-list">
             <div className="commentDiv">
               <img
-                src={`http://127.0.0.1:8000/media/zenitsu.jpg`}
+                src={
+                  (user && user.avatar) ||
+                  "https://qph.fs.quoracdn.net/main-qimg-92e5c1d46505b34638aafd281449dabc"
+                }
                 alt="comment-author"
                 className="authorImage"
               />
               <textarea
-              value={commentInput}
-              onChange={(e)=>setCommentInput(e.target.value)}
+                value={commentInput}
+                onChange={(e) => setCommentInput(e.target.value)}
                 className="commentInput"
                 placeholder="Tweet your Reply"
               ></textarea>
-              <button onClick={commentAdd} className="link-tweet">Reply</button>
+              <button
+                disabled={!commentInput}
+                onClick={commentAdd}
+                className="link-tweet"
+              >
+                {comments.uploading ? (
+                  <ClipLoader color="white" loading={true} size={18} />
+                ) : (
+                  "Reply"
+                )}
+              </button>
             </div>
             {comments && comments.isLoading ? (
               <span className="d-flex justify-content-center mt-4">
@@ -132,7 +171,12 @@ const commentAdd = () => {
               </span>
             ) : (
               comments.commentList.map((comment) => (
-                <CommentCard comment={comment} key={comment.id} />
+                <CommentCard
+                  tweetId={tweet.id}
+                  user={user}
+                  key={comment.id}
+                  comment={comment}
+                />
               ))
             )}
           </div>

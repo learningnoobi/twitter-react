@@ -3,7 +3,7 @@ import { AiFillUnlock } from "react-icons/ai";
 import { BiGlobe } from "react-icons/bi";
 import { editTweet } from "../../redux/asyncActions/TweetAsync";
 import Viewer from "react-viewer";
-
+import Moment from 'moment';
 export const TweetContent = ({
   id,
   dispatch,
@@ -22,12 +22,16 @@ export const TweetContent = ({
   return (
     <div className="tweet-content">
       <div>
+  
         <span style={{ display: "flex", alignItems: "center" }}>
-          {tweet.author.first_name}
-
-          <span className="side-name">
-            @ {tweet.author.first_name}| 14 hrs
+          {tweet.author.username}
+          
+          <span className="side-names">
+            @ {tweet.author.username} -
+             {/* {Moment(tweet.created ).format('MMM Do YY')} */}
+             {Moment(tweet.created).fromNow()}
             {tweet.is_private ? <AiFillUnlock /> : <BiGlobe />}
+            {tweet.isEdited && <span className="mx-2">- Edited</span>}
           </span>
         </span>
       </div>

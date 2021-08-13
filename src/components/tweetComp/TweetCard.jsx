@@ -5,9 +5,11 @@ import { load_tweet } from "../../redux/asyncActions/TweetAsync";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import TweetPostCard from "./TweetPostCard";
+import useUserInfo from "../../hooks/useUserInfo";
 const TweetCard = () => {
   const tweetsInfo = useSelector((state) => state.tweetReducer);
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(load_tweet());
   }, []);
@@ -18,7 +20,7 @@ const TweetCard = () => {
     </span>
   ) : (
     tweetsInfo.tweets.map((tweet) => (
-      <TweetPostCard tweet={tweet} key={tweet.id} />
+      <TweetPostCard dispatch={dispatch} tweet={tweet} key={tweet.id}/>
     ))
   );
 };

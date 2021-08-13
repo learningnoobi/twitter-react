@@ -7,6 +7,7 @@ import {
   deletedSuccess,
   tweetDetail,
   setUploading,
+  likeUnlikeTweet,
   setMessage,
 } from "../slices/tweetSlice";
 
@@ -54,22 +55,34 @@ export const deleteTweet = (pk) => async (dispatch) => {
     dispatch(setMessage("Tweet Deleted !"));
   } catch (err) {
     dispatch(tweetFail());
-    console.log(err)
+    console.log(err);
     dispatch(setMessage("Something went Wrong !"));
   }
 };
-export const editTweet = (id, title,isChecked) => async (dispatch) => {
+export const editTweet = (id, title, isChecked) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.put(`tweets/${id}/`, { 
+    const res = await axiosInstance.put(`tweets/${id}/`, {
       title,
-      is_private:isChecked
-     });
+      is_private: isChecked,
+      isEdited: true,
+    });
     dispatch(setLoading(false));
     dispatch(tweetDetail(res.data));
     dispatch(setMessage("Tweet Updated !"));
   } catch (err) {
     dispatch(tweetFail());
+    console.log(err);
+    dispatch(setMessage("Something went Wrong !"));
+  }
+};
+export const likeTweet = (id) => async (dispatch) => {
+  try {
+    const res = await axiosInstance.post(`tweets/love/like-unlike/`, {
+      pk: id,
+    });
+    dispatch(likeUnlikeTweet({ ...res.data, id: parseInt(id) }));
+  } catch (err) {
     console.log(err);
     dispatch(setMessage("Something went Wrong !"));
   }

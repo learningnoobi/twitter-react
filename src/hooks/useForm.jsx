@@ -9,8 +9,7 @@ const useForm = () => {
         ))
     }
     const disabled =
-        !state.firstname?.length ||
-        !state.lastname?.length ||
+        !state.username?.length ||
         !state.email?.length ||
         !state.password?.length ||
         !state.re_password?.length;

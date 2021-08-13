@@ -3,10 +3,14 @@ import { Link } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DropDown from "./DropDown";
 import { TweetOperation } from "../SimpleComponents";
+import Moment from "moment";
+import { likeTweet } from "../../redux/asyncActions/TweetAsync";
 
-
-const TweetPostCard = ({ tweet }) => {
+const TweetPostCard = ({ tweet, dispatch }) => {
   const [selected, setSelected] = useState(null);
+  const likeTweetD = (id) => {
+    dispatch(likeTweet(id));
+  };
   return (
     <div className="tweetCard">
       <div className="actual-tweet">
@@ -18,7 +22,7 @@ const TweetPostCard = ({ tweet }) => {
           {tweet.id === selected && <DropDown tweetId={tweet.id} />}
         </span>
         <span className="add-tweet-image">
-          <Link to="/">
+          <Link to={`/${tweet.author.username}`}>
             <img
               alt="img"
               src={tweet.author.avatar}
@@ -28,28 +32,31 @@ const TweetPostCard = ({ tweet }) => {
             />
           </Link>
         </span>
-        <Link to={`${tweet.author.first_name}/${tweet.id}`}>
+        <Link to={`${tweet.author.username}/${tweet.id}`}>
           <div className="tweet-content">
-            <div>
-              <span className="d-flex">
-                {tweet.author.first_name}
-
-                <span className="side-name d-flex">
-                  @ {tweet.author.first_name}| 14 hrs
-                </span>
+            <span className="d-flex">
+              {tweet.author.username}
+              <span className="side-name">
+                @ {tweet.author.username} |{Moment(tweet.created).fromNow()}
+                {tweet.isEdited && <span className="mx-2"> - Edited</span>}
               </span>
-            </div>
-            <p>
+            </span>
+
+            <p className="mt-2">
               {tweet.title} {tweet.body}
             </p>
             {tweet.image && (
               <img alt="img" src={tweet.image} className="image" />
             )}
           </div>
-         
         </Link>
       </div>
-      <TweetOperation />
+      <TweetOperation
+        id={tweet.id}
+        liked={tweet.iliked}
+        likeTweetD={likeTweetD}
+        like_count={tweet.like_count}
+      />
     </div>
   );
 };

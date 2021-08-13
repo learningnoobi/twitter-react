@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 import {
@@ -10,48 +10,44 @@ import {
   AiOutlineBarChart,
   AiOutlineCloseCircle,
 } from "react-icons/ai";
-import {FaGlobeAfrica} from 'react-icons/fa'
-import { useSelector,useDispatch } from "react-redux";
+import { FaGlobeAfrica } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
 import { addTweet } from "../../redux/asyncActions/TweetAsync";
 import ClipLoader from "react-spinners/ClipLoader";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const AddTweet = () => {
-  const isAuthenticated = useSelector(
-    (state) => state.userReducer.isAuthenticated
-  );
-  const uploading = useSelector(state =>state.tweetReducer.uploading)
+  const isAuthenticated = useSelector(state => state.userReducer.isAuthenticated);
+  const uploading = useSelector((state) => state.tweetReducer.uploading);
   const [tweetInput, setTweetInput] = useState("");
   const [PrevImage, setPrevImage] = useState(null);
-  const [tweetImage, setTweetImage] = useState(null)
+  const [tweetImage, setTweetImage] = useState(null);
   const [showEmoji, setShowEmoji] = useState(false);
- 
-  const history = useHistory();
-  const dispatch = useDispatch()
+  const [showPublic, setShowPublic] = useState(false);
+
+  const dispatch = useDispatch();
   const inputOpenFileRef = useRef(null);
+  const { user } = useUserInfo();
   const addEmoji = (emoji) => {
     setTweetInput((prev) => prev + emoji.native);
   };
-
+ 
   const showOpenFileDlg = () => {
     inputOpenFileRef.current.click();
-    console.log("opening");
   };
   const imageChanged = (e) => {
-    setTweetImage(e.target.files[0])
+    setTweetImage(e.target.files[0]);
     setPrevImage(URL.createObjectURL(e.target.files[0]));
   };
-
   const submitTweet = () => {
     const uploadData = new FormData();
-    uploadData.append('title',tweetInput)
-    tweetImage && uploadData.append('image',tweetImage)
-    console.log(uploadData)
-    // console.log(tweetImage,tweetInput)
-    dispatch(addTweet(uploadData))
-    setPrevImage(null)
-    setTweetImage(null)
-    setTweetInput('')
-  }
+    uploadData.append("title", tweetInput);
+    tweetImage && uploadData.append("image", tweetImage);
+    dispatch(addTweet(uploadData));
+    setPrevImage(null);
+    setTweetImage(null);
+    setTweetInput("");
+  };
   return (
     <div className="add-tweet">
       {!isAuthenticated ? (
@@ -59,10 +55,10 @@ const AddTweet = () => {
       ) : (
         <>
           <span className="add-tweet-image">
-            <Link>
+             <Link to={user &&`${user.username}`|| '/'}>
               <img
                 alt="img"
-                src="https://qph.fs.quoracdn.net/main-qimg-92e5c1d46505b34638aafd281449dabc"
+                src={user && user.avatar||"https://qph.fs.quoracdn.net/main-qimg-92e5c1d46505b34638aafd281449dabc"}
                 className="rounded-circle profile-image"
                 width="60px"
                 height="60px"
@@ -76,16 +72,18 @@ const AddTweet = () => {
               value={tweetInput}
               onChange={(e) => setTweetInput(e.target.value)}
               cols="50"
+              onClick={(prev) => setShowPublic(!prev)}
               className="addTweetTitle"
               placeholder=" What's happening ?"
             ></textarea>
-            <div className="setPublic mx-3">
-              <FaGlobeAfrica />
-              <span className="mx-2">Set As public</span>
+            {showPublic && (
+              <div className="setPublic mx-3">
+                <FaGlobeAfrica />
+                <span className="mx-2">Set As public</span>
               </div>
+            )}
             <div>
               <div>
-              
                 {PrevImage && (
                   <span style={{ position: "relative" }}>
                     <img
@@ -102,8 +100,8 @@ const AddTweet = () => {
                         top: -63,
                         right: 6,
                         cursor: "pointer",
-                        fontSize:20,
-                        color:"#f44"
+                        fontSize: 20,
+                        color: "#f44",
                       }}
                     />
                   </span>
@@ -122,50 +120,60 @@ const AddTweet = () => {
                     <AiOutlinePicture onClick={showOpenFileDlg} />
                   </li>
                   <li className="side-icon">
-                    <AiOutlineSmile onClick={()=>setShowEmoji(!showEmoji)} />
+                    <AiOutlineSmile onClick={() => setShowEmoji(!showEmoji)} />
                   </li>
-              {!PrevImage?
-               <><li className="side-icon">
-               <AiOutlineBarChart />
-             </li>
-             <li className="side-icon">
-               <AiOutlineGif />
-             </li>
-             <li className="side-icon">
-               <AiOutlineSchedule />
-             </li></>
-              :
-              <><li className="side-icon disabled">
-                    <AiOutlineBarChart />
-                  </li>
-                  <li className="side-icon disabled">
-                    <AiOutlineGif />
-                  </li>
-                  <li className="side-icon disabled">
-                    <AiOutlineSchedule />
-                  </li></>
-                  }
-                 
+                  {!PrevImage ? (
+                    <>
+                      <li className="side-icon">
+                        <AiOutlineBarChart />
+                      </li>
+                      <li className="side-icon">
+                        <AiOutlineGif />
+                      </li>
+                      <li className="side-icon">
+                        <AiOutlineSchedule />
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="side-icon disabled">
+                        <AiOutlineBarChart />
+                      </li>
+                      <li className="side-icon disabled">
+                        <AiOutlineGif />
+                      </li>
+                      <li className="side-icon disabled">
+                        <AiOutlineSchedule />
+                      </li>
+                    </>
+                  )}
                 </div>
 
-                <button disabled={!tweetInput} onClick={()=>submitTweet()} className="link-tweet">
-                 {uploading?
-                 <ClipLoader color="white" loading={true}  size={16} />
-                 : 'Tweet'
-                 }
+                <button
+                  disabled={!tweetInput}
+                  onClick={() => submitTweet()}
+                  className="link-tweet"
+                >
+                  {uploading ? (
+                    <ClipLoader color="white" loading={true} size={16} />
+                  ) : (
+                    "Tweet"
+                  )}
                 </button>
               </ul>
-            {showEmoji && <Picker
-              set="twitter"
-              showPreview={true}
-              onSelect={addEmoji}
-              style={{
-                position: "absolute",
-                marginTop: -18,
-                display: `${showEmoji}`,
-                zIndex: 10,
-              }}
-            />}
+              {showEmoji && (
+                <Picker
+                  set="twitter"
+                  showPreview={true}
+                  onSelect={addEmoji}
+                  style={{
+                    position: "absolute",
+                    marginTop: -18,
+                    display: `${showEmoji}`,
+                    zIndex: 10,
+                  }}
+                />
+              )}
             </div>
           </div>
         </>

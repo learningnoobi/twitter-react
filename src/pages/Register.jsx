@@ -5,13 +5,13 @@ import { register } from "../redux/asyncActions/UserAsync";
 import {useHistory} from 'react-router-dom'
 const Register = () => {
   const [values, handleChange, disabled] = useForm()
-  const { firstname, lastname, email, password, re_password } = values;
+  const { username,email, password, re_password } = values;
   const dispatch = useDispatch();
   const history = useHistory()
   const isAuthenticated = useSelector(state => state.userReducer.isAuthenticated)
   const registerMe = (e) => {
     e.preventDefault();
-    dispatch(register(firstname, lastname, email, password, re_password));
+    dispatch(register(username, email, password, re_password));
   };
   useEffect(() => {
     if(isAuthenticated){
@@ -23,20 +23,13 @@ const Register = () => {
       <h2>Register Page I guess</h2>
       <form onSubmit={registerMe}>
         <input
-          value={firstname || ""}
+          value={username || ""}
           onChange={handleChange}
           type="text"
-          name="firstname"
-          placeholder="firstname"
+          name="username"
+          placeholder="username"
         />
-        <br />
-        <input
-          value={lastname || ""}
-          onChange={handleChange}
-          type="text"
-          name="lastname"
-          placeholder="lastname"
-        />
+ 
         <br />
         <input
           value={email || ""}

@@ -27,8 +27,9 @@ export const userRegister = createSlice({
     authFail: (state) => {
       state.isAuthenticated = false;
     },
-    userFail: (state) => {
+    userFail: (state,{payload}) => {
       state.user = null;
+      state.error = payload
     },
     authSuccess: (state) => {
       state.isAuthenticated = true;

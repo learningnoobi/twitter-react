@@ -26,7 +26,6 @@ export const tweetReducer = createSlice({
       state.tweets = payload;
     },
     tweetFail: (state) => {
-    
       state.error = true;
     },
     tweetAdded: (state, { payload }) => {
@@ -42,6 +41,11 @@ export const tweetReducer = createSlice({
     removeMesage: (state, action) => {
       state.message = null;
     },
+    likeUnlikeTweet:(state,{payload}) => {
+      const tweet = state.tweets.find((i) => i.id === payload.id);
+      if (tweet) tweet.like_count = payload.count;
+      state.singleTweet.like_count=payload.count
+    }
   },
 });
 
@@ -55,5 +59,7 @@ export const {
   setUploading,
   setMessage,
   removeMesage,
+  likeUnlikeTweet
+  
 } = tweetReducer.actions;
 export default tweetReducer.reducer;

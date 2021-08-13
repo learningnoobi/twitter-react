@@ -28,12 +28,11 @@ export const load_user = () => async (dispatch) => {
 };
 
 export const register =
-  (firstname, lastname, email, password, re_password) => (dispatch) => {
+  (username, email, password, re_password) => (dispatch) => {
     dispatch(setLoading(true));
     axios
       .post(url, {
-        first_name: firstname,
-        last_name: lastname,
+        username,
         email,
         password,
         re_password,
@@ -77,6 +76,7 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(setLoading(false));
   } catch (err) {
     console.log(err);
+    dispatch(userFail('something is wrong'))
     dispatch(setLoading(false));
   }
 };
