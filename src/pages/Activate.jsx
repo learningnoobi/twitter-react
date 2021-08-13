@@ -17,12 +17,13 @@ const Activate = () => {
   }
 
   return (
-    <div>
-      <h2>Activate Account</h2>
+    <div className="mainForm">
+      <h2 className="heading">Activate Account</h2>
 
-      <button onClick={verifyMe} className="btn btn-danger">
-        Submit
+      <button onClick={verifyMe} className="link-tweet">
+        Activate
       </button>
+      <p className="help-text">By clicking this, <br /> your account will be verified and activated !</p>
     </div>
   );
 };

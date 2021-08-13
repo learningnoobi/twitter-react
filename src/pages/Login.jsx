@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import useForm from "../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuthenticated, login } from "../redux/asyncActions/UserAsync";
 import { useHistory } from "react-router-dom";
+import { RiTwitterFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
+
 const Login = () => {
   const user = useSelector((state) => state.userReducer);
   const [values, handleChange] = useForm();
@@ -11,8 +15,8 @@ const Login = () => {
   const history = useHistory();
   useEffect(() => {
     dispatch(checkAuthenticated());
-    console.log(user)
-    user.isAuthenticated && history.push('/')
+    console.log(user);
+    user.isAuthenticated && history.push("/");
   }, [user.isAuthenticated]);
   const loginMe = (e) => {
     e.preventDefault();
@@ -20,8 +24,11 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Register Page I guess</h2>
+    <div className="mainForm">
+      <i style={{ fontSize: 40 }}>
+        <RiTwitterFill color="#1da1f2" />
+      </i>
+      <h1 className="heading">Log in to Twitter</h1>
       <form onSubmit={loginMe}>
         <input
           value={email || ""}
@@ -29,13 +36,16 @@ const Login = () => {
           type="email"
           name="email"
           placeholder="email"
+          className="inputTag"
         />
         <br />
+
         <input
           value={password || ""}
           onChange={handleChange}
           type="password"
           name="password"
+          className="inputTag"
           placeholder="password"
         />
         <br />
@@ -43,12 +53,22 @@ const Login = () => {
         <button
           type="submit"
           disabled={!email || !password}
-          className="btn btn-danger"
+          className="link-tweet login-btn"
         >
-          Submit
+          {user.isLoading ? (
+            <ClipLoader color="white" loading={true} size={26} />
+          ) : (
+            "Login"
+          )}
         </button>
       </form>
-      {user.error && 'error'}
+      <p className="help-text">
+        Don't have account ?
+        <Link to="/register">
+          <span className="link-go mx-3">Register</span>
+        </Link>
+      </p>
+      {user.error && "error"}
     </div>
   );
 };
