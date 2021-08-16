@@ -23,7 +23,8 @@ const Home = () => {
     dispatch(load_tweet());
     dispatch(checkAuthenticated());
   }, []);
-// !isAuthenticated && history.push("/login");
+ 
+!isAuthenticated && history.push("/login");
   return (
     <div>
       <Sidebar />

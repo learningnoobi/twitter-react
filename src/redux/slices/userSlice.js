@@ -14,7 +14,6 @@ export const userRegister = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.isLoading = action.payload;
-      state.error = null;
     },
     loginSuccess: (state, { payload }) => {
       state.isAuthenticated = true;
@@ -24,24 +23,37 @@ export const userRegister = createSlice({
     userSuccess: (state, action) => {
       state.user = action.payload;
     },
+    userRegisterSuccess: (state, action) => {
+      state.message =
+        "Successfully registered ! Please activate account from mail.";
+    },
     authFail: (state) => {
       state.isAuthenticated = false;
     },
-    userFail: (state,{payload}) => {
+    userFail: (state, { payload }) => {
       state.user = null;
-      state.error = payload
+      state.error = payload;
+      state.isAuthenticated = false;
     },
     authSuccess: (state) => {
       state.isAuthenticated = true;
     },
-    logMeOut:state => {
-      localStorage.removeItem('access');
-      localStorage.removeItem('refresh');
-    }
+    logMeOut: (state) => {
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+    },
   },
 });
 
-export const { setLoading, loginSuccess, userSuccess, authFail, userFail,authSuccess ,logMeOut} =
-  userRegister.actions;
+export const {
+  setLoading,
+  loginSuccess,
+  userSuccess,
+  authFail,
+  userFail,
+  authSuccess,
+  userRegisterSuccess,
+  logMeOut,
+} = userRegister.actions;
 
 export default userRegister.reducer;

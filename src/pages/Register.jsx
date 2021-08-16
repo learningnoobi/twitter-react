@@ -1,32 +1,49 @@
 import React, { useEffect } from "react";
 import useForm from "../hooks/useForm";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../redux/asyncActions/UserAsync";
-import {useHistory} from 'react-router-dom'
-import {RiTwitterFill} from 'react-icons/ri'
+import { useHistory } from "react-router-dom";
+import { RiTwitterFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { BiError } from "react-icons/bi";
+import { WarningText } from "../GooberStyled/Common";
+import AlertMessage from "../components/alertMessage";
+import { removeMesage } from "../redux/slices/tweetSlice";
 
 const Register = () => {
-  const [values, handleChange, disabled] = useForm()
-  const { username,email, password, re_password } = values;
+  const [values, handleChange, disabled] = useForm();
+  const { username, email, password, re_password } = values;
   const dispatch = useDispatch();
-  const history = useHistory()
-  const user = useSelector(state => state.userReducer)
-  const isAuthenticated = useSelector(state => state.userReducer.isAuthenticated)
+  const history = useHistory();
+  const user = useSelector((state) => state.userReducer);
+  const isAuthenticated = useSelector(
+    (state) => state.userReducer.isAuthenticated
+  );
+
   const registerMe = (e) => {
     e.preventDefault();
     dispatch(register(username, email, password, re_password));
   };
   useEffect(() => {
-    if(isAuthenticated){
-      history.push('/')
+    if (isAuthenticated) {
+      history.push("/");
     }
-  },[])
+  }, []);
   return (
-    <div class="mainForm">
-       <i style={{fontSize:40}}><RiTwitterFill color='#1da1f2'/></i>
-      <h2 class="heading">Register In Twitter</h2>
+    <div className="mainForm">
+      <div style={{maxWidth:'400px'}}>
+      <i style={{ fontSize: 40 }}>
+        <RiTwitterFill color="#1da1f2" />
+      </i>
+      <h2 className="heading">Register In Twitter</h2>
+      {user.message && (
+        <AlertMessage
+          removeMesage={removeMesage}
+          dispatch={dispatch}
+          message={user.message}
+        />
+      )}
       <form onSubmit={registerMe} autoComplete="false">
         <input
           value={username || ""}
@@ -36,7 +53,7 @@ const Register = () => {
           placeholder="username"
           className="inputTag"
         />
- 
+
         <br />
         <input
           value={email || ""}
@@ -64,18 +81,27 @@ const Register = () => {
           name="re_password"
           placeholder="re password"
         />
-        <br />
-        <button type="submit" disabled={disabled} className="link-tweet login-btn">
-        {user.isLoading ? (
+
+        {user.error && <WarningText>{user.error}</WarningText>}
+        <button
+          type="submit"
+          disabled={disabled}
+          className="link-tweet login-btn"
+        >
+          {user.isLoading ? (
             <ClipLoader color="white" loading={true} size={26} />
           ) : (
-            "Login"
+            "Register"
           )}
         </button>
       </form>
-      <p className="help-text">Already have account ? 
-      <Link to="/login"><span className="link-go mx-3">Login</span></Link>
+      <p className="help-text">
+        Already have account ?
+        <Link to="/login">
+          <span className="link-go mx-3">Login</span>
+        </Link>
       </p>
+      </div>
     </div>
   );
 };

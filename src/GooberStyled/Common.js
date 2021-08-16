@@ -13,3 +13,13 @@ export const Input = styled("div")(() => [
 
     },
   ]);
+
+export const WarningText = styled("p")(()=>[
+  {
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    color:"#e0245e",
+    marginTop:10
+  }
+])

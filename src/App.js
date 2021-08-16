@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Activate from "./pages/Activate";
 import Profile from "./pages/Profile";
 import TweetDetail from "./pages/TweetDetail";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/:username" exact component={Profile} />
         <Route path="/:username/:id" component={TweetDetail} />
+        <Route path="" component={NotFound} />
       </Switch>
     </BrowserRouter>
   );

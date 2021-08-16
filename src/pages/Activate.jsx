@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { Redirect, useParams } from "react-router-dom";
+import {useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { verify } from "../redux/asyncActions/UserAsync";
 
 const Activate = () => {
-  const [verified, setVerified] = useState(false);
   const dispatch = useDispatch();
   const { uid, token } = useParams();
+  const history = useHistory();
   console.log(uid, token);
   const verifyMe = () => {
     dispatch(verify(uid, token));
-    setVerified(true);
+    history.push('/login')
   };
-  if(verified){
-    <Redirect to="/login"/>
-  }
+
 
   return (
     <div className="mainForm">

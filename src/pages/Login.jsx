@@ -6,7 +6,8 @@ import { useHistory } from "react-router-dom";
 import { RiTwitterFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import { BiError } from "react-icons/bi";
+import { WarningText } from "../GooberStyled/Common";
 const Login = () => {
   const user = useSelector((state) => state.userReducer);
   const [values, handleChange] = useForm();
@@ -15,12 +16,14 @@ const Login = () => {
   const history = useHistory();
   useEffect(() => {
     dispatch(checkAuthenticated());
-    console.log(user);
+    console.log(user.error);
+   
     user.isAuthenticated && history.push("/");
   }, [user.isAuthenticated]);
   const loginMe = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
+   
   };
 
   return (
@@ -49,7 +52,9 @@ const Login = () => {
           placeholder="password"
         />
         <br />
-
+        {user.error && <WarningText>
+          <BiError /> {user.error}
+        </WarningText>}
         <button
           type="submit"
           disabled={!email || !password}
@@ -68,7 +73,7 @@ const Login = () => {
           <span className="link-go mx-3">Register</span>
         </Link>
       </p>
-      {user.error && "error"}
+   
     </div>
   );
 };

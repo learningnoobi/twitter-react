@@ -1,5 +1,14 @@
-import {  setLoading, loginSuccess, userSuccess, authFail, userFail,authSuccess ,logMeOut} from "../slices/userSlice";
-import axios from 'axios'
+import {
+  setLoading,
+  loginSuccess,
+  userSuccess,
+  authFail,
+  userFail,
+  userRegisterSuccess,
+  authSuccess,
+  logMeOut,
+} from "../slices/userSlice";
+import axios from "axios";
 const url = "http://127.0.0.1:8000/auth/users/";
 
 export const load_user = () => async (dispatch) => {
@@ -38,12 +47,17 @@ export const register =
         re_password,
       })
       .then((res) => {
-        console.log(res);
+        dispatch(userRegisterSuccess())
         dispatch(load_user());
         dispatch(setLoading(false));
       })
       .catch((err) => {
         console.log(err.response.data);
+        const errcode = err.response.data;
+        errcode.email && dispatch(userFail(errcode.email[0]));
+        errcode.password && dispatch(userFail(errcode.password[0]));
+        errcode.username && dispatch(userFail(errcode.username[0]));
+        errcode.non_field_errors && dispatch(userFail(errcode.non_field_errors));
         dispatch(setLoading(false));
       });
   };
@@ -75,8 +89,7 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(loginSuccess(res.data));
     dispatch(setLoading(false));
   } catch (err) {
-    console.log(err);
-    dispatch(userFail('something is wrong'))
+    dispatch(userFail("User or password is wrong !"));
     dispatch(setLoading(false));
   }
 };
@@ -112,7 +125,6 @@ export const checkAuthenticated = () => async (dispatch) => {
   }
 };
 
-export const logoutAct = () => dispatch => {
-  dispatch(logMeOut())
+export const logoutAct = () => (dispatch) => {
+  dispatch(logMeOut());
 };
-
