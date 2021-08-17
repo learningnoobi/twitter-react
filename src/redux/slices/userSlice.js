@@ -7,6 +7,7 @@ const initialState = {
   isAuthenticated: false,
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
+  message:null
 };
 export const userRegister = createSlice({
   name: "userRegister",
@@ -22,6 +23,9 @@ export const userRegister = createSlice({
     },
     userSuccess: (state, action) => {
       state.user = action.payload;
+    },
+    removeMesage:state =>{
+      state.message=null
     },
     userRegisterSuccess: (state, action) => {
       state.message =
@@ -51,6 +55,7 @@ export const {
   userSuccess,
   authFail,
   userFail,
+  removeMesage,
   authSuccess,
   userRegisterSuccess,
   logMeOut,

@@ -59,7 +59,7 @@ const AddTweet = () => {
               <img
                 alt="img"
                 src={user && user.avatar||"https://qph.fs.quoracdn.net/main-qimg-92e5c1d46505b34638aafd281449dabc"}
-                className="rounded-circle profile-image"
+                className="rounded-circle author-image"
                 width="60px"
                 height="60px"
               />

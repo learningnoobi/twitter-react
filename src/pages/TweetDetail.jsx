@@ -112,7 +112,7 @@ const TweetDetail = () => {
                   <img
                     alt="img"
                     src={tweet.author.avatar}
-                    className="rounded-circle profile-image"
+                    className="rounded-circle author-image"
                     width="60px"
                     height="60px"
                   />

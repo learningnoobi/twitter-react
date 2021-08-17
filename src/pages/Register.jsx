@@ -9,7 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { BiError } from "react-icons/bi";
 import { WarningText } from "../GooberStyled/Common";
 import AlertMessage from "../components/alertMessage";
-import { removeMesage } from "../redux/slices/tweetSlice";
+import { removeMesage } from "../redux/slices/userSlice";
 
 const Register = () => {
   const [values, handleChange, disabled] = useForm();

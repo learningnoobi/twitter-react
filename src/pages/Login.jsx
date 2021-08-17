@@ -16,8 +16,6 @@ const Login = () => {
   const history = useHistory();
   useEffect(() => {
     dispatch(checkAuthenticated());
-    console.log(user.error);
-   
     user.isAuthenticated && history.push("/");
   }, [user.isAuthenticated]);
   const loginMe = (e) => {

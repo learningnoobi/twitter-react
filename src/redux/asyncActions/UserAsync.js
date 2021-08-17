@@ -9,7 +9,10 @@ import {
   logMeOut,
 } from "../slices/userSlice";
 import axios from "axios";
+import { axiosInstance } from "../../index";
 const url = "http://127.0.0.1:8000/auth/users/";
+
+
 
 export const load_user = () => async (dispatch) => {
   if (localStorage.getItem("access")) {
@@ -36,8 +39,7 @@ export const load_user = () => async (dispatch) => {
   }
 };
 
-export const register =
-  (username, email, password, re_password) => (dispatch) => {
+export const register =(username, email, password, re_password) => (dispatch) => {
     dispatch(setLoading(true));
     axios
       .post(url, {
@@ -76,7 +78,18 @@ export const verify = (uid, token) => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
-
+export const userProfile = (username) => async (dispatch) =>{
+  dispatch(setLoading(true))
+  try {
+    const res = await axiosInstance.get(`http://127.0.0.1:8000/user/${username}/`);
+    dispatch(setLoading(false));
+    dispatch(userSuccess(res.data));
+  } catch (err) {
+    dispatch(userFail());
+    dispatch(setLoading(false));
+    console.log(err);
+  }
+}
 export const login = (email, password) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
@@ -128,3 +141,4 @@ export const checkAuthenticated = () => async (dispatch) => {
 export const logoutAct = () => (dispatch) => {
   dispatch(logMeOut());
 };
+
