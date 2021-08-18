@@ -291,9 +291,20 @@ body {
   outline: 0 !important;
   cursor: pointer;
 }
-
+.btn-outline{
+  background-color: var(--background);
+  border: 1px solid var(--red);
+  width: 40px;
+  height:40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  outline: 0 !important;
+}
 .link-tweet:hover {
-  background-color: #e0245e;
+  background-color: #b61146;
 }
 .link-tweet:disabled {
   background-color: #c2184e;
@@ -339,7 +350,7 @@ body {
 .side-name {
   color: rgb(157, 172, 192);
   display: flex;
-  /* align-items: center; */
+  align-items: center;
 }
 .second-trend {
   padding-top: 6px;

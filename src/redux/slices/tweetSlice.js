@@ -34,7 +34,6 @@ export const tweetReducer = createSlice({
     tweetDetail: (state, { payload }) => {
       state.singleTweet = payload;
     },
-
     deletedSuccess: (state, { payload }) => {
       state.tweets = state.tweets.filter((i) => i.id !== payload);
     },

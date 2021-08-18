@@ -1,4 +1,5 @@
 import { axiosInstance } from "../../index";
+import axios from 'axios'
 import {
   tweetSuccess,
   setLoading,
@@ -29,6 +30,19 @@ export const tweet_detail = (id) => async (dispatch) => {
     const res = await axiosInstance.get(`http://127.0.0.1:8000/tweets/${id}/`);
     dispatch(setLoading(false));
     dispatch(tweetDetail(res.data));
+  } catch (err) {
+    // dispatch(userFail());
+    console.log(err);
+  }
+};
+
+// tweets of specific users
+export const tweet_specific_user = (username) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const res = await axiosInstance.get(`http://127.0.0.1:8000/tweets/specific/${username}/`);
+    dispatch(setLoading(false));
+    dispatch(tweetSuccess(res.data));
   } catch (err) {
     // dispatch(userFail());
     console.log(err);
@@ -82,6 +96,21 @@ export const likeTweet = (id) => async (dispatch) => {
       pk: id,
     });
     dispatch(likeUnlikeTweet({ ...res.data, id: parseInt(id) }));
+  } catch (err) {
+    console.log(err);
+    dispatch(setMessage("Something went Wrong !"));
+  }
+};
+export const bookmarkTweet = (id) => async (dispatch) => {
+  try {
+    const res = await axiosInstance.post(`tweets/love/bookmark/`, {
+      pk: id,
+    });
+
+    {res.data.bookmarked?
+      dispatch(setMessage("Saved to Bookmark !"))
+      : dispatch(setMessage("Removed from Bookmark !"))
+    }
   } catch (err) {
     console.log(err);
     dispatch(setMessage("Something went Wrong !"));

@@ -6,14 +6,22 @@ import {
   AiOutlineRetweet,
 } from "react-icons/ai";
 import { FiShare } from "react-icons/fi";
-
+import {useDispatch} from 'react-redux'
 import Heart from "../GooberStyled/TwitterHeart";
+import { bookmarkTweet } from "../redux/asyncActions/TweetAsync";
 
-export const TweetOperation = ({ liked, id, likeTweetD, like_count }) => {
+export const TweetOperation = ({ tweet,liked, id, likeTweetD, like_count }) => {
   const [isclicked, setClick] = useState(null);
+  const dispatch = useDispatch()
+  const [bookmarked, setBookmarked] = useState(tweet?.i_bookmarked)
   useEffect(() => {
     setClick(liked);
-  }, [liked]);
+    setBookmarked(bookmarked)
+  }, [liked,bookmarked]);
+  const onBookmark = (id) => {
+    dispatch(bookmarkTweet(id))
+    setBookmarked(!bookmarked)
+  }
   return (
     <div className="tweet-bottom-active">
       <i className="tweetIcons">
@@ -32,9 +40,17 @@ export const TweetOperation = ({ liked, id, likeTweetD, like_count }) => {
         />
         <span className="count">{like_count}</span>
       </i>
-      <i className="tweetIcons">
-        <FiShare />
-      </i>
+    
+      {bookmarked ?
+      <i className="tweetIcons pointer">
+        <FiShare color="lightgreen"
+         onClick={()=>onBookmark(id)}/>
+      </i>:
+      <i className="tweetIcons pointer">
+       <FiShare onClick={()=>onBookmark(id)} 
+       onClick={()=>onBookmark(id)}/>
+    </i>
+      }
     </div>
   );
 };

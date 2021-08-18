@@ -9,7 +9,7 @@ import useUserInfo from "../../hooks/useUserInfo";
 const TweetCard = () => {
   const tweetsInfo = useSelector((state) => state.tweetReducer);
   const dispatch = useDispatch();
-  
+  const {user} =useUserInfo()
   useEffect(() => {
     dispatch(load_tweet());
   }, []);
@@ -20,7 +20,7 @@ const TweetCard = () => {
     </span>
   ) : (
     tweetsInfo.tweets.map((tweet) => (
-      <TweetPostCard dispatch={dispatch} tweet={tweet} key={tweet.id}/>
+      <TweetPostCard user={user} dispatch={dispatch} tweet={tweet} key={tweet.id} />
     ))
   );
 };

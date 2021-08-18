@@ -7,6 +7,7 @@ import {
   userRegisterSuccess,
   authSuccess,
   logMeOut,
+  profileUserSuccess
 } from "../slices/userSlice";
 import axios from "axios";
 import { axiosInstance } from "../../index";
@@ -83,13 +84,26 @@ export const userProfile = (username) => async (dispatch) =>{
   try {
     const res = await axiosInstance.get(`http://127.0.0.1:8000/user/${username}/`);
     dispatch(setLoading(false));
-    dispatch(userSuccess(res.data));
+    dispatch(profileUserSuccess(res.data));
   } catch (err) {
     dispatch(userFail());
     dispatch(setLoading(false));
     console.log(err);
   }
 }
+export const userEdit = (username,data) => async (dispatch) =>{
+  dispatch(setLoading(true))
+  try {
+    const res = await axiosInstance.put(`http://127.0.0.1:8000/user/${username}/`,data);
+    dispatch(setLoading(false));
+    dispatch(profileUserSuccess(res.data));
+  } catch (err) {
+    dispatch(userFail());
+    dispatch(setLoading(false));
+    console.log(err);
+  }
+}
+
 export const login = (email, password) => async (dispatch) => {
   dispatch(setLoading(true));
   try {

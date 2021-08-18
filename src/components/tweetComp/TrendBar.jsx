@@ -26,7 +26,7 @@ const TrendBar = () => {
            <span className="trendlist">
                   <span>
                       <Link to="/">
-                      <img alt="img" src="dabi.jpg" className="rounded-circle profile-image" width="50px" height="50px"/></Link></span>
+                      <img alt="img" src="http://127.0.0.1:8000/media/avatars/dabiprofile_wTdGFvG.jpg" className="rounded-circle author-image"/></Link></span>
                       <span className="left-20">
                         <Link to="/">
                               <p className="user-list">Rayon | <span className="side-name">@Raee</span></p>

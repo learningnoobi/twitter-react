@@ -21,6 +21,7 @@ import CommentCard from "../components/CommentCard";
 import { addComment, tweet_comments } from "../redux/asyncActions/CommentAsync";
 import ClipLoader from "react-spinners/ClipLoader";
 import useUserInfo from "../hooks/useUserInfo";
+import DropDown from "../components/tweetComp/DropDown";
 
 const TweetDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -79,6 +80,7 @@ const TweetDetail = () => {
                   className="dropdownIcon"
                 />
                 {isOpen && (
+                  // <DropDown user={user} tweet={tweet} tweetId={tweet.id}/>
                   <div className="dropdownMenu">
                     <p>
                       <BiUserPlus /> <span>Unfollow Rayos</span>
@@ -134,6 +136,7 @@ const TweetDetail = () => {
               liked={tweet.iliked}
               likeTweetD={likeTweetD}
               like_count={tweet.like_count}
+              tweet={tweet}
             />
           </div>
           {/* comment lists */}

@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import { useHistory } from "react-router-dom";
-import { checkAuthenticated } from "../redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
 import HomeTweets from "../components/HomeTweets";
-import { load_tweet } from "../redux/asyncActions/TweetAsync";
 import { removeMesage } from "../redux/slices/tweetSlice";
 import AlertMessage from "../components/alertMessage";
+import useUserInfo from "../hooks/useUserInfo";
 
 const Home = () => {
-  const isAuthenticated = useSelector(
-    (state) => state.userReducer.isAuthenticated
-  );
+  const {isAuthenticated} = useUserInfo();
   const message = useSelector((state) => state.tweetReducer.message);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -20,11 +17,10 @@ const Home = () => {
       dispatch(removeMesage());
     }, 3000);
   useEffect(() => {
-    dispatch(load_tweet());
-    dispatch(checkAuthenticated());
-  }, []);
+    // !isAuthenticated && history.push("/login");
+  }, [isAuthenticated]);
  
-!isAuthenticated && history.push("/login");
+
   return (
     <div>
       <Sidebar />

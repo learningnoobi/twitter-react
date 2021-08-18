@@ -5,7 +5,7 @@ const BottomTab = () => {
         <div className="bottom-menu">
         <ul>
           <li>
-            <i className="fa fa-home" style={{ color: "black" }}></i>
+            <i className="fa fa-home" ></i>
           </li>
           <li>
             <i className="fa fa-search"></i>

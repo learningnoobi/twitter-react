@@ -7,7 +7,8 @@ const initialState = {
   isAuthenticated: false,
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
-  message:null
+  message:null,
+  profileUser:null,
 };
 export const userRegister = createSlice({
   name: "userRegister",
@@ -23,6 +24,9 @@ export const userRegister = createSlice({
     },
     userSuccess: (state, action) => {
       state.user = action.payload;
+    },
+    profileUserSuccess: (state, action) => {
+      state.profileUser = action.payload;
     },
     removeMesage:state =>{
       state.message=null
@@ -59,6 +63,7 @@ export const {
   authSuccess,
   userRegisterSuccess,
   logMeOut,
+  profileUserSuccess
 } = userRegister.actions;
 
 export default userRegister.reducer;

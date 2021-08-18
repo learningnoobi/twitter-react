@@ -125,3 +125,39 @@
 .bold-text{
     font-weight: bolder;
 }
+.follow-or-edit{
+    margin-top: 10px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 10px;
+}
+.icon{
+    color: aliceblue;
+    font-weight: 900;
+    font-size: 20px;
+}
+.icon:hover{
+    color: rgb(235, 57, 57);
+}
+.pointer{
+    cursor: pointer;
+}
+@media only screen and (max-width: 1150px) {
+    .profile-image{
+        height: 100px;
+        width: 100px;
+    }
+    .cover-image{
+        min-height:160px ;
+    }
+}
+@media only screen and (max-width: 450px) {
+    .profile-image{
+        height: 80px;
+        width: 80px;
+    }
+    .cover-image{
+        max-height:160px ;
+    }
+}
