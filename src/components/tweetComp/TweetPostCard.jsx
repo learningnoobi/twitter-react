@@ -39,7 +39,7 @@ const TweetPostCard = ({ tweet, dispatch ,user}) => {
             />
           </Link>
         </span>
-        <Link to={`${tweet.author.username}/${tweet.id}`}>
+        <Link to={`${tweet.author.username}/tweet/${tweet.id}`}>
           <div className="tweet-content">
             <span className="d-flex">
               {tweet.author.username}

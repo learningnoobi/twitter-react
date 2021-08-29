@@ -26,7 +26,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/:username" exact component={Profile} />
-        <Route path="/:username/:id" component={TweetDetail} />
+        <Route path="/:username/tweet/:id" component={TweetDetail} />
         <Route path="" component={NotFound} />
       </Switch>
     </BrowserRouter>

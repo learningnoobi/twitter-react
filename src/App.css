@@ -579,6 +579,7 @@ body {
     background-color: transparent !important;
     color: var(--red);
   }
+
   .bottom-menu {
     display: block;
     position: fixed;
@@ -609,6 +610,12 @@ body {
   .image {
     max-height: 230px;
     width: 300px;
+  }
+  .heart-parent{
+    position: relative;
+    transform: scale(0.66);
+    margin-top:-11.2%;
+    margin-bottom: -35px;
   }
 }
 @media only screen and (max-width: 400px) {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Link} from 'react-router-dom'
 import { TweetOperation } from "./SimpleComponents";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -64,11 +65,13 @@ const CommentCard = ({ tweetId, user, comment}) => {
         )}
       </span>
       <div key={comment.id} className="comment-innerDiv">
+        <Link to={`/${comment.author.username}`}>
         <img
           src={`http://127.0.0.1:8000${comment.author.avatar}`}
           alt="comment-author"
           className="authorImage"
         />
+        </Link>
         <div>
           <div className="comment-info">
             {comment.author.username}
