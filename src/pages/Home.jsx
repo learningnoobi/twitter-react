@@ -6,9 +6,10 @@ import HomeTweets from "../components/HomeTweets";
 import { removeMesage } from "../redux/slices/tweetSlice";
 import AlertMessage from "../components/alertMessage";
 import useUserInfo from "../hooks/useUserInfo";
+import { load_user } from "../redux/asyncActions/UserAsync";
 
 const Home = () => {
-  const {isAuthenticated} = useUserInfo();
+  // const {isAuthenticated} = useUserInfo();
   const message = useSelector((state) => state.tweetReducer.message);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -16,14 +17,13 @@ const Home = () => {
     setTimeout(() => {
       dispatch(removeMesage());
     }, 3000);
-  useEffect(() => {
-    // !isAuthenticated && history.push("/login");
-  }, [isAuthenticated]);
+
+
  
 
   return (
     <div>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <HomeTweets />
       {message && (
         <AlertMessage

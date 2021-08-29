@@ -1,3 +1,5 @@
+import React,{useEffect} from 'react'
+
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from "./pages/Login";
@@ -7,8 +9,15 @@ import Activate from "./pages/Activate";
 import Profile from "./pages/Profile";
 import TweetDetail from "./pages/TweetDetail";
 import NotFound from "./components/NotFound";
-
+import { load_user } from './redux/asyncActions/UserAsync';
+import { useDispatch } from 'react-redux';
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(load_user())
+    console.log('loaded user')
+    // !isAuthenticated && history.push("/login");
+  }, []);
   return (
     <BrowserRouter>
       <Switch>

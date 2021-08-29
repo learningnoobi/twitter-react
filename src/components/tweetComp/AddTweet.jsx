@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
@@ -17,7 +17,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import useUserInfo from "../../hooks/useUserInfo";
 
 const AddTweet = () => {
-  const isAuthenticated = useSelector(state => state.userReducer.isAuthenticated);
+  const userIn = useSelector(state => state.userReducer);
   const uploading = useSelector((state) => state.tweetReducer.uploading);
   const [tweetInput, setTweetInput] = useState("");
   const [PrevImage, setPrevImage] = useState(null);
@@ -27,11 +27,12 @@ const AddTweet = () => {
 
   const dispatch = useDispatch();
   const inputOpenFileRef = useRef(null);
-  const { user } = useUserInfo();
+  const { user ,isAuthenticated} = userIn;
+  console.log('add twet ', isAuthenticated)
   const addEmoji = (emoji) => {
     setTweetInput((prev) => prev + emoji.native);
   };
- 
+
   const showOpenFileDlg = () => {
     inputOpenFileRef.current.click();
   };

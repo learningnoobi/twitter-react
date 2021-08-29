@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-  load_user,
   userEdit,
   userProfile,
 } from "../redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
-import Sidebar from "../components/Sidebar";
+
 import Second from "../components/Second";
 import Moment from "moment";
 import useUserInfo from "../hooks/useUserInfo";
@@ -35,8 +34,8 @@ const Profile = () => {
   const message = tweetsInfo.message;
   const userprofile = userIn.profileUser;
 
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
+  // const onOpenModal = () => setOpen(true);
+  // const onCloseModal = () => setOpen(false);
   message &&
     setTimeout(() => {
       dispatch(removeMesage());
@@ -49,7 +48,7 @@ const Profile = () => {
 
   return (
     <div>
-      <Sidebar />
+   
 
       <Second>
         {message && (

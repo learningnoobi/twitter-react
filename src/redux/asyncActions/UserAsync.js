@@ -111,8 +111,7 @@ export const login = (email, password) => async (dispatch) => {
       email,
       password,
     });
-    localStorage.setItem("access", res.data.access);
-    localStorage.setItem("refresh", res.data.refresh);
+    
     dispatch(loginSuccess(res.data));
     dispatch(setLoading(false));
   } catch (err) {
@@ -142,17 +141,16 @@ export const checkAuthenticated = () => async (dispatch) => {
       if (res.data.code !== "token_not_valid") {
         dispatch(authSuccess());
       } else {
-        dispatch(authFail());
+        dispatch(userFail());
       }
     } catch (err) {
-      dispatch(authFail());
+      dispatch(userFail());
     }
   } else {
-    dispatch(authFail());
+    dispatch(userFail());
   }
 };
 
 export const logoutAct = () => (dispatch) => {
   dispatch(logMeOut());
 };
-

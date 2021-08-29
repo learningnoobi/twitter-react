@@ -32,8 +32,12 @@ const TweetDetail = () => {
   const [editTitle, setEditTitle] = useState("");
   const tweet = useSelector((state) => state.tweetReducer.singleTweet);
   const [commentInput, setCommentInput] = useState("");
+  const userIn = useSelector(
+    (state) => state.userReducer
+  );
   const { username, id } = useParams();
-  const { user } = useUserInfo();
+  const { user } =userIn;
+
   const message = useSelector((state) => state.tweetReducer.message);
   const comments = useSelector((state) => state.commentReducer);
   useEffect(() => {
@@ -59,7 +63,7 @@ const TweetDetail = () => {
   };
   return (
     <div>
-      <Sidebar />
+      {/* <Sidebar /> */}
       {/* alert message during tweet operations */}
       {message && (
         <AlertMessage
@@ -137,10 +141,11 @@ const TweetDetail = () => {
               likeTweetD={likeTweetD}
               like_count={tweet.like_count}
               tweet={tweet}
+              bookmark = {tweet.i_bookmarked}
             />
           </div>
           {/* comment lists */}
-          <div className="comment-list">
+          <section className="comment-list">
             <div className="commentDiv">
               <img
                 src={
@@ -182,7 +187,7 @@ const TweetDetail = () => {
                 />
               ))
             )}
-          </div>
+          </section>
         </Second>
       )}
     </div>

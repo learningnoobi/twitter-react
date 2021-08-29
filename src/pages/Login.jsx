@@ -10,14 +10,15 @@ import { BiError } from "react-icons/bi";
 import { WarningText } from "../GooberStyled/Common";
 const Login = () => {
   const user = useSelector((state) => state.userReducer);
+  const {isAuthenticated} = user;
   const [values, handleChange] = useForm();
   const { email, password } = values;
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
-    dispatch(checkAuthenticated());
-    user.isAuthenticated && history.push("/");
-  }, [user.isAuthenticated]);
+    // dispatch(checkAuthenticated());
+    isAuthenticated && history.push("/");
+  }, [history,user.isAuthenticated]);
   const loginMe = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
@@ -26,9 +27,11 @@ const Login = () => {
 
   return (
     <div className="mainForm">
-      <i style={{ fontSize: 40 }}>
+     <Link to="/">
+     <i style={{ fontSize: 40 }}>
         <RiTwitterFill color="#1da1f2" />
       </i>
+     </Link>
       <h1 className="heading">Log in to Twitter</h1>
       <form onSubmit={loginMe}>
         <input

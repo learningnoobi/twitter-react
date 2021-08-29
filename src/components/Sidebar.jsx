@@ -14,9 +14,9 @@ import { checkAuthenticated, logoutAct } from "../redux/asyncActions/UserAsync";
 import useUserInfo from "../hooks/useUserInfo";
 
 const Sidebar = () => {
-  const isAuthenticated = useSelector(
-    (state) => state.userReducer.isAuthenticated
-  );
+  const userIn = useSelector(
+    (state) => state.userReducer
+);
   const sidebarClass = useSelector((state) => state.changeClass.myclass);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -26,7 +26,8 @@ const Sidebar = () => {
       dispatch(checkAuthenticated());
     }
   };
-  const {user} = useUserInfo()
+  const {user,isAuthenticated} = userIn;
+  // const user={yo:'nmae'}
   return (
     <div className={`nav ${sidebarClass}`} id="nav">
       <ul className="navbar-nav">

@@ -1,5 +1,5 @@
 import { axiosInstance } from "../../index";
-import axios from 'axios'
+import axios from "axios";
 import {
   tweetSuccess,
   setLoading,
@@ -12,26 +12,42 @@ import {
   setMessage,
 } from "../slices/tweetSlice";
 
+
+// check is localstorage for access is present or not
+
+
+
+
+
+
 export const load_tweet = () => async (dispatch) => {
   dispatch(setLoading(true));
-
+ 
   try {
-    const res = await axiosInstance.get("http://127.0.0.1:8000/tweets/");
+    let res;
+    if (localStorage.getItem("access")) {
+     res = await axiosInstance.get(`tweets/`);
+    }
+    else{
+       res = await axios.get(`http://127.0.0.1:8000/tweets/`);
+    }
+   
+    console.table('res is ',res.data)
     dispatch(setLoading(false));
     dispatch(tweetSuccess(res.data));
   } catch (err) {
-    // dispatch(userFail());
-    console.log(err);
+    dispatch(setLoading(false));
   }
 };
+
+
 export const tweet_detail = (id) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.get(`http://127.0.0.1:8000/tweets/${id}/`);
+    const res = await axiosInstance.get(`tweets/${id}/`);
     dispatch(setLoading(false));
     dispatch(tweetDetail(res.data));
   } catch (err) {
-    // dispatch(userFail());
     console.log(err);
   }
 };
@@ -40,7 +56,9 @@ export const tweet_detail = (id) => async (dispatch) => {
 export const tweet_specific_user = (username) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.get(`http://127.0.0.1:8000/tweets/specific/${username}/`);
+    const res = await axiosInstance.get(
+      `tweets/specific/${username}/`
+    );
     dispatch(setLoading(false));
     dispatch(tweetSuccess(res.data));
   } catch (err) {
@@ -55,22 +73,22 @@ export const addTweet = (uploadData) => async (dispatch) => {
 
     dispatch(setUploading(false));
     dispatch(tweetAdded(res.data));
-    dispatch(setMessage("Tweet Added !"));
+    dispatch(setMessage(`Tweet Added !`));
   } catch (err) {
     dispatch(tweetFail());
     console.log(err);
-    dispatch(setMessage("Something went Wrong !"));
+    dispatch(setMessage(`Something went Wrong !`));
   }
 };
 export const deleteTweet = (pk) => async (dispatch) => {
   try {
     await axiosInstance.delete(`tweets/${pk}/`);
     dispatch(deletedSuccess(pk));
-    dispatch(setMessage("Tweet Deleted !"));
+    dispatch(setMessage(`Tweet Deleted !`));
   } catch (err) {
     dispatch(tweetFail());
     console.log(err);
-    dispatch(setMessage("Something went Wrong !"));
+    dispatch(setMessage(`Something went Wrong !`));
   }
 };
 export const editTweet = (id, title, isChecked) => async (dispatch) => {
@@ -83,11 +101,11 @@ export const editTweet = (id, title, isChecked) => async (dispatch) => {
     });
     dispatch(setLoading(false));
     dispatch(tweetDetail(res.data));
-    dispatch(setMessage("Tweet Updated !"));
+    dispatch(setMessage(`Tweet Updated !`));
   } catch (err) {
     dispatch(tweetFail());
     console.log(err);
-    dispatch(setMessage("Something went Wrong !"));
+    dispatch(setMessage(`Something went Wrong !`));
   }
 };
 export const likeTweet = (id) => async (dispatch) => {
@@ -98,7 +116,7 @@ export const likeTweet = (id) => async (dispatch) => {
     dispatch(likeUnlikeTweet({ ...res.data, id: parseInt(id) }));
   } catch (err) {
     console.log(err);
-    dispatch(setMessage("Something went Wrong !"));
+    dispatch(setMessage(`Something went Wrong !`));
   }
 };
 export const bookmarkTweet = (id) => async (dispatch) => {
@@ -107,12 +125,13 @@ export const bookmarkTweet = (id) => async (dispatch) => {
       pk: id,
     });
 
-    {res.data.bookmarked?
-      dispatch(setMessage("Saved to Bookmark !"))
-      : dispatch(setMessage("Removed from Bookmark !"))
+    {
+      res.data.bookmarked
+        ? dispatch(setMessage(`Saved to Bookmark !`))
+        : dispatch(setMessage(`Removed from Bookmark !`));
     }
   } catch (err) {
     console.log(err);
-    dispatch(setMessage("Something went Wrong !"));
+    dispatch(setMessage(`Something went Wrong !`));
   }
 };

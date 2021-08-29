@@ -10,14 +10,14 @@ import {useDispatch} from 'react-redux'
 import Heart from "../GooberStyled/TwitterHeart";
 import { bookmarkTweet } from "../redux/asyncActions/TweetAsync";
 
-export const TweetOperation = ({ tweet,liked, id, likeTweetD, like_count }) => {
+export const TweetOperation = ({ bookmark,liked, id, likeTweetD, like_count }) => {
   const [isclicked, setClick] = useState(null);
   const dispatch = useDispatch()
-  const [bookmarked, setBookmarked] = useState(tweet?.i_bookmarked)
+  const [bookmarked, setBookmarked] = useState(null)
   useEffect(() => {
     setClick(liked);
-    setBookmarked(bookmarked)
-  }, [liked,bookmarked]);
+    setBookmarked(bookmark)
+  }, [liked,bookmark]);
   const onBookmark = (id) => {
     dispatch(bookmarkTweet(id))
     setBookmarked(!bookmarked)
