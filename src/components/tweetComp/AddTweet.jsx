@@ -14,7 +14,7 @@ import { FaGlobeAfrica } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { addTweet } from "../../redux/asyncActions/TweetAsync";
 import ClipLoader from "react-spinners/ClipLoader";
-import useUserInfo from "../../hooks/useUserInfo";
+// import useUserInfo from "../../hooks/useUserInfo";
 
 const AddTweet = () => {
   const userIn = useSelector(state => state.userReducer);

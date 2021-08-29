@@ -22,6 +22,7 @@ import { addComment, tweet_comments } from "../redux/asyncActions/CommentAsync";
 import ClipLoader from "react-spinners/ClipLoader";
 import useUserInfo from "../hooks/useUserInfo";
 import DropDown from "../components/tweetComp/DropDown";
+import AddPicker from "../components/AddPicker";
 
 const TweetDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -161,6 +162,8 @@ const TweetDetail = () => {
                 className="commentInput"
                 placeholder="Tweet your Reply"
               ></textarea>
+
+              <AddPicker setInput={setCommentInput}/>
               <button
                 disabled={!commentInput}
                 onClick={commentAdd}
@@ -184,6 +187,7 @@ const TweetDetail = () => {
                   user={user}
                   key={comment.id}
                   comment={comment}
+                 
                 />
               ))
             )}

@@ -1,163 +1,187 @@
-.comment-list{
-    border-top: 1px solid rgb(62, 66, 94);
+.comment-list {
+  border-top: 1px solid rgb(62, 66, 94);
 }
-.comment-card{
-    border-bottom: 1px solid rgb(51, 55, 77);
-    position :relative;
+.comment-card {
+  border-bottom: 1px solid rgb(51, 55, 77);
+  position: relative;
 }
-.comment-innerDiv{
-      padding: 10px;
-    display: flex;
-  
+.comment-innerDiv {
+  padding: 10px;
+  display: flex;
 }
 .side-names {
-    color: gray;
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-  }
-.authorImage{
-    height: 50px;
-    width: 50px;
-    object-fit: cover;
-    border-radius: 50%;
+  color: gray;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
 }
-.comment-info{
-    margin-left: 20px;
-    display: flex;
-    align-items: center;
+.authorImage {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 50%;
 }
-.commentDiv{
-    display: flex;
-    border-bottom: 9px solid rgb(62, 66, 94);
-    align-items: center;
-    padding: 20px;
-    justify-content: space-around;
+.comment-info {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
 }
-.commentInput{
-    width: 100%;
-    outline: 0;
-    background-color: #15202b;
-    border: none;
-    padding: 10px 10px;
-    color: rgb(145, 148, 185);
+.commentDiv {
+  display: flex;
+  border-bottom: 9px solid rgb(62, 66, 94);
+  align-items: center;
+  padding: 20px;
+  justify-content: space-around;
 }
-.commentInput::placeholder{
-    color: rgb(145, 148, 185);
-    letter-spacing: 1px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+.commentInput {
+  width: 100%;
+  outline: 0;
+  background-color: #15202b;
+  border: none;
+  padding: 10px 10px;
+  color: rgb(145, 148, 185);
 }
-.mainForm{
-    width: 100%;
-    display: grid;
-    margin-top: 5%;
-    justify-content: center;
-    align-items: center;
-   
+.commentInput::placeholder {
+  color: rgb(145, 148, 185);
+  letter-spacing: 1px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
-.inputTag{
-    padding: 17px;
-    border: none;
-    outline: 0;
-    background-color: transparent;
-    color: rgb(177, 196, 235);
-    width: 100%;
-    margin-top: 10px;
-    border-radius: 3px;
-    border: 1px solid rgb(54, 72, 95);
-    margin-bottom: 4px;
+.mainForm {
+  width: 100%;
+  display: grid;
+  margin-top: 5%;
+  justify-content: center;
+  align-items: center;
 }
-.inputTag::placeholder{
-    color:rgb(87, 105, 141);
+.inputTag {
+  padding: 17px;
+  border: none;
+  outline: 0;
+  background-color: transparent;
+  color: rgb(177, 196, 235);
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 3px;
+  border: 1px solid rgb(54, 72, 95);
+  margin-bottom: 4px;
 }
-.heading{
-    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: bolder;
+.inputTag::placeholder {
+  color: rgb(87, 105, 141);
 }
-.login-btn{
-    width: 100%;
-    background-color: #1da1f2!important;
-    padding: 12px !important;
-    margin-top: 10px;
-
+.heading {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: bolder;
 }
-.help-text{
-    margin-top: 10px;
-    font-size: 15px;
-    color: rgb(186, 183, 228);
-    display: flex;
-    justify-content: center;
+.login-btn {
+  width: 100%;
+  background-color: #1da1f2 !important;
+  padding: 12px !important;
+  margin-top: 10px;
 }
-.link-go{
-    font-weight: bolder;
-    color: rgb(211, 52, 121);
+.help-text {
+  margin-top: 10px;
+  font-size: 15px;
+  color: rgb(186, 183, 228);
+  display: flex;
+  justify-content: center;
 }
-.link-go:hover{
-    color: rgb(218, 99, 150);
+.link-go {
+  font-weight: bolder;
+  color: rgb(211, 52, 121);
 }
-.author-image{
-    height: 60px;
-    width: 60px;
-    object-fit: cover;
+.link-go:hover {
+  color: rgb(218, 99, 150);
 }
-.profile-image{
-    height: 130px;
-    width: 130px;
-    cursor: pointer;
-    object-fit: cover;
-    position: absolute;
-    z-index: 1;
-    left: 10px;
-    bottom: -40px;
-    border: 4px solid #15202b;
+.author-image {
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
 }
-.cover-image{
-    width: 100%;
-    min-height: 200px;
-    object-fit: cover;
-    cursor: pointer;
+.profile-image {
+  height: 130px;
+  width: 130px;
+  cursor: pointer;
+  object-fit: cover;
+  position: absolute;
+  z-index: 1;
+  left: 10px;
+  bottom: -40px;
+  border: 4px solid #15202b;
 }
-.user-info{
-    margin-top: 5%;
-    padding: 20px;
-    border-bottom: 1px solid rgb(55, 66, 94);
+.cover-image {
+  width: 100%;
+  min-height: 200px;
+  object-fit: cover;
+  cursor: pointer;
 }
-.bold-text{
-    font-weight: bolder;
+.user-info {
+  margin-top: 5%;
+  padding: 20px;
+  border-bottom: 1px solid rgb(55, 66, 94);
 }
-.follow-or-edit{
-    margin-top: 10px;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    right: 10px;
+.bold-text {
+  font-weight: bolder;
 }
-.icon{
-    color: aliceblue;
-    font-weight: 900;
-    font-size: 20px;
+.follow-or-edit {
+  margin-top: 10px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  right: 10px;
 }
-.icon:hover{
-    color: rgb(235, 57, 57);
+.icon {
+  color: aliceblue;
+  font-weight: 900;
+  font-size: 20px;
 }
-.pointer{
-    cursor: pointer;
+.icon:hover {
+  color: rgb(235, 57, 57);
+}
+.pointer {
+  cursor: pointer;
+}
+.picker-class {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: -240px;
+  z-index: 10;
 }
 @media only screen and (max-width: 1150px) {
-    .profile-image{
-        height: 100px;
-        width: 100px;
-    }
-    .cover-image{
-        min-height:160px ;
-    }
+  .profile-image {
+    height: 100px;
+    width: 100px;
+  }
+  .cover-image {
+    min-height: 160px;
+  }
+  .picker-class {
+    margin-top: -30px;
+    transform: scale(0.8);
+  }
+  .picker-comment{
+    margin-left: -60px;
+    margin-top: -30px;
+    transform: scale(0.8);
+  }
 }
 @media only screen and (max-width: 450px) {
-    .profile-image{
-        height: 80px;
-        width: 80px;
-    }
-    .cover-image{
-        max-height:160px ;
-    }
+  .profile-image {
+    height: 80px;
+    width: 80px;
+  }
+  .cover-image {
+    max-height: 160px;
+  }
+  .picker-class {
+    margin-top: -60px;
+    margin-left: -180px;
+    transform: scale(0.7);
+  }
+  .picker-comment{
+    margin-left: -60px;
+    margin-top: -60px;
+    transform: scale(0.7);
+  }
 }

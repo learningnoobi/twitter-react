@@ -6,7 +6,8 @@ import { useDispatch } from "react-redux";
 import { BiUserPlus, BiEditAlt, BiBlock } from "react-icons/bi";
 import { delComment ,editComment} from "../redux/asyncActions/CommentAsync";
 import Moment from 'moment'
-const CommentCard = ({ tweetId, user, comment }) => {
+import AddPicker from "./AddPicker";
+const CommentCard = ({ tweetId, user, comment}) => {
   const [curIndex, setCurIndex] = useState(null);
   const [edit, setEdit] = useState(false);
   const [editCommentInput, setEditComment] = useState(comment.body);
@@ -78,20 +79,33 @@ const CommentCard = ({ tweetId, user, comment }) => {
           </div>
           {edit ? (
             <>
-              <textarea
+         
+             <div>
+             <textarea
                 value={editCommentInput}
                 onChange={(e) => setEditComment(e.target.value)}
                 className="editArea"
               ></textarea>
-              <button onClick={()=>{
+             </div>
+          
+          <div className="d-flex">
+     
+          <AddPicker classNem="picker-comment" setInput={setEditComment}/>
+        
+          <button onClick={()=>{
                 sendEditComment(comment.id)
               }} className="btn btn-primary">Edit</button>
+            
               <button
                 onClick={() => setEdit(false)}
                 className="btn btn-danger mx-2"
               >
                 Cancel
               </button>
+
+          </div>
+              
+                 
             </>
           ) : (
             <p className="mx-4 mt-2">{comment.body}</p>
