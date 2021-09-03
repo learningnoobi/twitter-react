@@ -116,6 +116,13 @@
   object-fit: cover;
   cursor: pointer;
 }
+.cover-edit{
+  width: 100%;
+  min-height: 100px;
+  max-height: 180px;
+  object-fit: cover;
+  cursor: pointer;
+}
 .user-info {
   margin-top: 5%;
   padding: 20px;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { userEdit, userProfile } from "../redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -174,9 +174,33 @@ const FollowInfo = ({ number, followinfo }) => {
 
 const UserEditModal = ({ user, modalId }) => {
   const dispatch = useDispatch();
-  console.log(user);
- const [bio, setBio] = useState(user?.bio);
- const [nickname, setNickname] = useState(user?.nickname);
+  // console.log(user);
+  const [bio, setBio] = useState(user?.bio);
+  const [nickname, setNickname] = useState(user?.nickname);
+  const inputOpenFileRef = useRef(null);
+  const inputAvatarFileRef = useRef(null);
+  const [avatar, setAvatar] = useState();
+  const [cover, setCover] = useState();
+  const [prevCoverImage, setPrevCoverImage] = useState(false);
+  const [prevAvatarImage, setPrevAvatarImage] = useState(false);
+  
+  const showOpenFileDlg = () => {
+    inputOpenFileRef.current.click();
+    console.log('clicked to cover image')
+  };
+  const showAvatarFileDlg = () => {
+    inputAvatarFileRef.current.click();
+    console.log('clicked to profile image')
+  };
+  const imageChanged = (e) => {
+    setCover(e.target.files[0]);
+      setPrevCoverImage(URL.createObjectURL(e.target.files[0]));
+  };
+  const AvatarChanged =(e) => {
+    setAvatar(e.target.files[0]);
+      setPrevAvatarImage(URL.createObjectURL(e.target.files[0]));
+
+  }
   const updateUser = () => {
     dispatch(userEdit(user.username, { nickname: nickname, bio: bio }));
   };
@@ -197,51 +221,72 @@ const UserEditModal = ({ user, modalId }) => {
             </h5>
           </div>
           <div id="modalId" className="modal-body custom-modal-body">
-          <div style={{ position: "relative" }}>
+            <div style={{ position: "relative" }}>
+              <input
+                onChange={imageChanged}
+                ref={inputOpenFileRef}
+                type="file"
+                style={{ display: "none" }}
+              />
               <img
-                // onClick={() => setCoverVisible(true)}
-                src={user?.cover_image}
+                onClick={()=>showOpenFileDlg()}
+                src={prevCoverImage?prevCoverImage:user?.cover_image}
                 alt="cover image"
-                className="cover-image"
+                className="cover-edit"
                 title="change cover image"
               />
-               <img
-                // onClick={() => setVisible(true)}
-                src={user?.avatar}
+                  <input
+                  
+                onChange={AvatarChanged}
+                ref={inputAvatarFileRef}
+                type="file"
+                style={{ display: "none" }}
+              />
+              <img
+              onClick={()=>showAvatarFileDlg()}
+                src={prevAvatarImage?prevAvatarImage:user?.avatar}
                 alt="profile image"
                 className="rounded-circle profile-image"
                 title="change profile image"
               />
             </div>
-           <div style={{marginTop:"9%"}}>
-           <input
-              value={nickname}
-              onChange={e=>setNickname(e.target.value)}
-              type="text"
-              name="text"
-              placeholder="Add nickname"
-              className="inputTag"
-            />
-            <br />
-            <textarea
-              value={bio}
-              onChange={e=>setBio(e.target.value)}
-              type="text"
-              name="text"
-              placeholder="nickname"
-              className="inputTag"
-            ></textarea>
-           </div>
+            <div style={{ marginTop: "9%" }}>
+              <input
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                type="text"
+                name="text"
+                placeholder="Add nickname"
+                className="inputTag"
+              />
+              <br />
+              <textarea
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                type="text"
+                name="text"
+                placeholder="nickname"
+                className="inputTag"
+              ></textarea>
+            </div>
           </div>
           <div className="modal-footer">
             <button
               type="button"
               className="btn btn-outline-danger"
               data-dismiss="modal"
+              onClick={()=>{
+                setPrevCoverImage('');
+                setPrevAvatarImage('');
+              }}
             >
               Cancel
             </button>
-            <button onClick={updateUser} type="button" className="btn btn-outline-success">
+            <button
+              onClick={updateUser}
+              type="button"
+              className="btn btn-outline-success"
+            >
               Save changes
             </button>
           </div>
