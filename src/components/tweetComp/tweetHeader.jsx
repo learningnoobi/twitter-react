@@ -19,6 +19,7 @@ const TweetHeader = ({ headerName, back = true }) => {
       <button className="btns" onClick={() => dispatch(showSidebar("sidebar"))}>
         ☰
       </button>
+      
     </div>
   );
 };

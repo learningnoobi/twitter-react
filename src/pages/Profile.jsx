@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  userEdit,
-  userProfile,
-} from "../redux/asyncActions/UserAsync";
+import { userEdit, userProfile } from "../redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
 
 import Second from "../components/Second";
@@ -48,8 +45,6 @@ const Profile = () => {
 
   return (
     <div>
-   
-
       <Second>
         {message && (
           <AlertMessage
@@ -104,11 +99,16 @@ const Profile = () => {
               {authUser?.email === userprofile?.email ? (
                 <div className="follow-or-edit">
                   <button
-                    onClick={() => setShowUserModal(!showUserModal)}
+                    // onClick={() => setShowUserModal(!showUserModal)}
                     className="link-tweet"
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#userModal"
                   >
                     Edit Profile
                   </button>
+
+                  <UserEditModal user={userprofile} modalId="userModal" />
                 </div>
               ) : (
                 <div className="follow-or-edit">
@@ -172,51 +172,81 @@ const FollowInfo = ({ number, followinfo }) => {
   );
 };
 
-const UserEditModal = ({ user, setShowUserModal }) => {
-  const [values, handleChange] = useForm();
+const UserEditModal = ({ user, modalId }) => {
   const dispatch = useDispatch();
-  const { nickname, bio } = values;
   console.log(user);
+ const [bio, setBio] = useState(user?.bio);
+ const [nickname, setNickname] = useState(user?.nickname);
   const updateUser = () => {
     dispatch(userEdit(user.username, { nickname: nickname, bio: bio }));
   };
   return (
-    <ModalContainer>
-      <Modal>
-        <button onClick={() => setShowUserModal(false)} className="link-tweet">
-          Close
-        </button>
-        <h2>Edit Profile</h2>
-        <input
-          value={nickname || user?.nickname}
-          onChange={handleChange}
-          type="text"
-          name="nickname"
-          placeholder="nickname"
-        />{" "}
-        <br />
-        <input
-          value={bio || user?.bio}
-          onChange={handleChange}
-          type="text"
-          name="bio"
-          placeholder="bio"
-        />{" "}
-        <br />
-        <label htmlFor="profile">Profile</label>
-        {/* <input
-        value={avatar || user?.avatar}
-        onChange={handleChange}
-         type="file" name="avatar" id="" /> <br />
-        <label htmlFor="cover">Cover</label>
-        <input
-        value={cover_image || user?.cover_image}
-        onChange={handleChange}
-        type="file" name="cover_image" id="" /> <br /> */}
-        <button onClick={updateUser} className="link-tweet">
-          Update
-        </button>
-      </Modal>
-    </ModalContainer>
+    <div
+      className="modal fade"
+      id={`${modalId}`}
+      tabIndex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div className="modal-dialog modal-dialog-centered " role="document">
+        <div className="modal-content modal-custom-css">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLongTitle">
+              Edit Profile
+            </h5>
+          </div>
+          <div id="modalId" className="modal-body custom-modal-body">
+          <div style={{ position: "relative" }}>
+              <img
+                // onClick={() => setCoverVisible(true)}
+                src={user?.cover_image}
+                alt="cover image"
+                className="cover-image"
+                title="change cover image"
+              />
+               <img
+                // onClick={() => setVisible(true)}
+                src={user?.avatar}
+                alt="profile image"
+                className="rounded-circle profile-image"
+                title="change profile image"
+              />
+            </div>
+           <div style={{marginTop:"9%"}}>
+           <input
+              value={nickname}
+              onChange={e=>setNickname(e.target.value)}
+              type="text"
+              name="text"
+              placeholder="Add nickname"
+              className="inputTag"
+            />
+            <br />
+            <textarea
+              value={bio}
+              onChange={e=>setBio(e.target.value)}
+              type="text"
+              name="text"
+              placeholder="nickname"
+              className="inputTag"
+            ></textarea>
+           </div>
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-outline-danger"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button onClick={updateUser} type="button" className="btn btn-outline-success">
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };

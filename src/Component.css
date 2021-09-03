@@ -148,6 +148,31 @@
   margin-left: -240px;
   z-index: 10;
 }
+#modalId::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+#modalId::-webkit-scrollbar-track {
+  background: var(--border);
+}
+
+/* Handle */
+#modalId::-webkit-scrollbar-thumb {
+  background: rgb(235, 58, 91);
+}
+
+/* Handle on hover */
+#modalId::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.modal-custom-css{
+  background-color: #15202b;
+}
+.custom-modal-body{
+  overflow-y: auto;
+  max-height: 500px;
+}
 @media only screen and (max-width: 1150px) {
   .profile-image {
     height: 100px;

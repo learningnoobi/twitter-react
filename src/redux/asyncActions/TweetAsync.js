@@ -32,7 +32,7 @@ export const load_tweet = () => async (dispatch) => {
        res = await axios.get(`http://127.0.0.1:8000/tweets/`);
     }
    
-    console.table('res is ',res.data)
+    // console.table('res is ',res.data)
     dispatch(setLoading(false));
     dispatch(tweetSuccess(res.data));
   } catch (err) {
