@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { userEdit, userProfile } from "../redux/asyncActions/UserAsync";
+import { userFollow, userProfile } from "../redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
-
 import Second from "../components/Second";
 import Moment from "moment";
 import useUserInfo from "../hooks/useUserInfo";
@@ -14,8 +13,7 @@ import { tweet_specific_user } from "../redux/asyncActions/TweetAsync";
 import TweetPostCard from "../components/tweetComp/TweetPostCard";
 import { removeMesage } from "../redux/slices/tweetSlice";
 import AlertMessage from "../components/alertMessage";
-import { Modal, ModalContainer } from "../GooberStyled/Common";
-import useForm from "../hooks/useForm";
+import UserEditModal from "../components/UserEditModal";
 // import { Modal } from "react-responsive-modal";
 const Profile = () => {
   const { username } = useParams();
@@ -117,7 +115,11 @@ const Profile = () => {
                       <AiOutlineSmile />
                     </i>
                   </button>
-                  <button className="link-tweet">Follow</button>
+                  <button 
+                  onClick={()=> dispatch(userFollow(userprofile.username))}
+                  className="link-tweet">
+                    Follow
+                    </button>
                 </div>
               )}
             </div>
@@ -168,130 +170,6 @@ const FollowInfo = ({ number, followinfo }) => {
     <div className="d-flex">
       <span className="bold-text">{number}</span>
       <span className="mx-2 side-name">{followinfo}</span>
-    </div>
-  );
-};
-
-const UserEditModal = ({ user, modalId }) => {
-  const dispatch = useDispatch();
-  // console.log(user);
-  const [bio, setBio] = useState(user?.bio);
-  const [nickname, setNickname] = useState(user?.nickname);
-  const inputOpenFileRef = useRef(null);
-  const inputAvatarFileRef = useRef(null);
-  const [avatar, setAvatar] = useState();
-  const [cover, setCover] = useState();
-  const [prevCoverImage, setPrevCoverImage] = useState(false);
-  const [prevAvatarImage, setPrevAvatarImage] = useState(false);
-  
-  const showOpenFileDlg = () => {
-    inputOpenFileRef.current.click();
-    console.log('clicked to cover image')
-  };
-  const showAvatarFileDlg = () => {
-    inputAvatarFileRef.current.click();
-    console.log('clicked to profile image')
-  };
-  const imageChanged = (e) => {
-    setCover(e.target.files[0]);
-      setPrevCoverImage(URL.createObjectURL(e.target.files[0]));
-  };
-  const AvatarChanged =(e) => {
-    setAvatar(e.target.files[0]);
-      setPrevAvatarImage(URL.createObjectURL(e.target.files[0]));
-
-  }
-  const updateUser = () => {
-    dispatch(userEdit(user.username, { nickname: nickname, bio: bio }));
-  };
-  return (
-    <div
-      className="modal fade"
-      id={`${modalId}`}
-      tabIndex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered " role="document">
-        <div className="modal-content modal-custom-css">
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLongTitle">
-              Edit Profile
-            </h5>
-          </div>
-          <div id="modalId" className="modal-body custom-modal-body">
-            <div style={{ position: "relative" }}>
-              <input
-                onChange={imageChanged}
-                ref={inputOpenFileRef}
-                type="file"
-                style={{ display: "none" }}
-              />
-              <img
-                onClick={()=>showOpenFileDlg()}
-                src={prevCoverImage?prevCoverImage:user?.cover_image}
-                alt="cover image"
-                className="cover-edit"
-                title="change cover image"
-              />
-                  <input
-                  
-                onChange={AvatarChanged}
-                ref={inputAvatarFileRef}
-                type="file"
-                style={{ display: "none" }}
-              />
-              <img
-              onClick={()=>showAvatarFileDlg()}
-                src={prevAvatarImage?prevAvatarImage:user?.avatar}
-                alt="profile image"
-                className="rounded-circle profile-image"
-                title="change profile image"
-              />
-            </div>
-            <div style={{ marginTop: "9%" }}>
-              <input
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                type="text"
-                name="text"
-                placeholder="Add nickname"
-                className="inputTag"
-              />
-              <br />
-              <textarea
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                type="text"
-                name="text"
-                placeholder="nickname"
-                className="inputTag"
-              ></textarea>
-            </div>
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-outline-danger"
-              data-dismiss="modal"
-              onClick={()=>{
-                setPrevCoverImage('');
-                setPrevAvatarImage('');
-              }}
-            >
-              Cancel
-            </button>
-            <button
-              onClick={updateUser}
-              type="button"
-              className="btn btn-outline-success"
-            >
-              Save changes
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

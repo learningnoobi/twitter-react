@@ -103,7 +103,20 @@ export const userEdit = (username,data) => async (dispatch) =>{
     console.log(err);
   }
 }
-
+export const userFollow= (username) => async (dispatch) =>{
+  dispatch(setLoading(true))
+  try {
+    const res = await axiosInstance.post(`http://127.0.0.1:8000/user/me/follow_unfollow/`,{
+      username
+    });
+    dispatch(setLoading(false));
+    // dispatch(profileUserSuccess(res.data));
+  } catch (err) {
+    dispatch(userFail());
+    dispatch(setLoading(false));
+    console.log(err);
+  }
+}
 export const login = (email, password) => async (dispatch) => {
   dispatch(setLoading(true));
   try {

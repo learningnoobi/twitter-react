@@ -28,6 +28,7 @@ export const userRegister = createSlice({
     },
     profileUserSuccess: (state, action) => {
       state.profileUser = action.payload;
+      state.isAuthenticated = true;
     },
     removeMesage:state =>{
       state.message=null
