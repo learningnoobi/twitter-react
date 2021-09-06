@@ -137,6 +137,7 @@ const TweetDetail = () => {
               />
             </div>
             <TweetOperation
+            user = {user}
               id={parseInt(id)}
               liked={tweet.iliked}
               likeTweetD={likeTweetD}

@@ -181,6 +181,13 @@
   overflow-y: auto;
   max-height: 500px;
 }
+.modal-header {
+  border-bottom:0.2px solid gray ;
+}
+
+.modal-footer {
+  border-top: 0 none;
+}
 @media only screen and (max-width: 1150px) {
   .profile-image {
     height: 100px;

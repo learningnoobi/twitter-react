@@ -33,7 +33,7 @@ export const load_user = () => async (dispatch) => {
       dispatch(userSuccess(res.data));
     } catch (err) {
       dispatch(userFail());
-      console.log(err);
+      // console.log(err);
     }
   } else {
     dispatch(userFail());
@@ -124,8 +124,8 @@ export const login = (email, password) => async (dispatch) => {
       email,
       password,
     });
-    
     dispatch(loginSuccess(res.data));
+    dispatch(load_user());
     dispatch(setLoading(false));
   } catch (err) {
     dispatch(userFail("User or password is wrong !"));
@@ -166,4 +166,5 @@ export const checkAuthenticated = () => async (dispatch) => {
 
 export const logoutAct = () => (dispatch) => {
   dispatch(logMeOut());
+  // dispatch(load_user());
 };

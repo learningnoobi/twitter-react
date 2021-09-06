@@ -10,7 +10,7 @@ import {
 } from "react-icons/ri";
 import { BiBell, BiBookmark, BiUser, BiLogIn } from "react-icons/bi";
 import { CgMoreO } from "react-icons/cg";
-import { checkAuthenticated, logoutAct } from "../redux/asyncActions/UserAsync";
+import { checkAuthenticated, load_user, logoutAct } from "../redux/asyncActions/UserAsync";
 import useUserInfo from "../hooks/useUserInfo";
 
 const Sidebar = () => {
@@ -23,6 +23,9 @@ const Sidebar = () => {
   const logout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       dispatch(logoutAct());
+        history.push('/login');
+      dispatch(load_user());
+    
       dispatch(checkAuthenticated());
     }
   };
@@ -75,7 +78,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/">
+          <Link to="/bookmark">
             <i>
               <BiBookmark />
             </i>

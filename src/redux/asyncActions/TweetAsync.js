@@ -51,7 +51,16 @@ export const tweet_detail = (id) => async (dispatch) => {
     console.log(err);
   }
 };
-
+export const bookmark_list = () => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const res = await axiosInstance.get(`tweets/love/bookmarkList/`);
+    dispatch(setLoading(false));
+    dispatch(tweetSuccess(res.data));
+  } catch (err) {
+    console.log(err);
+  }
+};
 // tweets of specific users
 export const tweet_specific_user = (username) => async (dispatch) => {
   dispatch(setLoading(true));

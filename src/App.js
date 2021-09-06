@@ -11,6 +11,7 @@ import TweetDetail from "./pages/TweetDetail";
 import NotFound from "./components/NotFound";
 import { load_user } from './redux/asyncActions/UserAsync';
 import { useDispatch } from 'react-redux';
+import BookmarkList from './pages/BookmarkList';
 function App() {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/activate/:uid/:token" exact component={Activate} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/bookmark" component={BookmarkList} />
         <Route path="/:username" exact component={Profile} />
         <Route path="/:username/tweet/:id" component={TweetDetail} />
         <Route path="" component={NotFound} />

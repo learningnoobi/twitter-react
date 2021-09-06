@@ -291,6 +291,12 @@ body {
   outline: 0 !important;
   cursor: pointer;
 }
+.link-tweet.outline{
+  background-color: rgb(79, 115, 186);
+}
+.link-tweet.outline:hover{
+  background-color: rgb(47, 77, 138);
+}
 .btn-outline{
   background-color: var(--background);
   border: 1px solid var(--red);
@@ -350,6 +356,7 @@ body {
 .side-name {
   color: rgb(157, 172, 192);
   display: flex;
+  font-size: 14px;
   align-items: center;
 }
 .second-trend {
