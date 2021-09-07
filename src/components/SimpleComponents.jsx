@@ -12,7 +12,6 @@ import { bookmarkTweet } from "../redux/asyncActions/TweetAsync";
 import { addComment } from "../redux/asyncActions/CommentAsync";
 
 export const TweetOperation = ({
-  user,
   bookmark,
   liked,
   id,
@@ -21,6 +20,8 @@ export const TweetOperation = ({
 }) => {
   const [isclicked, setClick] = useState(null);
   const dispatch = useDispatch();
+ 
+  const [comId, setComId] = useState(null);
   const [bookmarked, setBookmarked] = useState(null);
   useEffect(() => {
     setClick(liked);
@@ -30,12 +31,19 @@ export const TweetOperation = ({
     dispatch(bookmarkTweet(id));
     setBookmarked(!bookmarked);
   };
+  const setId = () => {
+    setComId(id)
+    // console.log('comId',comId)
+  }
   return (
     <div className="tweet-bottom-active">
       <i className="tweetIcons">
-        <AiOutlineComment data-toggle="modal" data-target="#CommentModal" />
-      </i>
-      <CommentModal id={id} />
+        <AiOutlineComment
+         onClick={setId} 
+          data-toggle="modal"
+          data-target={`#${id}CommentModal`} />
+      </i> 
+      <CommentModal idName={`${id}CommentModal`} comId={comId}/>
       <i className="tweetIcons">
         <AiOutlineRetweet />
       </i>
@@ -57,7 +65,7 @@ export const TweetOperation = ({
         <i className="tweetIcons pointer">
           <FiShare
             onClick={() => onBookmark(id)}
-            onClick={() => onBookmark(id)}
+           
           />
         </i>
       )}
@@ -71,19 +79,19 @@ TweetOperation.propTypes = {
   like_count: PropTypes.number,
 };
 
-const CommentModal = ({ id }) => {
+const CommentModal = ({ idName,comId }) => {
   const [commentInput, setCommentInput] = useState();
   const dispatch = useDispatch();
-
-  const commentAdd = () => {
-    dispatch(addComment(id, commentInput));
+  const commentAdd = (ia) => {
+    dispatch(addComment(ia, commentInput));
     setCommentInput("");
   };
+
   return (
     <div
       className="modal fade"
-      id="CommentModal"
-      tabindex="-1"
+      id={idName}
+      tabIndex="-1"
       role="dialog"
       aria-labelledby="exampleModalCenterTitle"
       aria-hidden="true"
@@ -118,7 +126,7 @@ const CommentModal = ({ id }) => {
               Close
             </button>
             <button
-              onClick={() => commentAdd()}
+              onClick={()=>commentAdd(comId)}
               type="button"
               className="link-tweet outline"
               data-dismiss="modal"

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory, NavLink } from "react-router-dom";
+import { Link, useHistory,Redirect, NavLink } from "react-router-dom";
 import { showSidebar } from "../redux/slices/simpleState";
 import {
   RiHome7Fill,
@@ -22,12 +22,11 @@ const Sidebar = () => {
   const history = useHistory();
   const logout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
+      
       dispatch(logoutAct());
-        history.push('/login');
       dispatch(load_user());
-    
       dispatch(checkAuthenticated());
-    }
+    }<Redirect to="/login"></Redirect>
   };
   const {user,isAuthenticated} = userIn;
   // const user={yo:'nmae'}
