@@ -5,9 +5,9 @@ import DropDown from "./DropDown";
 import { TweetOperation } from "../SimpleComponents";
 import Moment from "moment";
 import { likeTweet } from "../../redux/asyncActions/TweetAsync";
-import {AiFillUnlock} from 'react-icons/ai'
-import {BiGlobe} from 'react-icons/bi'
-const TweetPostCard = ({ tweet, dispatch ,user}) => {
+import { AiFillUnlock } from "react-icons/ai";
+import { BiGlobe } from "react-icons/bi";
+const TweetPostCard = ({ tweet, dispatch, user }) => {
   const [selected, setSelected] = useState(null);
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
@@ -15,13 +15,31 @@ const TweetPostCard = ({ tweet, dispatch ,user}) => {
   return (
     <div className="tweetCard">
       <div className="actual-tweet">
-        <span>
+        <div>
           <FiMoreHorizontal
-            onClick={() => setSelected(selected === tweet.id ? null : tweet.id)}
+            data-toggle="dropdown"
+            // onClick={() => setSelected(selected === tweet.id ? null : tweet.id)}
             className="dropdownIcon"
+            id={`#${tweet.id}dropdown`}
+            aria-haspopup="true"
+            aria-expanded="false"
           />
-          {tweet.id === selected && <DropDown tweet={tweet} user={user} tweetId={tweet.id} />}
-        </span>
+          <DropDown
+            target={`${tweet.id}dropdown`}
+            tweet={tweet}
+            user={user}
+            tweetId={tweet.id}
+          />
+          {tweet.id === selected && (
+            <DropDown
+              target={`${tweet.id}dropdown`}
+              tweet={tweet}
+              user={user}
+              tweetId={tweet.id}
+            />
+          )}
+        </div>
+
         <span className="add-tweet-image">
           <Link to={`/${tweet.author.username}`}>
             <img
@@ -30,8 +48,8 @@ const TweetPostCard = ({ tweet, dispatch ,user}) => {
               //some have http://http://127.0.0.1:8000 while don't
               src={
                 tweet.author.avatar.includes("http://")
-                ?tweet.author.avatar
-                :`http://127.0.0.1:8000${tweet.author.avatar}`
+                  ? tweet.author.avatar
+                  : `http://127.0.0.1:8000${tweet.author.avatar}`
               }
               className="rounded-circle author-image"
               width="60px"
@@ -46,8 +64,7 @@ const TweetPostCard = ({ tweet, dispatch ,user}) => {
               <span className="side-name">
                 @ {tweet.author.username} |{Moment(tweet.created).fromNow()}
                 {tweet.is_private ? <AiFillUnlock /> : <BiGlobe />}
-                {tweet.isEdited && <span className="mx-2"> 
-                - Edited</span>}
+                {tweet.isEdited && <span className="mx-2">- Edited</span>}
               </span>
             </span>
 
@@ -55,13 +72,15 @@ const TweetPostCard = ({ tweet, dispatch ,user}) => {
               {tweet.title} {tweet.body}
             </p>
             {tweet.image && (
-              <img alt="img" 
-              src={
-                tweet.image.includes("http://")
-                ?tweet.image
-                :`http://127.0.0.1:8000${tweet.image}`
-              } 
-              className="image" />
+              <img
+                alt="img"
+                src={
+                  tweet.image.includes("http://")
+                    ? tweet.image
+                    : `http://127.0.0.1:8000${tweet.image}`
+                }
+                className="image"
+              />
             )}
           </div>
         </Link>

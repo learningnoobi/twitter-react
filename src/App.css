@@ -147,6 +147,11 @@ body {
 .navbar-nav li:last-child {
   margin-top: 20px;
 }
+.navbar-nav li:first-child:hover {
+  background-color:transparent;
+  color: var(--red) !important;
+  border-radius: 30px;
+}
 .navbar-nav li:hover {
   background-color: var(--red);
   color: var(--red) !important;
@@ -182,6 +187,7 @@ body {
 .tweet-bottom-active {
   display: flex;
   justify-content: space-around;
+  z-index: 80005555;
 }
 
 .tweetIcons {
@@ -375,6 +381,7 @@ body {
   padding-top: 10px;
   right: 10px;
   top: 40px;
+  color:white;
 }
 .dropdownMenu p {
   padding: 5px 10px;

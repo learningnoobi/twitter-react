@@ -86,6 +86,7 @@ const Profile = () => {
                 }}
                 images={[{ src: userprofile?.avatar, alt: "img" }]}
               />
+             
               <Viewer
                 visible={covervisible}
                 onClose={() => {
@@ -97,7 +98,6 @@ const Profile = () => {
               {authUser?.email === userprofile?.email ? (
                 <div className="follow-or-edit">
                   <button
-                    // onClick={() => setShowUserModal(!showUserModal)}
                     className="link-tweet"
                     type="button"
                     data-toggle="modal"
@@ -115,11 +115,12 @@ const Profile = () => {
                       <AiOutlineSmile />
                     </i>
                   </button>
-                  <button 
-                  onClick={()=> dispatch(userFollow(userprofile.username))}
-                  className="link-tweet">
+                  <button
+                    onClick={() => dispatch(userFollow(userprofile.username))}
+                    className="link-tweet"
+                  >
                     Follow
-                    </button>
+                  </button>
                 </div>
               )}
             </div>

@@ -7,13 +7,11 @@ import {
   userRegisterSuccess,
   authSuccess,
   logMeOut,
-  profileUserSuccess
+  profileUserSuccess,
 } from "../slices/userSlice";
 import axios from "axios";
 import { axiosInstance } from "../../index";
 const url = "http://127.0.0.1:8000/auth/users/";
-
-
 
 export const load_user = () => async (dispatch) => {
   if (localStorage.getItem("access")) {
@@ -40,7 +38,8 @@ export const load_user = () => async (dispatch) => {
   }
 };
 
-export const register =(username, email, password, re_password) => (dispatch) => {
+export const register =
+  (username, email, password, re_password) => (dispatch) => {
     dispatch(setLoading(true));
     axios
       .post(url, {
@@ -50,7 +49,7 @@ export const register =(username, email, password, re_password) => (dispatch) =>
         re_password,
       })
       .then((res) => {
-        dispatch(userRegisterSuccess())
+        dispatch(userRegisterSuccess());
         dispatch(load_user());
         dispatch(setLoading(false));
       })
@@ -60,7 +59,8 @@ export const register =(username, email, password, re_password) => (dispatch) =>
         errcode.email && dispatch(userFail(errcode.email[0]));
         errcode.password && dispatch(userFail(errcode.password[0]));
         errcode.username && dispatch(userFail(errcode.username[0]));
-        errcode.non_field_errors && dispatch(userFail(errcode.non_field_errors));
+        errcode.non_field_errors &&
+          dispatch(userFail(errcode.non_field_errors));
         dispatch(setLoading(false));
       });
   };
@@ -79,10 +79,12 @@ export const verify = (uid, token) => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
-export const userProfile = (username) => async (dispatch) =>{
-  dispatch(setLoading(true))
+export const userProfile = (username) => async (dispatch) => {
+  dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.get(`http://127.0.0.1:8000/user/${username}/`);
+    const res = await axiosInstance.get(
+      `http://127.0.0.1:8000/user/${username}/`
+    );
     dispatch(setLoading(false));
     dispatch(profileUserSuccess(res.data));
   } catch (err) {
@@ -90,25 +92,34 @@ export const userProfile = (username) => async (dispatch) =>{
     dispatch(setLoading(false));
     console.log(err);
   }
-}
-export const userEdit = (username,data) => async (dispatch) =>{
-  dispatch(setLoading(true))
+};
+
+export const userEdit = (username, data) => async (dispatch) => {
+  dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.put(`http://127.0.0.1:8000/user/${username}/`,data);
+    const res = await axiosInstance.put(
+      `http://127.0.0.1:8000/user/${username}/`,
+      data
+    );
     dispatch(setLoading(false));
     dispatch(profileUserSuccess(res.data));
+    dispatch(load_user());
   } catch (err) {
     dispatch(userFail());
+
     dispatch(setLoading(false));
     console.log(err);
   }
-}
-export const userFollow= (username) => async (dispatch) =>{
-  dispatch(setLoading(true))
+};
+export const userFollow = (username) => async (dispatch) => {
+  dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.post(`http://127.0.0.1:8000/user/me/follow_unfollow/`,{
-      username
-    });
+    const res = await axiosInstance.post(
+      `http://127.0.0.1:8000/user/me/follow_unfollow/`,
+      {
+        username,
+      }
+    );
     dispatch(setLoading(false));
     // dispatch(profileUserSuccess(res.data));
   } catch (err) {
@@ -116,7 +127,7 @@ export const userFollow= (username) => async (dispatch) =>{
     dispatch(setLoading(false));
     console.log(err);
   }
-}
+};
 export const login = (email, password) => async (dispatch) => {
   dispatch(setLoading(true));
   try {

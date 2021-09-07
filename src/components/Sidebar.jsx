@@ -56,7 +56,9 @@ const Sidebar = () => {
         </li>
         <li>
           <Link to="/">
-            <i className="fa fa-rocket"></i>
+          <i>
+              <RiMailLine />
+            </i>
             <span className="link-text">Explore</span>
           </Link>
         </li>
