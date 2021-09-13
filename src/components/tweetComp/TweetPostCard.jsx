@@ -79,7 +79,7 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
                     ? tweet.image
                     : `http://127.0.0.1:8000${tweet.image}`
                 }
-                className="image"
+                className="image img"
               />
             )}
           </div>

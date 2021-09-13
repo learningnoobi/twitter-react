@@ -6,7 +6,7 @@ import {
   deleteTweet,
   likeTweet,
 } from "../redux/asyncActions/TweetAsync";
-import Sidebar from "../components/Sidebar";
+
 import Second from "../components/Second";
 import TweetHeader from "../components/tweetComp/tweetHeader";
 import { Link, useHistory } from "react-router-dom";
@@ -20,8 +20,6 @@ import { TweetContent } from "../components/tweetComp/TweetContent";
 import CommentCard from "../components/CommentCard";
 import { addComment, tweet_comments } from "../redux/asyncActions/CommentAsync";
 import ClipLoader from "react-spinners/ClipLoader";
-import useUserInfo from "../hooks/useUserInfo";
-import DropDown from "../components/tweetComp/DropDown";
 import AddPicker from "../components/AddPicker";
 
 const TweetDetail = () => {
@@ -81,12 +79,17 @@ const TweetDetail = () => {
             <div className="actual-tweet">
               <span>
                 <FiMoreHorizontal
-                  onClick={() => setIsOpen(!isOpen)}
+                  data-toggle="dropdown"
+                  className="dropdownIcon"
+                  id={`#${tweet.id}dropdown`}
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  // onClick={() => setIsOpen(!isOpen)}
                   className="dropdownIcon"
                 />
-                {isOpen && (
-                  // <DropDown user={user} tweet={tweet} tweetId={tweet.id}/>
-                  <div className="dropdownMenu">
+               
+                 
+                  <div className="dropdown-menu dropdown-menu-right dropdownMenu">
                     <p>
                       <BiUserPlus /> <span>Unfollow Rayos</span>
                     </p>
@@ -112,7 +115,7 @@ const TweetDetail = () => {
                       </>
                     )}
                   </div>
-                )}
+                
               </span>
               <span className="add-tweet-image">
                 <Link to={`/${tweet.author.username}`}>

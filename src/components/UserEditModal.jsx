@@ -56,6 +56,7 @@ const UserEditModal= ({ user, modalId }) => {
             </div>
             <div id="modalId" className="modal-body custom-modal-body">
               <div style={{ position: "relative" }}>
+             
                 <input
                   onChange={imageChanged}
                   ref={inputOpenFileRef}
@@ -84,6 +85,7 @@ const UserEditModal= ({ user, modalId }) => {
                 />
               </div>
               <div style={{ marginTop: "9%" }}>
+             
                 <input
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
@@ -92,6 +94,7 @@ const UserEditModal= ({ user, modalId }) => {
                   placeholder="Add nickname"
                   className="inputTag"
                 />
+             
                 <br />
                 <textarea
                   value={bio}
