@@ -14,7 +14,7 @@ import TweetPostCard from "../components/tweetComp/TweetPostCard";
 import { removeMesage } from "../redux/slices/tweetSlice";
 import AlertMessage from "../components/alertMessage";
 import UserEditModal from "../components/UserEditModal";
-// import { Modal } from "react-responsive-modal";
+
 const Profile = () => {
   const { username } = useParams();
   const { user: authUser } = useUserInfo();
@@ -29,8 +29,6 @@ const Profile = () => {
   const message = tweetsInfo.message;
   const userprofile = userIn.profileUser;
 
-  // const onOpenModal = () => setOpen(true);
-  // const onCloseModal = () => setOpen(false);
   message &&
     setTimeout(() => {
       dispatch(removeMesage());
@@ -38,7 +36,6 @@ const Profile = () => {
   useEffect(() => {
     dispatch(userProfile(username));
     dispatch(tweet_specific_user(username));
-    // console.log(userprofile);
   }, []);
 
   return (
@@ -115,12 +112,20 @@ const Profile = () => {
                       <AiOutlineSmile />
                     </i>
                   </button>
+                {
+                  userprofile?.i_follow?
                   <button
-                    onClick={() => dispatch(userFollow(userprofile.username))}
-                    className="link-tweet"
-                  >
-                    Follow
-                  </button>
+                  onClick={() => dispatch(userFollow(userprofile.username))}
+                  className="link-tweet"
+                >
+                  Unfollow
+                </button>
+                  :<button
+                  onClick={() => dispatch(userFollow(userprofile.username))}
+                  className="link-tweet"
+                >
+                  Follow
+                </button>}
                 </div>
               )}
             </div>
@@ -143,8 +148,8 @@ const Profile = () => {
                 </span>
               </p>
               <div className="d-flex">
-                <FollowInfo number="102" followinfo="followers" />
-                <FollowInfo number="17" followinfo="following" />
+                <FollowInfo number={userprofile?.followers} followinfo="followers" />
+                <FollowInfo number={userprofile?.following} followinfo="following" />
               </div>
             </div>
           </>

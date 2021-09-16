@@ -8,6 +8,8 @@ import { BiUserPlus, BiEditAlt, BiBlock } from "react-icons/bi";
 import { delComment ,editComment} from "../redux/asyncActions/CommentAsync";
 import Moment from 'moment'
 import AddPicker from "./AddPicker";
+
+
 const CommentCard = ({ tweetId, user, comment}) => {
   const [curIndex, setCurIndex] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -18,16 +20,19 @@ const CommentCard = ({ tweetId, user, comment}) => {
     setEdit(false)
   }
   return (
-    <div className="comment-card animate__bounceIn">
+    <div className="comment-card ">
       <span>
         <FiMoreHorizontal
-          onClick={() =>
-            setCurIndex(curIndex === comment.id ? null : comment.id)
-          }
-          className="dropdownIcon"
+         data-toggle="dropdown"
+         className="dropdownIcon"
+        //  id={`#${tweetId}dropdown`}
+         aria-haspopup="true"
+         aria-expanded="false"
+         className="dropdownIcon"
+          
         />
-        {curIndex === comment.id && (
-          <div className="dropdownMenu">
+       
+          <div className="dropdown-menu dropdown-menu-right dropdownMenu">
             {user.email !== comment.author.email && (
               <>
                 <p>
@@ -62,7 +67,7 @@ const CommentCard = ({ tweetId, user, comment}) => {
               </>
             )}
           </div>
-        )}
+        
       </span>
       <div key={comment.id} className="comment-innerDiv">
         <Link to={`/${comment.author.username}`}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DropDown from "./DropDown";
@@ -8,7 +8,8 @@ import { likeTweet } from "../../redux/asyncActions/TweetAsync";
 import { AiFillUnlock } from "react-icons/ai";
 import { BiGlobe } from "react-icons/bi";
 const TweetPostCard = ({ tweet, dispatch, user }) => {
-  const [selected, setSelected] = useState(null);
+  const [getId, setGetId] = useState(null);
+
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
   };
@@ -18,7 +19,6 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
         <div>
           <FiMoreHorizontal
             data-toggle="dropdown"
-            // onClick={() => setSelected(selected === tweet.id ? null : tweet.id)}
             className="dropdownIcon"
             id={`#${tweet.id}dropdown`}
             aria-haspopup="true"
@@ -30,14 +30,6 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
             user={user}
             tweetId={tweet.id}
           />
-          {tweet.id === selected && (
-            <DropDown
-              target={`${tweet.id}dropdown`}
-              tweet={tweet}
-              user={user}
-              tweetId={tweet.id}
-            />
-          )}
         </div>
 
         <span className="add-tweet-image">
@@ -86,12 +78,12 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
         </Link>
       </div>
       <TweetOperation
-        id={tweet.id}
         liked={tweet.iliked}
         likeTweetD={likeTweetD}
         like_count={tweet.like_count}
         tweet={tweet}
         bookmark={tweet.i_bookmarked}
+        id={tweet.id}
       />
     </div>
   );

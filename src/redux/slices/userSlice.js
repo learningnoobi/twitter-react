@@ -30,6 +30,10 @@ export const userRegister = createSlice({
       state.profileUser = action.payload;
       state.isAuthenticated = true;
     },
+    followedUnfollowed:(state,action) => {
+      state.profileUser.i_follow = action.payload.follow
+      state.profileUser.followers = action.payload.followers
+    },
     removeMesage:state =>{
       state.message=null
     },
@@ -66,7 +70,8 @@ export const {
   authSuccess,
   userRegisterSuccess,
   logMeOut,
-  profileUserSuccess
+  profileUserSuccess,
+  followedUnfollowed
 } = userRegister.actions;
 
 export default userRegister.reducer;

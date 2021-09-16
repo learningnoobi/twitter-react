@@ -8,7 +8,9 @@ import {
   authSuccess,
   logMeOut,
   profileUserSuccess,
+  followedUnfollowed,
 } from "../slices/userSlice";
+import { setMessage } from "../slices/tweetSlice";
 import axios from "axios";
 import { axiosInstance } from "../../index";
 const url = "http://127.0.0.1:8000/auth/users/";
@@ -95,36 +97,35 @@ export const userProfile = (username) => async (dispatch) => {
 };
 
 export const userEdit = (username, data) => async (dispatch) => {
-  dispatch(setLoading(true));
+  // dispatch(setLoading(true));
   try {
     const res = await axiosInstance.put(
-      `http://127.0.0.1:8000/user/${username}/`,
+      `user/${username}/`,
       data
     );
     dispatch(setLoading(false));
     dispatch(profileUserSuccess(res.data));
     dispatch(load_user());
+    dispatch(setMessage("Succesfully Edited"));
   } catch (err) {
     dispatch(userFail());
-
+    dispatch(setMessage("Something's wrong !"));
     dispatch(setLoading(false));
     console.log(err);
   }
 };
 export const userFollow = (username) => async (dispatch) => {
-  // dispatch(setLoading(true));
   try {
     const res = await axiosInstance.post(
-      `http://127.0.0.1:8000/user/me/follow_unfollow/`,
+      `user/me/follow_unfollow/`,
       {
-        "username":username
+        username: username,
       }
     );
     dispatch(setLoading(false));
-    // dispatch(profileUserSuccess(res.data));
+    dispatch(followedUnfollowed(res.data));
   } catch (err) {
     dispatch(userFail());
-    // dispatch(setLoading(false));
     console.log(err);
   }
 };
