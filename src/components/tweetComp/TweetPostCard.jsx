@@ -8,7 +8,6 @@ import { likeTweet } from "../../redux/asyncActions/TweetAsync";
 import { AiFillUnlock } from "react-icons/ai";
 import { BiGlobe } from "react-icons/bi";
 const TweetPostCard = ({ tweet, dispatch, user }) => {
-  const [getId, setGetId] = useState(null);
 
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));

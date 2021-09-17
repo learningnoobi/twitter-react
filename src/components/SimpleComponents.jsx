@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import {
   AiOutlineHeart,
@@ -17,13 +17,13 @@ export const TweetOperation = ({
   id,
   likeTweetD,
   like_count,
-  
 }) => {
   const [isclicked, setClick] = useState(null);
   const dispatch = useDispatch();
   const [comId, setComId] = useState(null);
   const [bookmarked, setBookmarked] = useState(null);
   const [commentInput, setCommentInput] = useState();
+
   useEffect(() => {
     setClick(liked);
     setBookmarked(bookmark);
@@ -33,89 +33,81 @@ export const TweetOperation = ({
     dispatch(bookmarkTweet(id));
     setBookmarked(!bookmarked);
   };
-  const setId = () => {
-    setComId(id)
- 
+  const setId = (ia) => {
+    setComId(ia);
+    console.log("clicked id is :", ia);
   };
 
   const commentAdd = (ia) => {
-   dispatch(addComment(ia, commentInput));
+    dispatch(addComment(ia, commentInput));
     setCommentInput("");
-    console.log('aded on ',ia)
+    setComId(null);
+    console.log("aded on ", ia);
   };
 
   return (
     <div className="tweet-bottom-active">
-      <i className="tweetIcons"  onClick={setId}>
-      <AiOutlineComment
-         onClick={setId} 
-          data-toggle="modal"
-          data-target={`#${id}CommentModal`} />
-      
+      <i className="tweetIcons" onClick={() => setId(id)}>
+        <AiOutlineComment data-toggle="modal" data-target="#what" />
       </i>
-      {/* <CommentModal idName={`${id}CommentModal`} comId={id} /> */}
 
-
-
-
-      <div
-      className="modal fade"
-      id={`${id}CommentModal`}
-      tabIndex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered" role="document">
-        <div className="modal-content modal-custom-css">
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLongTitle">
-              Add Comment
-            </h5>
-            <button
-              onClick={()=>console.log(id)}
-              type="button"
-              // className="close"
-              // data-dismiss="modal"
-              // aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body custom-modal-body">
-            <textarea
-              value={commentInput}
-              onChange={(e) => setCommentInput(e.target.value)}
-              type="text"
-              name="text"
-              placeholder="add Comment"
-              className="inputTag"
-            ></textarea>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="link-tweet " data-dismiss="modal">
-              Close
-            </button>
-            <button
-            onClick={()=>commentAdd(comId)}
-              type="button"
-              className="link-tweet outline"
-              data-dismiss="modal"
-            >
-              Add Comment
-            </button>
+      {comId && (
+        <div
+          className="modal fade"
+   
+          id="what"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="what"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content modal-custom-css">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">
+                  Add Comment
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body custom-modal-body">
+                <textarea
+                  value={commentInput}
+                  onChange={(e) => setCommentInput(e.target.value)}
+                  type="text"
+                  name="text"
+                  placeholder="add Comment"
+                  className="inputTag"
+                ></textarea>
+              </div>
+              <div className="modal-footer">
+                <button
+                  onClick={() => setComId(null)}
+                  type="button"
+                  className="link-tweet "
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  onClick={() => commentAdd(comId)}
+                  type="button"
+                  className="link-tweet outline"
+                  data-dismiss="modal"
+                >
+                  Add Comment
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-
-
-
-
-
-
-
-
+      )}
 
       <i className="tweetIcons">
         <AiOutlineRetweet />
@@ -135,7 +127,12 @@ export const TweetOperation = ({
           <FiShare color="lightgreen" onClick={() => onBookmark(id)} />
         </i>
       ) : (
-        <i data-toggle="tooltip" data-placement="bottom" title="Bookmark" className="tweetIcons pointer">
+        <i
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="Bookmark"
+          className="tweetIcons pointer"
+        >
           <FiShare onClick={() => onBookmark(id)} />
         </i>
       )}
@@ -156,7 +153,6 @@ const CommentModal = ({ idName, comId }) => {
   const commentAdd = () => {
     comId && dispatch(addComment(comId, commentInput));
     setCommentInput("");
-   
   };
 
   return (

@@ -121,7 +121,9 @@ const AddTweet = () => {
                     <AiOutlinePicture onClick={showOpenFileDlg} />
                   </li>
                   <li className="side-icon">
-                    <AiOutlineSmile onClick={() => setShowEmoji(!showEmoji)} />
+                    <AiOutlineSmile 
+                    onClick={() => setShowEmoji(!showEmoji)}
+                     />
                   </li>
                   {!PrevImage ? (
                     <>
@@ -164,6 +166,7 @@ const AddTweet = () => {
               </ul>
               {showEmoji && (
                 <Picker
+                className="dropdown-menu dropdown-menu-right"
                   set="twitter"
                   showPreview={true}
                   onSelect={addEmoji}
@@ -175,6 +178,8 @@ const AddTweet = () => {
                   }}
                 />
               )}
+            
+              
             </div>
           </div>
         </>
