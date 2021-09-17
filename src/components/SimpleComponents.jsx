@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect,useRef} from "react";
+
 import PropTypes from "prop-types";
 import {
   AiOutlineHeart,
@@ -17,6 +18,8 @@ export const TweetOperation = ({
   id,
   likeTweetD,
   like_count,
+  comid=null,
+  reply
 }) => {
   const [isclicked, setClick] = useState(null);
   const dispatch = useDispatch();
@@ -25,6 +28,9 @@ export const TweetOperation = ({
   const [commentInput, setCommentInput] = useState();
 
   useEffect(() => {
+    //bootstrap tooltip 
+  
+    window.$('[data-toggle="tooltip"]').tooltip(); 
     setClick(liked);
     setBookmarked(bookmark);
   }, [liked, bookmark]);
@@ -39,7 +45,7 @@ export const TweetOperation = ({
   };
 
   const commentAdd = (ia) => {
-    dispatch(addComment(ia, commentInput));
+    dispatch(addComment(ia, commentInput,comid,reply));
     setCommentInput("");
     setComId(null);
     console.log("aded on ", ia);
@@ -47,14 +53,14 @@ export const TweetOperation = ({
 
   return (
     <div className="tweet-bottom-active">
-      <i className="tweetIcons" onClick={() => setId(id)}>
-        <AiOutlineComment data-toggle="modal" data-target="#what" />
+      <i data-toggle="tooltip" title="Add Reply" className="tweetIcons" onClick={() => setId(id)}>
+        <AiOutlineComment 
+        data-toggle="modal" data-target="#what" />
       </i>
 
       {comId && (
         <div
           className="modal fade"
-   
           id="what"
           tabIndex="-1"
           role="dialog"
@@ -84,6 +90,7 @@ export const TweetOperation = ({
                   name="text"
                   placeholder="add Comment"
                   className="inputTag"
+               
                 ></textarea>
               </div>
               <div className="modal-footer">
@@ -109,7 +116,7 @@ export const TweetOperation = ({
         </div>
       )}
 
-      <i className="tweetIcons">
+      <i  data-toggle="tooltip" title="Re- Tweet" className="tweetIcons">
         <AiOutlineRetweet />
       </i>
       <i className="tweetIcons heart-parent">
@@ -123,14 +130,17 @@ export const TweetOperation = ({
         <span className="count">{like_count}</span>
       </i>
       {bookmarked ? (
-        <i className="tweetIcons pointer">
+        <i 
+        data-html="true"
+        data-toggle="tooltip" title="Bookmark" 
+        data-placement="up"
+        className="tweetIcons pointer">
           <FiShare color="lightgreen" onClick={() => onBookmark(id)} />
         </i>
       ) : (
         <i
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="Bookmark"
+        data-toggle="tooltip" 
+        title="Bookmark!"
           className="tweetIcons pointer"
         >
           <FiShare onClick={() => onBookmark(id)} />
@@ -159,9 +169,7 @@ const CommentModal = ({ idName, comId }) => {
     <div
       className="modal fade"
       id={`${idName}`}
-      // id={`${comId}CommentModal`}
-      // id={idName}
-      // id="what"
+
       tabIndex="-1"
       role="dialog"
       aria-labelledby="exampleModalCenterTitle"

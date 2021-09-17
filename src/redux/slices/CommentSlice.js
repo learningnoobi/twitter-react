@@ -19,6 +19,10 @@ export const commentReducer = createSlice({
     commentAdded: (state, { payload }) => {
       state.commentList.unshift(payload);
     },
+    replyAdded: (state, { payload }) => {
+      const comment = state.commentList.find((i) => i.id === payload.parentId);
+      comment.children.unshift(payload);
+    },
     commentEdit: (state, { payload }) => {
       const comment = state.commentList.find((i) => i.id === payload.id);
       if (comment) comment.body = payload.body;
@@ -38,6 +42,7 @@ export const {
   commentAdded,
   commentUploading,
   commentDeleted,
+  replyAdded,
   commentEdit
 } = commentReducer.actions;
 

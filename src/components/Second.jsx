@@ -1,10 +1,11 @@
-import React from "react";
+import React ,{useEffect}from "react";
 import Sidebar from "./Sidebar";
 import BottomTab from "./tweetComp/BottomTab";
 import TrendBar from "./tweetComp/TrendBar";
 
 
 const Second = (props) => {
+
   return (
     <>
     <Sidebar />

@@ -2,9 +2,33 @@
   border-top: 1px solid rgb(62, 66, 94);
 }
 .comment-card {
+  position: relative;
   border-bottom: 1px solid rgb(51, 55, 77);
   position: relative;
+  padding-bottom: 5px;
 }
+/* .comment-card::before {
+  content: "";
+  position: absolute;
+  top: 60px;
+  left: 31px;
+  width: 36px;
+  bottom:100px;
+  border-left: 1px solid #2d323f;
+  border-bottom: 1px solid #2d323f;
+}
+.comment-card::after {
+  content: "";
+  position: absolute;
+  left: 64px;
+  bottom: 96px;
+
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 3.5px 0 3.5px 5px;
+  border-color: transparent transparent transparent #c0c0c0;
+} */
 .comment-innerDiv {
   padding: 10px;
   display: flex;
@@ -187,6 +211,14 @@
 
 .modal-footer {
   border-top: 0 none;
+}
+
+.replyCard{
+  border: 1px solid rgb(59, 58, 82);
+  border-radius: 10px;
+  padding: 7px 20px;
+  margin-inline: 40px;
+  margin-bottom: 2px;
 }
 @media only screen and (max-width: 1150px) {
   .profile-image {

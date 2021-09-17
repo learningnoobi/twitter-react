@@ -28,7 +28,13 @@ const AddTweet = () => {
   const dispatch = useDispatch();
   const inputOpenFileRef = useRef(null);
   const { user ,isAuthenticated} = userIn;
-  console.log('add twet ', isAuthenticated)
+
+  useEffect(() => {
+    //bootstrap tooltip 
+    window.$('[data-toggle="tooltip"]').tooltip(); 
+
+  }, []);
+
   const addEmoji = (emoji) => {
     setTweetInput((prev) => prev + emoji.native);
   };
@@ -52,7 +58,7 @@ const AddTweet = () => {
   return (
     <div className="add-tweet">
       {!isAuthenticated ? (
-        <h4>Login To See</h4>
+        <h4>Login To Add Tweet</h4>
       ) : (
         <>
           <span className="add-tweet-image">
@@ -110,7 +116,7 @@ const AddTweet = () => {
               </div>
               <ul className="add-tweet-icon">
                 <div className="add-icon">
-                  <li className="side-icon">
+                  <li  data-toggle="tooltip" title="Add Image" data-placement="bottom" className="side-icon">
                     <input
                       onChange={imageChanged}
                       ref={inputOpenFileRef}
@@ -118,22 +124,24 @@ const AddTweet = () => {
                       style={{ display: "none" }}
                     />
 
-                    <AiOutlinePicture onClick={showOpenFileDlg} />
+                    <AiOutlinePicture 
+                     data-placement="up"
+                    onClick={showOpenFileDlg} />
                   </li>
-                  <li className="side-icon">
+                  <li  data-toggle="tooltip" title="Add Emoji" data-placement="bottom" className="side-icon">
                     <AiOutlineSmile 
                     onClick={() => setShowEmoji(!showEmoji)}
                      />
                   </li>
                   {!PrevImage ? (
                     <>
-                      <li className="side-icon">
+                      <li   data-toggle="tooltip" title="Add Bar" data-placement="bottom" className="side-icon">
                         <AiOutlineBarChart />
                       </li>
-                      <li className="side-icon">
+                      <li  data-toggle="tooltip" title="Add Gif" data-placement="bottom" className="side-icon">
                         <AiOutlineGif />
                       </li>
-                      <li className="side-icon">
+                      <li  data-toggle="tooltip" title="Add Schedule" data-placement="bottom" className="side-icon">
                         <AiOutlineSchedule />
                       </li>
                     </>

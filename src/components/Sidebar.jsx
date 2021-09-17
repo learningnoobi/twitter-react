@@ -7,8 +7,9 @@ import {
   RiTwitterFill,
   RiMailLine,
   RiFileListLine,
+  
 } from "react-icons/ri";
-import { BiBell, BiBookmark, BiUser, BiLogIn } from "react-icons/bi";
+import { BiBell, BiBookmark, BiUser, BiLogIn,BiGlobeAlt } from "react-icons/bi";
 import { CgMoreO } from "react-icons/cg";
 import { checkAuthenticated, load_user, logoutAct } from "../redux/asyncActions/UserAsync";
 import useUserInfo from "../hooks/useUserInfo";
@@ -29,11 +30,11 @@ const Sidebar = () => {
     }<Redirect to="/login"></Redirect>
   };
   const {user,isAuthenticated} = userIn;
-  // const user={yo:'nmae'}
+
   return (
     <div className={`nav ${sidebarClass}`} id="nav">
       <ul className="navbar-nav">
-        <li>
+        <li >
           <Link to="/">
             <i>
               <RiTwitterFill />
@@ -45,8 +46,8 @@ const Sidebar = () => {
           >
             X
           </span>
-        </li>
-        <li>
+        </li >
+        <li >
           <NavLink to="/">
             <i>
               <RiHome7Fill />
@@ -54,15 +55,15 @@ const Sidebar = () => {
             <span className="link-text">Home</span>
           </NavLink>
         </li>
-        <li>
+        <li >
           <Link to="/">
           <i>
-              <RiMailLine />
+              <BiGlobeAlt />
             </i>
             <span className="link-text">Explore</span>
           </Link>
         </li>
-        <li>
+        <li >
           <Link to="/">
             <i>
               <BiBell />
@@ -102,7 +103,7 @@ const Sidebar = () => {
             <span className="link-text">Profile</span>
           </Link>
         </li>
-        <li data-toggle="tooltip" data-placement="top" title="More">
+        <li>
           <Link to="/register">
             <i>
               <CgMoreO />
@@ -126,9 +127,7 @@ const Sidebar = () => {
             <Link
               to="/"
               onClick={logout}
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Log Out"
+            
             >
               <i>
                 <BiLogIn />
@@ -138,9 +137,6 @@ const Sidebar = () => {
           ) : (
             <Link
               to="/login"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Log In"
             >
               <i>
                 <BiLogIn />

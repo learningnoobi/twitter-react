@@ -12,7 +12,11 @@ const UserEditModal= ({ user, modalId }) => {
     const [cover, setCover] = useState();
     const [prevCoverImage, setPrevCoverImage] = useState(false);
     const [prevAvatarImage, setPrevAvatarImage] = useState(false);
-    
+    useEffect(() => {
+      //bootstrap tooltip 
+      window.$('[data-toggle="tooltip"]').tooltip(); 
+  
+    }, []);
     const showOpenFileDlg = () => {
       inputOpenFileRef.current.click();
       console.log('clicked to cover image')
@@ -68,7 +72,7 @@ const UserEditModal= ({ user, modalId }) => {
                   src={prevCoverImage?prevCoverImage:user?.cover_image}
                   alt="cover image"
                   className="cover-edit"
-                  title="change cover image"
+                  data-toggle="tooltip" title="Change Cover Image" data-placement="bottom"
                 />
                     <input
                   onChange={AvatarChanged}
@@ -81,7 +85,7 @@ const UserEditModal= ({ user, modalId }) => {
                   src={prevAvatarImage?prevAvatarImage:user?.avatar}
                   alt="profile image"
                   className="rounded-circle profile-image"
-                  title="change profile image"
+                  data-toggle="tooltip" title="Change Profile Image" data-placement="bottom"
                 />
               </div>
               <div style={{ marginTop: "9%" }}>

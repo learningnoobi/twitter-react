@@ -97,7 +97,7 @@ const TweetDetail = () => {
                       <BiBlock />
                       <span>Block</span>
                     </p>
-                    {user.email === tweet.author.email && (
+                    {user?.email === tweet?.author.email && (
                       <>
                         <p onClick={editpost}>
                           <BiEditAlt />

@@ -1,4 +1,4 @@
-import {setLoading,commentSuccess,commentAdded,commentEdit ,commentDeleted,commentUploading} from "../slices/CommentSlice";
+import {setLoading,commentSuccess,commentAdded,commentEdit,replyAdded ,commentDeleted,commentUploading} from "../slices/CommentSlice";
 import { axiosInstance } from "../../index";
 import { setMessage, setUploading } from "../slices/tweetSlice";
 
@@ -15,14 +15,29 @@ export const tweet_comments = (id) => async (dispatch) => {
       console.log(err);
     }
   };
-export const addComment = (id,body) => async (dispatch) => {
+export const addComment = (id,body,comid,reply=false) => async (dispatch) => {
     dispatch(commentUploading(true));
     try {
-      const res = await axiosInstance.post(`tweets/comments/${id}/`,{body});
-      dispatch(commentUploading(false));
-      dispatch(commentAdded(res.data));
-      console.log('pyload is ' ,res.data)
-      dispatch(setMessage("Reply Added !"));
+      if(reply){
+        const res = await axiosInstance.post(`tweets/comments/reply/${id}/`,
+        {
+          body,
+          "comId":comid
+        });
+        dispatch(commentUploading(false));
+        dispatch(replyAdded(res.data));
+        console.log('pyload is ' ,res.data)
+        dispatch(setMessage("Reply Added !"));
+      }
+      else{
+        const res = await axiosInstance.post(`tweets/comments/${id}/`,{body});
+        dispatch(commentUploading(false));
+        dispatch(commentAdded(res.data));
+        console.log('pyload is ' ,res.data)
+        dispatch(setMessage("Reply Added !"));
+      }
+      
+     
     } catch (err) {
       console.log(err);
       dispatch(commentUploading(false));

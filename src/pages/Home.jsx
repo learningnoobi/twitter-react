@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import HomeTweets from "../components/HomeTweets";
 import { removeMesage } from "../redux/slices/tweetSlice";
 import AlertMessage from "../components/alertMessage";
-import useUserInfo from "../hooks/useUserInfo";
-import { load_user } from "../redux/asyncActions/UserAsync";
 
 const Home = () => {
   // const {isAuthenticated} = useUserInfo();
