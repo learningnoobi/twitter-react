@@ -17,6 +17,7 @@ function App() {
   useEffect(() => {
     dispatch(load_user())
     console.log('loaded user')
+    
     // !isAuthenticated && history.push("/login");
   }, []);
   return (

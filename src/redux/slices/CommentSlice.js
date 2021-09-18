@@ -7,11 +7,21 @@ const initialState = {
   uploading: false,
 };
 
+const getParent = (id, comments) => {
+  for (const comment of comments) {
+      if ( comment.id == id ) return comment
+      else {
+          const gotParent = getParent(id, comment.children)
+          if (gotParent) return gotParent
+      }
+  }
+  return null
+}
 export const commentReducer = createSlice({
   name: "commentReducer",
   initialState,
   reducers: {
-    setLoading: (state, {payload}) => {
+    setLoading: (state, { payload }) => {
       state.isLoading = payload;
     },
     commentSuccess: (state, { payload }) => {
@@ -21,19 +31,8 @@ export const commentReducer = createSlice({
       state.commentList.unshift(payload);
     },
     replyAdded: (state, { payload }) => {
-      const comment = state.commentList.find((i) => i.id === payload.parentId);
-       if(comment)  comment.children.unshift(payload);
-      
-      // 
-      // else{
-      //   const commentChild =  state.commentList.map(i=>i.children.find((i) => i.id === payload.parentId))
-      //   commentChild.children.unshift(payload);
-      //   console.log('some deep level')
-      //   // recursive(state.commentList.children)
-       
-      //  if(comment)  comment.children.unshift(payload);
-      // }
-      
+      const parent = getParent(payload.parentId, state.commentList)
+      parent.children.unshift(payload)
     },
     commentEdit: (state, { payload }) => {
       const comment = state.commentList.find((i) => i.id === payload.id);
@@ -55,7 +54,7 @@ export const {
   commentUploading,
   commentDeleted,
   replyAdded,
-  commentEdit
+  commentEdit,
 } = commentReducer.actions;
 
 export default commentReducer.reducer;

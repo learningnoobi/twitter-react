@@ -178,6 +178,7 @@ const CommentCard = ({ tweetId, user, comment }) => {
 export default CommentCard;
 
 const ReplyComment = ({ childCom, parentCom, tweetId }) => {
+  
   const [showReply, setShowReply] = useState(false);
   return (
     <div className="replyCard ">
@@ -189,6 +190,7 @@ const ReplyComment = ({ childCom, parentCom, tweetId }) => {
             className="authorImage"
           />
         </Link>
+        <div>
         <div className="mx-3 d-flex justify-content-center align-items-center">
           <strong>
             <Link to={`/${childCom.author.username}`}>
@@ -198,15 +200,15 @@ const ReplyComment = ({ childCom, parentCom, tweetId }) => {
             <Link to={`/${parentCom.author.username}`}>
               {parentCom.author.username}
             </Link>
-            <p className="side-name">{childCom.body}</p>
+            
           </strong>
-          {/* <span className="mx-2 side-name">
-              {Moment(childCom.created).fromNow()}
+          <span className="mx-2 side-name">
+              - {Moment(childCom.created).fromNow()}
             </span>
-
-             */}
-             
         </div>
+        <p className="mx-3 side-name">{childCom.body}</p>
+        </div>
+  
         
         
       </div>
