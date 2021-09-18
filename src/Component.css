@@ -217,8 +217,17 @@
   border: 1px solid rgb(59, 58, 82);
   border-radius: 10px;
   padding: 7px 20px;
-  margin-inline: 40px;
+  margin-left: 20px;
   margin-bottom: 2px;
+}
+.showHideReply{
+  cursor: pointer;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: small;
+  transition: 300ms ease-in;
+}
+.showHideReply:hover{
+  color: rgb(211, 80, 148);
 }
 @media only screen and (max-width: 1150px) {
   .profile-image {

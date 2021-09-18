@@ -4,15 +4,22 @@ import { TweetOperation } from "./SimpleComponents";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { BiUserPlus, BiEditAlt, BiBlock,BiCaretRight } from "react-icons/bi";
+import {
+  BiUserPlus,
+  BiEditAlt,
+  BiBlock,
+  BiCaretUp,
+  BiCaretRight,
+  BiCaretDown,
+} from "react-icons/bi";
 import { delComment, editComment } from "../redux/asyncActions/CommentAsync";
 import Moment from "moment";
 import AddPicker from "./AddPicker";
-import { ArcherContainer, ArcherElement } from 'react-archer';
-
+import { ArcherContainer, ArcherElement } from "react-archer";
 
 const CommentCard = ({ tweetId, user, comment }) => {
   const [curIndex, setCurIndex] = useState(null);
+  const [showReply, setShowReply] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editCommentInput, setEditComment] = useState(comment.body);
   const dispatch = useDispatch();
@@ -22,7 +29,6 @@ const CommentCard = ({ tweetId, user, comment }) => {
   };
   return (
     <div className="comment-card ">
-      
       <span>
         <FiMoreHorizontal
           data-toggle="dropdown"
@@ -69,18 +75,16 @@ const CommentCard = ({ tweetId, user, comment }) => {
           )}
         </div>
       </span>
-     
+
       <div key={comment.id} className="comment-innerDiv">
-     
-             <Link to={`/${comment.author.username}`}>
+        <Link to={`/${comment.author.username}`}>
           <img
             src={`http://127.0.0.1:8000${comment.author.avatar}`}
             alt="comment-author"
             className="authorImage"
           />
         </Link>
-        
-       
+
         <div>
           <div className="comment-info">
             {comment.author.username}
@@ -127,54 +131,105 @@ const CommentCard = ({ tweetId, user, comment }) => {
           )}
         </div>
       </div>
-      
-      <TweetOperation
-            reply={true}
-              id={tweetId}
-              comid={comment.id}
-              // liked={tweet.iliked}
-              // likeTweetD={likeTweetD}
-              // like_count={tweet.like_count}
-              // bookmark = {tweet.i_bookmarked} 
 
+      <TweetOperation
+        reply={true}
+        id={tweetId}
+        comid={comment.id}
+        // liked={tweet.iliked}
+        // likeTweetD={likeTweetD}
+        // like_count={tweet.like_count}
+        // bookmark = {tweet.i_bookmarked}
       />
-   
-    {comment.children && comment.children.map((childcom) => (
-        <ReplyComment  childCom={childcom} parentCom={comment}/>
-        // <CommentCard tweetId={tweetId} user={user} comment={comment}/>
-      ))}
-   
-     
+      {comment.children.length > 0 && (
+        <strong
+          onClick={() => setShowReply(!showReply)}
+          className="d-flex justify-content-center align-items-center my-2 showHideReply"
+        >
+         
+          {showReply ? (
+            <>
+             Hide Replies ({comment.children.length})
+            <BiCaretUp className="mx-2" size={24} />
+            </>
+          ) : (
+            <>
+             Show Replies ({comment.children.length})
+            <BiCaretDown className="mx-2" size={24} />
+            </>
+          )}
+        </strong>
+      )}
+      {showReply &&
+        comment.children &&
+        comment.children.map((childcom) => (
+          <ReplyComment
+            tweetId={tweetId}
+            childCom={childcom}
+            parentCom={comment}
+          />
+          // <CommentCard tweetId={tweetId} user={user} comment={comment}/>
+        ))}
     </div>
   );
 };
 
 export default CommentCard;
 
-const ReplyComment = ({ childCom ,parentCom}) => {
+const ReplyComment = ({ childCom, parentCom, tweetId }) => {
+  const [showReply, setShowReply] = useState(false);
   return (
-    <div  className="replyCard d-flex">
-       <Link to={`/${childCom.author.username}`}>
+    <div className="replyCard ">
+      <div className="d-flex">
+        <Link to={`/${childCom.author.username}`}>
           <img
-          
             src={`http://127.0.0.1:8000${childCom.author.avatar}`}
             alt="comment-author"
             className="authorImage"
           />
         </Link>
-     <div className="mx-3">
-     <strong >
-     <Link to={`/${childCom.author.username}`}> 
-        {childCom?.author.username}
-        </Link>
-         <BiCaretRight/>
-        <Link to={`/${parentCom.author.username}`}> 
-        {parentCom.author.username} 
-        </Link>
-      </strong>
-      <p className="side-name">{childCom.body}</p>
-     </div>
-    
+        <div className="mx-3">
+          <strong>
+            <Link to={`/${childCom.author.username}`}>
+              {childCom?.author.username}
+            </Link>
+            <BiCaretRight />
+            <Link to={`/${parentCom.author.username}`}>
+              {parentCom.author.username}
+            </Link>
+          </strong>
+          <p className="side-name">{childCom.body}</p>
+        </div>
+      </div>
+      <TweetOperation reply={true} id={tweetId} comid={childCom.id} />
+      {childCom.children.length > 0 && (
+        <strong
+          onClick={() => setShowReply(!showReply)}
+          className="d-flex justify-content-center align-items-center my-2 showHideReply"
+        >
+         
+          {showReply ? (<>
+             Hide Replies ({childCom.children.length})
+            <BiCaretUp className="mx-2" size={24} /></>
+          ) : (
+            <>
+             Show Replies ({childCom.children.length})
+            <BiCaretDown className="mx-2" size={24} />
+            </>
+          )}
+        </strong>
+      )}
+  
+
+      {showReply && childCom.children &&
+        childCom.children.map((child) => (
+          <ReplyComment
+            tweetId={tweetId}
+            childCom={child}
+            parentCom={childCom}
+          />
+          // <CommentCard tweetId={tweetId} user={user} comment={comment}/>
+        ))}
     </div>
   );
 };
