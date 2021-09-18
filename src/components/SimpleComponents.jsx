@@ -1,8 +1,7 @@
-import React, { useState, useEffect,useRef} from "react";
-
+import React, { useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import {
-  AiOutlineHeart,
+  
   AiOutlineComment,
   AiOutlineRetweet,
 } from "react-icons/ai";
@@ -110,12 +109,13 @@ export const TweetOperation = ({
                 >
                   Add Comment
                 </button>
+               
               </div>
             </div>
           </div>
         </div>
       )}
-
+      
       <i  data-toggle="tooltip" title="Re- Tweet" className="tweetIcons">
         <AiOutlineRetweet />
       </i>
@@ -154,67 +154,4 @@ TweetOperation.propTypes = {
   id: PropTypes.number,
   likeTweetD: PropTypes.func,
   like_count: PropTypes.number,
-};
-
-const CommentModal = ({ idName, comId }) => {
-  const [commentInput, setCommentInput] = useState();
-  const dispatch = useDispatch();
-  // console.log(idName)
-  const commentAdd = () => {
-    comId && dispatch(addComment(comId, commentInput));
-    setCommentInput("");
-  };
-
-  return (
-    <div
-      className="modal fade"
-      id={`${idName}`}
-
-      tabIndex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered" role="document">
-        <div className="modal-content modal-custom-css">
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLongTitle">
-              Add Comment
-            </h5>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body custom-modal-body">
-            <textarea
-              value={commentInput}
-              onChange={(e) => setCommentInput(e.target.value)}
-              type="text"
-              name="text"
-              placeholder="add Comment"
-              className="inputTag"
-            ></textarea>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="link-tweet " data-dismiss="modal">
-              Close
-            </button>
-            <button
-              onClick={commentAdd}
-              type="button"
-              className="link-tweet outline"
-              data-dismiss="modal"
-            >
-              Add Comment
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 };

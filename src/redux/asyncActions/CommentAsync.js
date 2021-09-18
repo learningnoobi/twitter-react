@@ -18,22 +18,25 @@ export const tweet_comments = (id) => async (dispatch) => {
 export const addComment = (id,body,comid,reply=false) => async (dispatch) => {
     dispatch(commentUploading(true));
     try {
+      //this is for replying to a commnt
       if(reply){
         const res = await axiosInstance.post(`tweets/comments/reply/${id}/`,
         {
           body,
           "comId":comid
         });
+        // dispatch(tweet_comments(id))
         dispatch(commentUploading(false));
         dispatch(replyAdded(res.data));
-        console.log('pyload is ' ,res.data)
+
         dispatch(setMessage("Reply Added !"));
       }
       else{
+        //this is the parent comment not a reply
         const res = await axiosInstance.post(`tweets/comments/${id}/`,{body});
         dispatch(commentUploading(false));
         dispatch(commentAdded(res.data));
-        console.log('pyload is ' ,res.data)
+      
         dispatch(setMessage("Reply Added !"));
       }
       
@@ -41,7 +44,7 @@ export const addComment = (id,body,comid,reply=false) => async (dispatch) => {
     } catch (err) {
       console.log(err);
       dispatch(commentUploading(false));
-      dispatch(setMessage("Something went Wrong !"));
+      // dispatch(setMessage("Something went Wrong !"));
     }
   };
 

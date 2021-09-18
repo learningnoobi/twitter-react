@@ -191,6 +191,7 @@ body {
 }
 
 .tweetIcons {
+  cursor: pointer;
   font-size: 22px;
   color: rgb(168, 157, 157);
   font-family:Arial, Helvetica, sans-serif;

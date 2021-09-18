@@ -34,14 +34,18 @@ const TweetDetail = () => {
   const userIn = useSelector(
     (state) => state.userReducer
   );
+ 
   const { username, id } = useParams();
   const { user } =userIn;
 
   const message = useSelector((state) => state.tweetReducer.message);
   const comments = useSelector((state) => state.commentReducer);
+
   useEffect(() => {
     dispatch(tweet_detail(id));
     dispatch(tweet_comments(id));
+   
+ 
   }, []);
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
@@ -185,13 +189,13 @@ const TweetDetail = () => {
                 <ClipLoader color="#f44" loading={true} size={23} />
               </span>
             ) : (
-              comments.commentList.map((comment) => (
+              comments?.commentList.map((comment) => (
                 <CommentCard
                   tweetId={tweet.id}
                   user={user}
                   key={comment.id}
                   comment={comment}
-                 
+
                 />
               ))
             )}

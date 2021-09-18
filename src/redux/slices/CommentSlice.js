@@ -6,6 +6,7 @@ const initialState = {
   error: false,
   uploading: false,
 };
+
 export const commentReducer = createSlice({
   name: "commentReducer",
   initialState,
@@ -21,7 +22,18 @@ export const commentReducer = createSlice({
     },
     replyAdded: (state, { payload }) => {
       const comment = state.commentList.find((i) => i.id === payload.parentId);
-      comment.children.unshift(payload);
+       if(comment)  comment.children.unshift(payload);
+      
+      // 
+      // else{
+      //   const commentChild =  state.commentList.map(i=>i.children.find((i) => i.id === payload.parentId))
+      //   commentChild.children.unshift(payload);
+      //   console.log('some deep level')
+      //   // recursive(state.commentList.children)
+       
+      //  if(comment)  comment.children.unshift(payload);
+      // }
+      
     },
     commentEdit: (state, { payload }) => {
       const comment = state.commentList.find((i) => i.id === payload.id);

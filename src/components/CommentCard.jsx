@@ -27,13 +27,13 @@ const CommentCard = ({ tweetId, user, comment }) => {
     dispatch(editComment(id, editCommentInput));
     setEdit(false);
   };
+
   return (
     <div className="comment-card ">
       <span>
         <FiMoreHorizontal
           data-toggle="dropdown"
           className="dropdownIcon"
-          //  id={`#${tweetId}dropdown`}
           aria-haspopup="true"
           aria-expanded="false"
           className="dropdownIcon"
@@ -148,10 +148,10 @@ const CommentCard = ({ tweetId, user, comment }) => {
         >
          
           {showReply ? (
-            <>
+             <span className="showed">
              Hide Replies ({comment.children.length})
             <BiCaretUp className="mx-2" size={24} />
-            </>
+            </span>
           ) : (
             <>
              Show Replies ({comment.children.length})
@@ -165,6 +165,7 @@ const CommentCard = ({ tweetId, user, comment }) => {
         comment.children.map((childcom) => (
           <ReplyComment
             tweetId={tweetId}
+            key={childcom.id}
             childCom={childcom}
             parentCom={comment}
           />
@@ -188,7 +189,7 @@ const ReplyComment = ({ childCom, parentCom, tweetId }) => {
             className="authorImage"
           />
         </Link>
-        <div className="mx-3">
+        <div className="mx-3 d-flex justify-content-center align-items-center">
           <strong>
             <Link to={`/${childCom.author.username}`}>
               {childCom?.author.username}
@@ -197,9 +198,17 @@ const ReplyComment = ({ childCom, parentCom, tweetId }) => {
             <Link to={`/${parentCom.author.username}`}>
               {parentCom.author.username}
             </Link>
+            <p className="side-name">{childCom.body}</p>
           </strong>
-          <p className="side-name">{childCom.body}</p>
+          {/* <span className="mx-2 side-name">
+              {Moment(childCom.created).fromNow()}
+            </span>
+
+             */}
+             
         </div>
+        
+        
       </div>
       <TweetOperation reply={true} id={tweetId} comid={childCom.id} />
       {childCom.children.length > 0 && (
@@ -208,9 +217,9 @@ const ReplyComment = ({ childCom, parentCom, tweetId }) => {
           className="d-flex justify-content-center align-items-center my-2 showHideReply"
         >
          
-          {showReply ? (<>
-             Hide Replies ({childCom.children.length})
-            <BiCaretUp className="mx-2" size={24} /></>
+          {showReply ? (
+             <span className="showed">Hide Replies({childCom.children.length})
+            <BiCaretUp className="mx-2" size={24} /></span>
           ) : (
             <>
              Show Replies ({childCom.children.length})
@@ -224,6 +233,7 @@ const ReplyComment = ({ childCom, parentCom, tweetId }) => {
       {showReply && childCom.children &&
         childCom.children.map((child) => (
           <ReplyComment
+          key={child.id}
             tweetId={tweetId}
             childCom={child}
             parentCom={childCom}

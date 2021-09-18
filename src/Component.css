@@ -226,6 +226,9 @@
   font-size: small;
   transition: 300ms ease-in;
 }
+.showed{
+  color: rgb(231, 117, 180);
+}
 .showHideReply:hover{
   color: rgb(211, 80, 148);
 }
