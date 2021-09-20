@@ -89,6 +89,23 @@ export const addTweet = (uploadData) => async (dispatch) => {
     dispatch(setMessage(`Something went Wrong !`));
   }
 };
+
+export const reTweet = (tweetId) => async (dispatch) => {
+  dispatch(setUploading(true));
+  try {
+    const res = await axiosInstance.post(`tweets/post/retweet/`, tweetId);
+
+    dispatch(setUploading(false));
+    dispatch(tweetAdded(res.data));
+    dispatch(setMessage(`Re Tweeted !`));
+  } catch (err) {
+    dispatch(tweetFail());
+    console.log(err);
+    dispatch(setMessage(`Something went Wrong !`));
+  }
+};
+
+
 export const deleteTweet = (pk) => async (dispatch) => {
   try {
     await axiosInstance.delete(`tweets/${pk}/`);

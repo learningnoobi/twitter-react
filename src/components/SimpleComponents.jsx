@@ -8,7 +8,7 @@ import {
 import { FiShare } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import Heart from "../GooberStyled/TwitterHeart";
-import { bookmarkTweet } from "../redux/asyncActions/TweetAsync";
+import { bookmarkTweet, reTweet } from "../redux/asyncActions/TweetAsync";
 import { addComment } from "../redux/asyncActions/CommentAsync";
 
 export const TweetOperation = ({
@@ -49,7 +49,10 @@ export const TweetOperation = ({
     setComId(null);
     console.log("aded on ", ia);
   };
-
+const sendReTweet = (ia) => {
+dispatch(reTweet(ia));
+console.log("retweeted ", ia);
+}
   return (
     <div className="tweet-bottom-active">
       <i data-toggle="tooltip" title="Add Reply" className="tweetIcons" onClick={() => setId(id)}>
@@ -117,7 +120,7 @@ export const TweetOperation = ({
       )}
       
       <i  data-toggle="tooltip" title="Re- Tweet" className="tweetIcons">
-        <AiOutlineRetweet />
+        <AiOutlineRetweet onClick={()=>sendReTweet(id)}/>
       </i>
       <i className="tweetIcons heart-parent">
         <Heart

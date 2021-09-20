@@ -133,7 +133,7 @@ const Profile = () => {
             <div className="user-info">
               <p>
                 {userprofile?.username} <br />
-                <span className="side-name">@{userprofile?.username}</span>
+                <span className="side-name">@{userprofile?.nickname}</span>
               </p>
               <p>
                 {userprofile?.bio}
