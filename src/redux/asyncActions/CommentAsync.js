@@ -1,4 +1,4 @@
-import {setLoading,commentSuccess,commentAdded,commentEdit,replyAdded ,commentDeleted,commentUploading} from "../slices/CommentSlice";
+import {setLoading,commentSuccess,commentAdded,commentEdit,replyAdded ,commentDeleted,commentUploading, likeUnlikeComment} from "../slices/CommentSlice";
 import { axiosInstance } from "../../index";
 import { setMessage, setUploading } from "../slices/tweetSlice";
 
@@ -15,7 +15,7 @@ export const tweet_comments = (id) => async (dispatch) => {
       console.log(err);
     }
   };
-export const addComment = (id,body,comid,reply=false) => async (dispatch) => {
+  export const addComment = (id,body,comid,reply=false) => async (dispatch) => {
     dispatch(commentUploading(true));
     try {
       //this is for replying to a commnt
@@ -61,6 +61,20 @@ export const addComment = (id,body,comid,reply=false) => async (dispatch) => {
       dispatch(setMessage("Something went Wrong !"));
     }
   };
+
+export const likeComment = (id) => async (dispatch) => {
+    try {
+      const res = await axiosInstance.post(`tweets/love/like-unlike-comment/`, {
+        pk: id,
+      });
+      // console.log('liked Comment')
+      dispatch(likeUnlikeComment({ ...res.data, id: parseInt(id) }));
+    } catch (err) {
+      console.log(err);
+      dispatch(setMessage(`Something went Wrong !`));
+    }
+  };
+
   export const editComment = (id,body) => async (dispatch) => {
     try {
       await axiosInstance.put(`tweets/comment_detail/${id}/`,{

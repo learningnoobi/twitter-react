@@ -19,7 +19,6 @@ const Profile = () => {
   const { username } = useParams();
   const { user: authUser } = useUserInfo();
   const [showUserModal, setShowUserModal] = useState(false);
-  const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [covervisible, setCoverVisible] = useState(false);
   const dispatch = useDispatch();
@@ -171,7 +170,7 @@ const Profile = () => {
 
 export default Profile;
 
-const FollowInfo = ({ number, followinfo }) => {
+export const FollowInfo = ({ number=0, followinfo="" }) => {
   return (
     <div className="d-flex">
       <span className="bold-text">{number}</span>
@@ -179,3 +178,4 @@ const FollowInfo = ({ number, followinfo }) => {
     </div>
   );
 };
+

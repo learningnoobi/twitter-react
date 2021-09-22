@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DropDown from "./DropDown";
 import { TweetOperation } from "../SimpleComponents";
+
 import Moment from "moment";
 import { likeTweet } from "../../redux/asyncActions/TweetAsync";
 import { AiFillUnlock } from "react-icons/ai";
 import { BiGlobe } from "react-icons/bi";
+import { FollowInfo } from "../../pages/Profile";
+import PopInfo from "../PopInfo";
 const TweetPostCard = ({ tweet, dispatch, user }) => {
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
@@ -32,35 +35,51 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
         {tweet.parent ? (
           <div style={{ display: "flex", flexDirection: "column" }}>
             <strong>
-            <Link className="mx-2" to={`${tweet.author.username}`}>
-            {tweet.author.username} 
-              </Link>retweeted !</strong>
-            <TweetHasParentOrNot tweet={tweet.myparent}  />
+              <Link className="mx-2 side-name" to={`${tweet.author.username}`}>
+                {tweet.author.username} retweeted !
+              </Link>
+            </strong>
+
+            <TweetHasParentOrNot tweet={tweet.myparent} />
           </div>
         ) : (
-          <TweetHasParentOrNot tweet={tweet}  />
+          <TweetHasParentOrNot tweet={tweet} />
         )}
       </div>
-      <TweetOperation
-        liked={tweet.iliked}
-        likeTweetD={likeTweetD}
-        like_count={tweet.like_count}
-        tweet={tweet}
-        bookmark={tweet.i_bookmarked}
-        id={tweet.id}
-      />
+      {tweet.parent ? (
+        <TweetOperation
+          liked={tweet.myparent.iliked}
+          likeTweetD={likeTweetD}
+          like_count={tweet.myparent.like_count}
+          tweet={tweet.myparent}
+          bookmark={tweet.myparent.i_bookmarked}
+          id={tweet.myparent.id}
+          oriId={tweet.id}
+          retweet={true}
+        />
+      ) : (
+        <TweetOperation
+          liked={tweet.iliked}
+          likeTweetD={likeTweetD}
+          like_count={tweet.like_count}
+          tweet={tweet}
+          bookmark={tweet.i_bookmarked}
+          id={tweet.id}
+        />
+      )}
     </div>
   );
 };
 
 export default TweetPostCard;
 
-const TweetHasParentOrNot = ({ tweet}) => {
+const TweetHasParentOrNot = ({ tweet }) => {
   return (
     <>
       <span className="d-flex">
-        <span className="add-tweet-image">
-          <Link to={`/${tweet?.author.username}`}>
+        <span className="add-tweet-image ">
+          <div id="hover">
+            {/* to={`/${tweet?.author.username}`} */}
             <img
               alt="img"
               // for some reason image path is different ..
@@ -70,18 +89,22 @@ const TweetHasParentOrNot = ({ tweet}) => {
                   ? tweet?.author.avatar
                   : `http://127.0.0.1:8000${tweet?.author.avatar}`
               }
-              className="rounded-circle author-image"
+              className="rounded-circle author-image "
               width="60px"
               height="60px"
             />
-          </Link>
+            <div id="popup">
+              <PopInfo tweet={tweet} />
+            </div>
+          </div>
         </span>
+
         <Link to={`${tweet?.author.username}/tweet/${tweet?.id}`}>
           <div className="tweet-content">
             <span className="d-flex">
               {tweet?.author.username}
               <span className="side-name">
-                @ {tweet?.author.nickname} |{Moment(tweet?.created).fromNow()}
+                @ {tweet?.author.nickname} | {Moment(tweet?.created).fromNow()}
                 {tweet?.is_private ? <AiFillUnlock /> : <BiGlobe />}
                 {tweet?.isEdited && <span className="mx-2">- Edited</span>}
               </span>
@@ -106,4 +129,8 @@ const TweetHasParentOrNot = ({ tweet}) => {
       </span>
     </>
   );
+};
+
+const HtmlBoi = () => {
+  return <h2>fukc me</h2>;
 };

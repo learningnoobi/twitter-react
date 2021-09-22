@@ -85,7 +85,7 @@ export const addTweet = (uploadData) => async (dispatch) => {
     dispatch(setMessage(`Tweet Added !`));
   } catch (err) {
     dispatch(tweetFail());
-    console.log(err);
+    console.log(err.response.data);
     dispatch(setMessage(`Something went Wrong !`));
   }
 };
@@ -93,15 +93,15 @@ export const addTweet = (uploadData) => async (dispatch) => {
 export const reTweet = (tweetId) => async (dispatch) => {
   dispatch(setUploading(true));
   try {
-    const res = await axiosInstance.post(`tweets/post/retweet/`, tweetId);
+    const res = await axiosInstance.post(`tweets/post/retweet/`, {"tweetId":tweetId});
 
     dispatch(setUploading(false));
-    dispatch(tweetAdded(res.data));
+    // dispatch(tweetAdded(res.data));
     dispatch(setMessage(`Re Tweeted !`));
   } catch (err) {
     dispatch(tweetFail());
-    console.log(err);
-    dispatch(setMessage(`Something went Wrong !`));
+    console.log(err.response.data);
+    dispatch(setMessage(err.response.data.detail));
   }
 };
 
@@ -145,6 +145,8 @@ export const likeTweet = (id) => async (dispatch) => {
     dispatch(setMessage(`Something went Wrong !`));
   }
 };
+
+
 export const bookmarkTweet = (id) => async (dispatch) => {
   try {
     const res = await axiosInstance.post(`tweets/love/bookmark/`, {

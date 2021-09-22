@@ -17,7 +17,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 // import useUserInfo from "../../hooks/useUserInfo";
 
 const AddTweet = () => {
-  const userIn = useSelector(state => state.userReducer);
+  const userIn = useSelector((state) => state.userReducer);
   const uploading = useSelector((state) => state.tweetReducer.uploading);
   const [tweetInput, setTweetInput] = useState("");
   const [PrevImage, setPrevImage] = useState(null);
@@ -27,12 +27,11 @@ const AddTweet = () => {
 
   const dispatch = useDispatch();
   const inputOpenFileRef = useRef(null);
-  const { user ,isAuthenticated} = userIn;
+  const { user, isAuthenticated } = userIn;
 
   useEffect(() => {
-    //bootstrap tooltip 
-    window.$('[data-toggle="tooltip"]').tooltip(); 
-
+    //bootstrap tooltip
+    window.$('[data-toggle="tooltip"]').tooltip();
   }, []);
 
   const addEmoji = (emoji) => {
@@ -62,10 +61,13 @@ const AddTweet = () => {
       ) : (
         <>
           <span className="add-tweet-image">
-             <Link to={user &&`${user.username}`|| '/'}>
+            <Link to={(user && `${user.username}`) || "/"}>
               <img
                 alt="img"
-                src={user && user.avatar||"https://qph.fs.quoracdn.net/main-qimg-92e5c1d46505b34638aafd281449dabc"}
+                src={
+                  (user && user.avatar) ||
+                  "https://qph.fs.quoracdn.net/main-qimg-92e5c1d46505b34638aafd281449dabc"
+                }
                 className="rounded-circle author-image"
                 width="60px"
                 height="60px"
@@ -116,7 +118,12 @@ const AddTweet = () => {
               </div>
               <ul className="add-tweet-icon">
                 <div className="add-icon">
-                  <li  data-toggle="tooltip" title="Add Image" data-placement="bottom" className="side-icon">
+                  <li
+                    data-toggle="tooltip"
+                    title="Add Image"
+                    data-placement="bottom"
+                    className="side-icon"
+                  >
                     <input
                       onChange={imageChanged}
                       ref={inputOpenFileRef}
@@ -124,40 +131,45 @@ const AddTweet = () => {
                       style={{ display: "none" }}
                     />
 
-                    <AiOutlinePicture 
-                     data-placement="up"
-                    onClick={showOpenFileDlg} />
+                    <AiOutlinePicture
+                      data-placement="up"
+                      onClick={showOpenFileDlg}
+                    />
                   </li>
-                  <li  data-toggle="tooltip" title="Add Emoji" data-placement="bottom" className="side-icon">
-                    <AiOutlineSmile 
-                    onClick={() => setShowEmoji(!showEmoji)}
-                     />
+                  <li
+                    data-toggle="tooltip"
+                    title="Add Emoji"
+                    data-placement="bottom"
+                    className="side-icon"
+                  >
+                    <AiOutlineSmile onClick={() => setShowEmoji(!showEmoji)} />
                   </li>
-                  {!PrevImage ? (
-                    <>
-                      <li   data-toggle="tooltip" title="Add Bar" data-placement="bottom" className="side-icon">
-                        <AiOutlineBarChart />
-                      </li>
-                      <li  data-toggle="tooltip" title="Add Gif" data-placement="bottom" className="side-icon">
-                        <AiOutlineGif />
-                      </li>
-                      <li  data-toggle="tooltip" title="Add Schedule" data-placement="bottom" className="side-icon">
-                        <AiOutlineSchedule />
-                      </li>
-                    </>
-                  ) : (
-                    <>
-                      <li className="side-icon disabled">
-                        <AiOutlineBarChart />
-                      </li>
-                      <li className="side-icon disabled">
-                        <AiOutlineGif />
-                      </li>
-                      <li className="side-icon disabled">
-                        <AiOutlineSchedule />
-                      </li>
-                    </>
-                  )}
+                  <li
+                    data-toggle="tooltip"
+                    title="Add Bar"
+                    data-placement="bottom"
+                    className={`side-icon ${PrevImage && 'disabled'}`}
+                    
+                  >
+                    <AiOutlineBarChart />
+                  </li>
+                  <li
+                    data-toggle="tooltip"
+                    title="Add Gif"
+                    data-placement="bottom"
+                    className={`side-icon ${PrevImage && 'disabled'}`}
+                  >
+                    <AiOutlineGif />
+                  </li>
+                  <li
+                    data-toggle="tooltip"
+                    title="Add Schedule"
+                    data-placement="bottom"
+                    className={`side-icon ${PrevImage && 'disabled'}`}
+                  >
+                    <AiOutlineSchedule />
+                  </li>
+                  
                 </div>
 
                 <button
@@ -174,7 +186,7 @@ const AddTweet = () => {
               </ul>
               {showEmoji && (
                 <Picker
-                className="dropdown-menu dropdown-menu-right"
+                  className="dropdown-menu dropdown-menu-right"
                   set="twitter"
                   showPreview={true}
                   onSelect={addEmoji}
@@ -186,8 +198,6 @@ const AddTweet = () => {
                   }}
                 />
               )}
-            
-              
             </div>
           </div>
         </>

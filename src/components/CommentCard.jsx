@@ -12,10 +12,9 @@ import {
   BiCaretRight,
   BiCaretDown,
 } from "react-icons/bi";
-import { delComment, editComment } from "../redux/asyncActions/CommentAsync";
+import { delComment, editComment, likeComment } from "../redux/asyncActions/CommentAsync";
 import Moment from "moment";
 import AddPicker from "./AddPicker";
-import { ArcherContainer, ArcherElement } from "react-archer";
 
 const CommentCard = ({ tweetId, user, comment }) => {
   const [curIndex, setCurIndex] = useState(null);
@@ -27,7 +26,9 @@ const CommentCard = ({ tweetId, user, comment }) => {
     dispatch(editComment(id, editCommentInput));
     setEdit(false);
   };
-
+  const likeTweetD = (id) => {
+    dispatch(likeComment(id));
+  };
   return (
     <div className="comment-card ">
       <span>
@@ -79,7 +80,7 @@ const CommentCard = ({ tweetId, user, comment }) => {
       <div key={comment.id} className="comment-innerDiv">
         <Link to={`/${comment.author.username}`}>
           <img
-            src={`http://127.0.0.1:8000${comment.author.avatar}`}
+            src={`${comment.author.avatar}`}
             alt="comment-author"
             className="authorImage"
           />
@@ -136,9 +137,9 @@ const CommentCard = ({ tweetId, user, comment }) => {
         reply={true}
         id={tweetId}
         comid={comment.id}
-        // liked={tweet.iliked}
-        // likeTweetD={likeTweetD}
-        // like_count={tweet.like_count}
+        liked={comment.iliked}
+        likeTweetD={likeTweetD}
+        like_count={comment.like_count}
         // bookmark = {tweet.i_bookmarked}
       />
       {comment.children.length > 0 && (
@@ -178,14 +179,17 @@ const CommentCard = ({ tweetId, user, comment }) => {
 export default CommentCard;
 
 const ReplyComment = ({ childCom, parentCom, tweetId }) => {
-  
+  const dispatch = useDispatch();
+  const likeTweetD = (id) => {
+    dispatch(likeComment(id));
+  };
   const [showReply, setShowReply] = useState(false);
   return (
     <div className="replyCard ">
       <div className="d-flex">
         <Link to={`/${childCom.author.username}`}>
           <img
-            src={`http://127.0.0.1:8000${childCom.author.avatar}`}
+            src={`${childCom.author.avatar}`}
             alt="comment-author"
             className="authorImage"
           />
@@ -212,7 +216,17 @@ const ReplyComment = ({ childCom, parentCom, tweetId }) => {
         
         
       </div>
-      <TweetOperation reply={true} id={tweetId} comid={childCom.id} />
+
+      <TweetOperation
+        reply={true}
+        id={tweetId}
+        comid={childCom.id}
+        liked={childCom.iliked}
+        likeTweetD={likeTweetD}
+        reply={true} 
+        like_count={childCom.like_count}
+        // bookmark = {tweet.i_bookmarked}
+      />
       {childCom.children.length > 0 && (
         <strong
           onClick={() => setShowReply(!showReply)}
@@ -239,6 +253,7 @@ const ReplyComment = ({ childCom, parentCom, tweetId }) => {
             tweetId={tweetId}
             childCom={child}
             parentCom={childCom}
+            
           />
           // <CommentCard tweetId={tweetId} user={user} comment={comment}/>
         ))}

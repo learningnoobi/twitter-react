@@ -139,11 +139,7 @@ body {
   margin-top: 5px;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
-.navbar-nav li:nth-child(10) {
-  background-color: var(--red);
-  border-radius: 30px;
-  margin-top: 10px;
-}
+
 .navbar-nav li:last-child {
   margin-top: 20px;
 }
@@ -153,9 +149,15 @@ body {
   border-radius: 30px;
 }
 .navbar-nav li:hover {
-  background-color: var(--red);
+  /* background-color: var(--red); */
+  background-color: #223345;
   color: var(--red) !important;
   border-radius: 30px;
+}
+.navbar-nav li:nth-child(10) {
+  background-color: var(--red);
+  border-radius: 30px;
+  margin-top: 10px;
 }
 .navbar-nav a {
   text-decoration: none;

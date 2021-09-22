@@ -1,35 +1,34 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import PropTypes from "prop-types";
-import {
-  
-  AiOutlineComment,
-  AiOutlineRetweet,
-} from "react-icons/ai";
+import { AiOutlineComment, AiOutlineRetweet } from "react-icons/ai";
 import { FiShare } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import Heart from "../GooberStyled/TwitterHeart";
-import { bookmarkTweet, reTweet } from "../redux/asyncActions/TweetAsync";
+import { bookmarkTweet, deleteTweet, reTweet } from "../redux/asyncActions/TweetAsync";
 import { addComment } from "../redux/asyncActions/CommentAsync";
-
+import { Picker } from "emoji-mart";
+import AddPicker from "./AddPicker";
 export const TweetOperation = ({
   bookmark,
   liked,
   id,
+  oriId=null,
+  retweet=false,
   likeTweetD,
   like_count,
-  comid=null,
-  reply
+  comid = null,
+  reply,
 }) => {
   const [isclicked, setClick] = useState(null);
   const dispatch = useDispatch();
   const [comId, setComId] = useState(null);
   const [bookmarked, setBookmarked] = useState(null);
   const [commentInput, setCommentInput] = useState();
-
+  const inputRef = useRef()
   useEffect(() => {
-    //bootstrap tooltip 
-  
-    window.$('[data-toggle="tooltip"]').tooltip(); 
+    //bootstrap tooltip
+    window.$('[data-toggle="tooltip"]').tooltip();
+
     setClick(liked);
     setBookmarked(bookmark);
   }, [liked, bookmark]);
@@ -44,20 +43,24 @@ export const TweetOperation = ({
   };
 
   const commentAdd = (ia) => {
-    dispatch(addComment(ia, commentInput,comid,reply));
+    dispatch(addComment(ia, commentInput, comid, reply));
     setCommentInput("");
     setComId(null);
     console.log("aded on ", ia);
   };
-const sendReTweet = (ia) => {
-dispatch(reTweet(ia));
-console.log("retweeted ", ia);
-}
+  const sendReTweet = (ia) => {
+    dispatch(reTweet(ia));
+    console.log("retweeted ", ia);
+  };
   return (
     <div className="tweet-bottom-active">
-      <i data-toggle="tooltip" title="Add Reply" className="tweetIcons" onClick={() => setId(id)}>
-        <AiOutlineComment 
-        data-toggle="modal" data-target="#what" />
+      <i
+        data-toggle="tooltip"
+        title="Add Reply"
+        className="tweetIcons"
+        onClick={() => setId(id)}
+      >
+        <AiOutlineComment data-toggle="modal" data-target="#what" />
       </i>
 
       {comId && (
@@ -91,59 +94,72 @@ console.log("retweeted ", ia);
                   type="text"
                   name="text"
                   placeholder="add Comment"
+                  ref={inputRef}
                   className="inputTag"
-               
+                  autofocus
                 ></textarea>
               </div>
               <div className="modal-footer">
-                <button
-                  onClick={() => setComId(null)}
-                  type="button"
-                  className="link-tweet "
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
+              <AddPicker
+                  classNem="picker-comment"
+                  setInput={setCommentInput}
+                />
+                
                 <button
                   onClick={() => commentAdd(comId)}
                   type="button"
                   className="link-tweet outline"
                   data-dismiss="modal"
                 >
-                  Add Comment
+                  Add Reply
                 </button>
-               
+                <button
+                  onClick={() => setComId(null)}
+                  type="button"
+                  className="link-tweet"
+                  data-dismiss="modal"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
         </div>
       )}
-      
-      <i  data-toggle="tooltip" title="Re- Tweet" className="tweetIcons">
-        <AiOutlineRetweet onClick={()=>sendReTweet(id)}/>
-      </i>
+
+     { retweet ? <i data-toggle="tooltip" title="Will Delete Re Tweet" className="tweetIcons">
+        <AiOutlineRetweet
+         color="lightgreen"
+         
+          onClick={() => dispatch(deleteTweet(oriId)) }/>
+      </i>:
+      <i data-toggle="tooltip" title="Re- Tweet" className="tweetIcons">
+       <AiOutlineRetweet onClick={() => sendReTweet(id)} /></i>
+      }
       <i className="tweetIcons heart-parent">
         <Heart
           isclicked={isclicked ? 1 : 0}
           onClick={() => {
             setClick(!isclicked);
-            likeTweetD(id);
+            comid?likeTweetD(comid):likeTweetD(id);
           }}
         />
         <span className="count">{like_count}</span>
       </i>
       {bookmarked ? (
-        <i 
-        data-html="true"
-        data-toggle="tooltip" title="Bookmark" 
-        data-placement="up"
-        className="tweetIcons pointer">
+        <i
+          data-html="true"
+          data-toggle="tooltip"
+          title="Bookmark"
+          data-placement="up"
+          className="tweetIcons pointer"
+        >
           <FiShare color="lightgreen" onClick={() => onBookmark(id)} />
         </i>
       ) : (
         <i
-        data-toggle="tooltip" 
-        title="Bookmark!"
+          data-toggle="tooltip"
+          title="Bookmark!"
           className="tweetIcons pointer"
         >
           <FiShare onClick={() => onBookmark(id)} />

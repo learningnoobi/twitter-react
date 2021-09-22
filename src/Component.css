@@ -118,10 +118,58 @@
 .link-go:hover {
   color: rgb(218, 99, 150);
 }
+.add-tweet-image {
+  position: relative;
+  display: block;
+}
+
+#hover {
+
+  padding: 6px;
+  display: block;
+  position: relative;
+
+}
+
+
+#popup {
+  opacity: 0;
+  position: absolute;
+  top: 62px;
+  left: -8px;
+  min-width: 180px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(45deg, #131d27, #16222e);
+  box-shadow: 5px -5px 10px #080d11, -5px 5px 10px #223345;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  height: 0px;
+  padding: 12px;
+  overflow: hidden;
+  -webkit-transition: all 500ms;
+  transition: all 500ms;
+}
+
+.abs-follow{
+  position: absolute;
+  right: 10px;
+}
+
+#hover:hover #popup {
+  padding: 12px 12px;
+  height: auto;
+  opacity: 1;
+  border: 1px solid #262629;
+}
+
+
 .author-image {
   height: 60px;
   width: 60px;
   object-fit: cover;
+  position: relative;
 }
 .profile-image {
   height: 130px;
@@ -141,7 +189,7 @@
   object-fit: cover;
   cursor: pointer;
 }
-.cover-edit{
+.cover-edit {
   width: 100%;
   min-height: 100px;
   max-height: 180px;
@@ -198,38 +246,38 @@
 #modalId::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-.modal-custom-css{
+.modal-custom-css {
   background-color: #15202b;
 }
-.custom-modal-body{
+.custom-modal-body {
   overflow-y: auto;
   max-height: 500px;
 }
 .modal-header {
-  border-bottom:0.2px solid gray ;
+  border-bottom: 0.2px solid gray;
 }
 
 .modal-footer {
   border-top: 0 none;
 }
 
-.replyCard{
+.replyCard {
   border: 1px solid rgb(59, 58, 82);
   border-radius: 10px;
   padding: 7px 20px;
   margin-left: 20px;
   margin-bottom: 2px;
 }
-.showHideReply{
+.showHideReply {
   cursor: pointer;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: small;
   transition: 300ms ease-in;
 }
-.showed{
+.showed {
   color: rgb(231, 117, 180);
 }
-.showHideReply:hover{
+.showHideReply:hover {
   color: rgb(211, 80, 148);
 }
 @media only screen and (max-width: 1150px) {
@@ -245,7 +293,7 @@
     margin-top: -30px;
     transform: scale(0.8);
   }
-  .picker-comment{
+  .picker-comment {
     margin-left: -60px;
     margin-top: -30px;
     transform: scale(0.8);
@@ -265,7 +313,7 @@
     margin-left: -180px;
     transform: scale(0.7);
   }
-  .picker-comment{
+  .picker-comment {
     margin-left: -60px;
     margin-top: -60px;
     transform: scale(0.7);

@@ -44,6 +44,10 @@ export const commentReducer = createSlice({
     commentUploading: (state, { payload }) => {
       state.uploading = payload;
     },
+    likeUnlikeComment:(state,{payload}) => {
+      const parent = getParent(payload.id, state.commentList)
+      parent.like_count = payload.count;
+    }
   },
 });
 
@@ -55,6 +59,7 @@ export const {
   commentDeleted,
   replyAdded,
   commentEdit,
+  likeUnlikeComment
 } = commentReducer.actions;
 
 export default commentReducer.reducer;
