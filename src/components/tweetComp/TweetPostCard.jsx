@@ -133,6 +133,4 @@ const TweetHasParentOrNot = ({ tweet }) => {
   );
 };
 
-const HtmlBoi = () => {
-  return <h2>fukc me</h2>;
-};
+
