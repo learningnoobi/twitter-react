@@ -9,14 +9,14 @@ const initialState = {
 
 const getParent = (id, comments) => {
   for (const comment of comments) {
-      if ( comment.id == id ) return comment
-      else {
-          const gotParent = getParent(id, comment.children)
-          if (gotParent) return gotParent
-      }
+    if (comment.id == id) return comment;
+    else {
+      const gotParent = getParent(id, comment.children);
+      if (gotParent) return gotParent;
+    }
   }
-  return null
-}
+  return null;
+};
 export const commentReducer = createSlice({
   name: "commentReducer",
   initialState,
@@ -31,23 +31,26 @@ export const commentReducer = createSlice({
       state.commentList.unshift(payload);
     },
     replyAdded: (state, { payload }) => {
-      const parent = getParent(payload.parentId, state.commentList)
-      parent.children.unshift(payload)
+      const parent = getParent(payload.parentId, state.commentList);
+      parent.children.unshift(payload);
     },
     commentEdit: (state, { payload }) => {
-      const comment = state.commentList.find((i) => i.id === payload.id);
-      if (comment) comment.body = payload.body;
+      const parent = getParent(payload.id, state.commentList);
+      parent.body = payload.body;
     },
     commentDeleted: (state, { payload }) => {
-      state.commentList = state.commentList.filter((i) => i.id !== payload);
+      const parent = getParent(payload, state.commentList);
+      // parent.body = payload.body;
+
+      state.commentList = state.commentList.filter((i) => i.id !== parent.id);
     },
     commentUploading: (state, { payload }) => {
       state.uploading = payload;
     },
-    likeUnlikeComment:(state,{payload}) => {
-      const parent = getParent(payload.id, state.commentList)
+    likeUnlikeComment: (state, { payload }) => {
+      const parent = getParent(payload.id, state.commentList);
       parent.like_count = payload.count;
-    }
+    },
   },
 });
 
@@ -59,7 +62,7 @@ export const {
   commentDeleted,
   replyAdded,
   commentEdit,
-  likeUnlikeComment
+  likeUnlikeComment,
 } = commentReducer.actions;
 
 export default commentReducer.reducer;

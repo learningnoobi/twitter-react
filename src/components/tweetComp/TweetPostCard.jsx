@@ -104,9 +104,11 @@ const TweetHasParentOrNot = ({ tweet }) => {
             <span className="d-flex">
               {tweet?.author.username}
               <span className="side-name">
-                @ {tweet?.author.nickname} | {Moment(tweet?.created).fromNow()}
+                @ {tweet?.author.nickname} | {Moment(tweet?.created).fromNow(true)}
+                <span className="mx-2">
                 {tweet?.is_private ? <AiFillUnlock /> : <BiGlobe />}
                 {tweet?.isEdited && <span className="mx-2">- Edited</span>}
+                </span>
               </span>
             </span>
 

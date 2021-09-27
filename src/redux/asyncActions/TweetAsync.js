@@ -91,11 +91,11 @@ export const addTweet = (uploadData) => async (dispatch) => {
 };
 
 export const reTweet = (tweetId) => async (dispatch) => {
-  dispatch(setUploading(true));
+
   try {
     const res = await axiosInstance.post(`tweets/post/retweet/`, {"tweetId":tweetId});
 
-    dispatch(setUploading(false));
+   
     // dispatch(tweetAdded(res.data));
     dispatch(setMessage(`Re Tweeted !`));
   } catch (err) {

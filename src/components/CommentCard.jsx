@@ -9,12 +9,16 @@ import {
   BiEditAlt,
   BiBlock,
   BiCaretUp,
-  BiCaretRight,
   BiCaretDown,
 } from "react-icons/bi";
-import { delComment, editComment, likeComment } from "../redux/asyncActions/CommentAsync";
+import {
+  delComment,
+  editComment,
+  likeComment,
+} from "../redux/asyncActions/CommentAsync";
 import Moment from "moment";
-import AddPicker from "./AddPicker";
+import ReplyComment from "./ReplyComment";
+import { EditPost } from "./EditPost";
 
 const CommentCard = ({ tweetId, user, comment }) => {
   const [curIndex, setCurIndex] = useState(null);
@@ -41,39 +45,13 @@ const CommentCard = ({ tweetId, user, comment }) => {
         />
 
         <div className="dropdown-menu dropdown-menu-right dropdownMenu">
-          {user.email !== comment.author.email && (
-            <>
-              <p>
-                <BiUserPlus /> <span>Unfollow Rayos</span>
-              </p>
-              <p>
-                <BiBlock />
-                <span>Block</span>
-              </p>
-            </>
-          )}
-          {user.email === comment.author.email && (
-            <>
-              <p
-                onClick={() => {
-                  setEdit(true);
-                  setCurIndex(null);
-                }}
-              >
-                <BiEditAlt />
-                <span>Edit Reply</span>
-              </p>
-              <p
-                onClick={() => {
-                  dispatch(delComment(comment.id));
-                  setCurIndex(null);
-                }}
-              >
-                <AiOutlineDelete color="#e0245e" />
-                <span style={{ color: "#e0245e" }}>Delete Reply</span>
-              </p>
-            </>
-          )}
+          <DropdownContent
+            setEdit={setEdit}
+            dispatch={dispatch}
+            user={user}
+            setCurIndex={setCurIndex}
+            comment={comment}
+          />
         </div>
       </span>
 
@@ -90,46 +68,19 @@ const CommentCard = ({ tweetId, user, comment }) => {
           <div className="comment-info">
             {comment.author.username}
             <span className="mx-2 side-name">
-              {Moment(comment.created).fromNow()}
+              {Moment(comment.created).fromNow(true)}
               {comment.isEdited && "- Edited"}
             </span>
           </div>
-          {edit ? (
-            <>
-              <div>
-                <textarea
-                  value={editCommentInput}
-                  onChange={(e) => setEditComment(e.target.value)}
-                  className="editArea"
-                ></textarea>
-              </div>
 
-              <div className="d-flex">
-                <AddPicker
-                  classNem="picker-comment"
-                  setInput={setEditComment}
-                />
-
-                <button
-                  onClick={() => {
-                    sendEditComment(comment.id);
-                  }}
-                  className="btn btn-primary"
-                >
-                  Edit
-                </button>
-
-                <button
-                  onClick={() => setEdit(false)}
-                  className="btn btn-danger mx-2"
-                >
-                  Cancel
-                </button>
-              </div>
-            </>
-          ) : (
-            <p className="mx-4 mt-2">{comment.body}</p>
-          )}
+          <EditPost
+            edit={edit}
+            editCommentInput={editCommentInput}
+            setEditComment={setEditComment}
+            comment={comment}
+            setEdit={setEdit}
+            sendEditComment={sendEditComment}
+          />
         </div>
       </div>
 
@@ -147,16 +98,15 @@ const CommentCard = ({ tweetId, user, comment }) => {
           onClick={() => setShowReply(!showReply)}
           className="d-flex justify-content-center align-items-center my-2 showHideReply"
         >
-         
           {showReply ? (
-             <span className="showed">
-             Hide Replies ({comment.children.length})
-            <BiCaretUp className="mx-2" size={24} />
+            <span className="showed">
+              Hide Replies ({comment.children.length})
+              <BiCaretUp className="mx-2" size={24} />
             </span>
           ) : (
             <>
-             Show Replies ({comment.children.length})
-            <BiCaretDown className="mx-2" size={24} />
+              Show Replies ({comment.children.length})
+              <BiCaretDown className="mx-2" size={24} />
             </>
           )}
         </strong>
@@ -169,6 +119,11 @@ const CommentCard = ({ tweetId, user, comment }) => {
             key={childcom.id}
             childCom={childcom}
             parentCom={comment}
+            user={user}
+            setEdit={setEdit}
+            setCurIndex={setCurIndex}
+
+  
           />
           // <CommentCard tweetId={tweetId} user={user} comment={comment}/>
         ))}
@@ -178,85 +133,43 @@ const CommentCard = ({ tweetId, user, comment }) => {
 
 export default CommentCard;
 
-const ReplyComment = ({ childCom, parentCom, tweetId }) => {
-  const dispatch = useDispatch();
-  const likeTweetD = (id) => {
-    dispatch(likeComment(id));
-  };
-  const [showReply, setShowReply] = useState(false);
+export const DropdownContent = ({ user, comment, setEdit, setCurIndex, dispatch }) => {
   return (
-    <div className="replyCard ">
-      <div className="d-flex">
-        <Link to={`/${childCom.author.username}`}>
-          <img
-            src={`${childCom.author.avatar}`}
-            alt="comment-author"
-            className="authorImage"
-          />
-        </Link>
-        <div>
-        <div className="mx-3 d-flex justify-content-center align-items-center">
-          <strong>
-            <Link to={`/${childCom.author.username}`}>
-              {childCom?.author.username}
-            </Link>
-            <BiCaretRight />
-            <Link to={`/${parentCom.author.username}`}>
-              {parentCom.author.username}
-            </Link>
-            
-          </strong>
-          <span className="mx-2 side-name">
-              - {Moment(childCom.created).fromNow()}
-            </span>
-        </div>
-        <p className="mx-3 side-name">{childCom.body}</p>
-        </div>
-  
-        
-        
-      </div>
-
-      <TweetOperation
-        reply={true}
-        id={tweetId}
-        comid={childCom.id}
-        liked={childCom.iliked}
-        likeTweetD={likeTweetD}
-        reply={true} 
-        like_count={childCom.like_count}
-        // bookmark = {tweet.i_bookmarked}
-      />
-      {childCom.children.length > 0 && (
-        <strong
-          onClick={() => setShowReply(!showReply)}
-          className="d-flex justify-content-center align-items-center my-2 showHideReply"
-        >
-         
-          {showReply ? (
-             <span className="showed">Hide Replies({childCom.children.length})
-            <BiCaretUp className="mx-2" size={24} /></span>
-          ) : (
-            <>
-             Show Replies ({childCom.children.length})
-            <BiCaretDown className="mx-2" size={24} />
-            </>
-          )}
-        </strong>
+    <>
+      {user.email !== comment.author.email && (
+        <>
+          <p>
+            <BiUserPlus /> <span>Unfollow Rayos</span>
+          </p>
+          <p>
+            <BiBlock />
+            <span>Block</span>
+          </p>
+        </>
       )}
-  
-
-      {showReply && childCom.children &&
-        childCom.children.map((child) => (
-          <ReplyComment
-          key={child.id}
-            tweetId={tweetId}
-            childCom={child}
-            parentCom={childCom}
-            
-          />
-          // <CommentCard tweetId={tweetId} user={user} comment={comment}/>
-        ))}
-    </div>
+      {user.email === comment.author.email && (
+        <>
+          <p
+            onClick={() => {
+              setEdit(true);
+              setCurIndex(null);
+            }}
+          >
+            <BiEditAlt />
+            <span>Edit Reply</span>
+          </p>
+          <p
+            onClick={() => {
+              dispatch(delComment(comment.id));
+              setCurIndex(null);
+            }}
+          >
+            <AiOutlineDelete color="#e0245e" />
+            <span style={{ color: "#e0245e" }}>Delete Reply</span>
+          </p>
+        </>
+      )}
+    </>
   );
 };
+
