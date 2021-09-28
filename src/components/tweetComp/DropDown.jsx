@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BiUserPlus, BiEditAlt, BiBlock } from "react-icons/bi";
+import React from "react";
+import { BiUserPlus, BiBlock } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { deleteTweet } from "../../redux/asyncActions/TweetAsync";

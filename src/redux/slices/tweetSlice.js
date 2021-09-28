@@ -28,6 +28,10 @@ export const tweetReducer = createSlice({
     tweetFail: (state) => {
       state.error = true;
     },
+    tweetUser:(state,{payload}) =>{
+      const userMan = state.tweets.find((i) => i.author.username === payload.username);
+      userMan.author.i_follow = payload.follow
+    },
     tweetAdded: (state, { payload }) => {
       state.tweets.unshift(payload);
     },
@@ -58,6 +62,7 @@ export const {
   setUploading,
   setMessage,
   removeMesage,
+  tweetUser,
   likeUnlikeTweet
   
 } = tweetReducer.actions;

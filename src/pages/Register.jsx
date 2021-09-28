@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { RiTwitterFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { BiError } from "react-icons/bi";
 import { WarningText } from "../GooberStyled/Common";
 import AlertMessage from "../components/alertMessage";
 import { removeMesage } from "../redux/slices/userSlice";
@@ -29,7 +28,7 @@ const Register = () => {
     if (isAuthenticated) {
       history.push("/");
     }
-  }, []);
+  }, [isAuthenticated,history]);
   return (
     <div className="mainForm">
       <div style={{maxWidth:'400px'}}>

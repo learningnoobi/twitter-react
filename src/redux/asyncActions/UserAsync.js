@@ -2,7 +2,8 @@ import {
   setLoading,
   loginSuccess,
   userSuccess,
-  authFail,
+
+  refreshSuccess,
   userFail,
   userRegisterSuccess,
   authSuccess,
@@ -31,6 +32,29 @@ export const load_user = () => async (dispatch) => {
         config
       );
       dispatch(userSuccess(res.data));
+    } catch (err) {
+      dispatch(userFail());
+      // console.log(err);
+    }
+  } else {
+    dispatch(userFail());
+    
+  }
+};
+// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
+// eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyODExNTM
+// 4LCJqdGkiOiI2MDJkNjA2ZGFhOWI0NmQ1YWYxOGZjM2E2OTY4YzhmMiIsInVzZXJfaWQiOjF9.p27cGRdn345rlRyL5TCBArzW8n0s1SzxsBQGBVA7a-A
+
+
+
+export const refreshToken = () => async (dispatch) => {
+  if (localStorage.getItem("refresh")) {
+    try {
+      const res = await axiosInstance.post(
+        `http://127.0.0.1:8000/auth/jwt/refresh/`,
+        {refresh:`JWT ${localStorage.getItem('access')}`}
+      );
+      dispatch(refreshSuccess(res.data));
     } catch (err) {
       dispatch(userFail());
       // console.log(err);
@@ -81,6 +105,9 @@ export const verify = (uid, token) => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
+
+
+
 export const userProfile = (username) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
@@ -114,6 +141,7 @@ export const userEdit = (username, data) => async (dispatch) => {
     console.log(err);
   }
 };
+
 export const userFollow = (username) => async (dispatch) => {
   try {
     const res = await axiosInstance.post(
@@ -123,6 +151,7 @@ export const userFollow = (username) => async (dispatch) => {
       }
     );
     dispatch(setLoading(false));
+   
     dispatch(followedUnfollowed(res.data));
   } catch (err) {
     dispatch(userFail());
@@ -165,6 +194,7 @@ export const checkAuthenticated = () => async (dispatch) => {
 
       if (res.data.code !== "token_not_valid") {
         dispatch(authSuccess());
+     
       } else {
         dispatch(userFail());
       }

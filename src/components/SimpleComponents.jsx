@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AiOutlineComment, AiOutlineRetweet } from "react-icons/ai";
 import { FiShare } from "react-icons/fi";
@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import Heart from "../GooberStyled/TwitterHeart";
 import { bookmarkTweet, deleteTweet, reTweet } from "../redux/asyncActions/TweetAsync";
 import { addComment } from "../redux/asyncActions/CommentAsync";
-import { Picker } from "emoji-mart";
+
 import AddPicker from "./AddPicker";
 export const TweetOperation = ({
   bookmark,
@@ -24,7 +24,7 @@ export const TweetOperation = ({
   const [comId, setComId] = useState(null);
   const [bookmarked, setBookmarked] = useState(null);
   const [commentInput, setCommentInput] = useState();
-  const inputRef = useRef()
+
   useEffect(() => {
     //bootstrap tooltip
     window.$('[data-toggle="tooltip"]').tooltip();
@@ -94,9 +94,9 @@ export const TweetOperation = ({
                   type="text"
                   name="text"
                   placeholder="add Comment"
-                  ref={inputRef}
+                 
                   className="inputTag"
-                  autofocus
+                  autoFocus
                 ></textarea>
               </div>
               <div className="modal-footer">
@@ -127,11 +127,10 @@ export const TweetOperation = ({
         </div>
       )}
 
-     { retweet ? <i data-toggle="tooltip" title="Will Delete Re Tweet" className="tweetIcons">
+     { retweet ? <i data-toggle="tooltip" title="Remove reTweet" className="tweetIcons">
         <AiOutlineRetweet
          color="lightgreen"
-         
-          onClick={() => dispatch(deleteTweet(oriId)) }/>
+          onClick={() => dispatch(deleteTweet(oriId,true)) }/>
       </i>:
       <i data-toggle="tooltip" title="Re- Tweet" className="tweetIcons">
        <AiOutlineRetweet onClick={() => sendReTweet(id)} /></i>
@@ -144,6 +143,7 @@ export const TweetOperation = ({
             comid?likeTweetD(comid):likeTweetD(id);
           }}
         />
+
         <span className="count">{like_count}</span>
       </i>
       {bookmarked ? (

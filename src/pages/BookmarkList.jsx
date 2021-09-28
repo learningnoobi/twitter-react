@@ -11,7 +11,7 @@ const BookmarkList = () => {
     const tweetsInfo = useSelector((state) => state.tweetReducer);
     useEffect(()=> {
         dispatch(bookmark_list())
-    },[])
+    },[dispatch])
     return (
        <Second>
            <TweetHeader headerName="Your Bookmark"/>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { userFollow, userProfile } from "../redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
 import Second from "../components/Second";
@@ -35,7 +35,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(userProfile(username));
     dispatch(tweet_specific_user(username));
-  }, []);
+  }, [dispatch,username]);
 
   return (
     <div>
@@ -59,14 +59,14 @@ const Profile = () => {
               <img
                 onClick={() => setCoverVisible(true)}
                 src={userprofile?.cover_image}
-                alt="profile image"
+                alt="cover background"
                 className="cover-image"
               />
 
               <img
                 onClick={() => setVisible(true)}
                 src={userprofile?.avatar}
-                alt="profile image"
+                alt="profile background"
                 className="rounded-circle profile-image"
               />
               {showUserModal && (
@@ -80,15 +80,15 @@ const Profile = () => {
                 onClose={() => {
                   setVisible(false);
                 }}
-                images={[{ src: userprofile?.avatar, alt: "img" }]}
+                images={[{ src: userprofile?.avatar, alt: "background" }]}
               />
-             
+
               <Viewer
                 visible={covervisible}
                 onClose={() => {
                   setCoverVisible(false);
                 }}
-                images={[{ src: userprofile?.cover_image, alt: "img" }]}
+                images={[{ src: userprofile?.cover_image, alt: "background" }]}
               />
               {/* editprofile or follow button section depending on the user */}
               {authUser?.email === userprofile?.email ? (
@@ -111,20 +111,21 @@ const Profile = () => {
                       <AiOutlineSmile />
                     </i>
                   </button>
-                {
-                  userprofile?.i_follow?
-                  <button
-                  onClick={() => dispatch(userFollow(userprofile.username))}
-                  className="link-tweet"
-                >
-                  Unfollow
-                </button>
-                  :<button
-                  onClick={() => dispatch(userFollow(userprofile.username))}
-                  className="link-tweet"
-                >
-                  Follow
-                </button>}
+                  {userprofile?.i_follow ? (
+                    <button
+                      onClick={() => dispatch(userFollow(userprofile.username))}
+                      className="link-tweet"
+                    >
+                      Unfollow
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => dispatch(userFollow(userprofile.username))}
+                      className="link-tweet"
+                    >
+                      Follow
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -147,8 +148,14 @@ const Profile = () => {
                 </span>
               </p>
               <div className="d-flex">
-                <FollowInfo number={userprofile?.followers} followinfo="followers" />
-                <FollowInfo number={userprofile?.following} followinfo="following" />
+                <FollowInfo
+                  number={userprofile?.followers}
+                  followinfo="followers"
+                />
+                <FollowInfo
+                  number={userprofile?.following}
+                  followinfo="following"
+                />
               </div>
             </div>
           </>
@@ -170,7 +177,7 @@ const Profile = () => {
 
 export default Profile;
 
-export const FollowInfo = ({ number=0, followinfo="" }) => {
+export const FollowInfo = ({ number = 0, followinfo = "" }) => {
   return (
     <div className="d-flex">
       <span className="bold-text">{number}</span>
@@ -178,4 +185,3 @@ export const FollowInfo = ({ number=0, followinfo="" }) => {
     </div>
   );
 };
-

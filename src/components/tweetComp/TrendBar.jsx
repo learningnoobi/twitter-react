@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import { BsCardImage,BsSearch } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 const TrendBar = () => {
     return (
         <div className="second-trend">

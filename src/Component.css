@@ -123,17 +123,11 @@
   display: block;
 }
 
-#hover {
-
-  padding: 6px;
-  display: block;
-  position: relative;
-
-}
 
 
 #popup {
   opacity: 0;
+  z-index: 1000;
   position: absolute;
   top: 62px;
   left: -8px;
@@ -164,7 +158,14 @@
   border: 1px solid #262629;
 }
 
+#hover {
 
+    padding: 6px;
+    display: block;
+    position: relative;
+  
+  }
+  
 .author-image {
   height: 60px;
   width: 60px;

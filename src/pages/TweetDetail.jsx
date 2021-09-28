@@ -35,7 +35,7 @@ const TweetDetail = () => {
     (state) => state.userReducer
   );
  
-  const { username, id } = useParams();
+  const { id } = useParams();
   const { user } =userIn;
 
   const message = useSelector((state) => state.tweetReducer.message);
@@ -46,7 +46,7 @@ const TweetDetail = () => {
     dispatch(tweet_comments(id));
    
  
-  }, []);
+  }, [dispatch,id]);
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
   };
@@ -88,8 +88,6 @@ const TweetDetail = () => {
                   id={`#${tweet.id}dropdown`}
                   aria-haspopup="true"
                   aria-expanded="false"
-                  // onClick={() => setIsOpen(!isOpen)}
-                  className="dropdownIcon"
                 />
                
                  

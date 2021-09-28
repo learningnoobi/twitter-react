@@ -22,6 +22,12 @@ export const userRegister = createSlice({
       state.refresh = localStorage.setItem("refresh", payload.refresh);
       state.isAuthenticated = true;
     },
+    refreshSuccess: (state, { payload }) => {
+      state.access = localStorage.setItem("access", payload.access);
+      console.log(payload.access)
+      console.log("access is ",localStorage.getItem("access"))
+      state.isAuthenticated = true
+    },
     userSuccess: (state, action) => {
       state.user = action.payload;
       state.isAuthenticated = true;
@@ -31,6 +37,7 @@ export const userRegister = createSlice({
       state.isAuthenticated = true;
     },
     followedUnfollowed:(state,action) => {
+      
       state.profileUser.i_follow = action.payload.follow
       state.profileUser.followers = action.payload.followers
     },
@@ -71,6 +78,7 @@ export const {
   userRegisterSuccess,
   logMeOut,
   profileUserSuccess,
+  refreshSuccess,
   followedUnfollowed
 } = userRegister.actions;
 

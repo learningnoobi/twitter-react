@@ -26,7 +26,6 @@ const ReplyComment = ({ childCom, parentCom, tweetId, user, setCurIndex }) => {
       <div style={{ position: "relative" }} className="d-flex">
         <FiMoreHorizontal
           data-toggle="dropdown"
-          className="dropdownIcon"
           aria-haspopup="true"
           aria-expanded="false"
           className="dropdownIcon"
@@ -81,7 +80,6 @@ const ReplyComment = ({ childCom, parentCom, tweetId, user, setCurIndex }) => {
         comid={childCom.id}
         liked={childCom.iliked}
         likeTweetD={likeTweetD}
-        reply={true}
         like_count={childCom.like_count}
         // bookmark = {tweet.i_bookmarked}
       />

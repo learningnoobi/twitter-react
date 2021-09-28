@@ -70,7 +70,7 @@ const UserEditModal= ({ user, modalId }) => {
                 <img
                   onClick={()=>showOpenFileDlg()}
                   src={prevCoverImage?prevCoverImage:user?.cover_image}
-                  alt="cover image"
+                  alt="cover"
                   className="cover-edit"
                   data-toggle="tooltip" title="Change Cover Image" data-placement="bottom"
                 />
@@ -83,7 +83,7 @@ const UserEditModal= ({ user, modalId }) => {
                 <img
                 onClick={()=>showAvatarFileDlg()}
                   src={prevAvatarImage?prevAvatarImage:user?.avatar}
-                  alt="profile image"
+                  alt="profile "
                   className="rounded-circle profile-image"
                   data-toggle="tooltip" title="Change Profile Image" data-placement="bottom"
                 />

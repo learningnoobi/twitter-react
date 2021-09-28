@@ -1,6 +1,6 @@
 import {setLoading,commentSuccess,commentAdded,commentEdit,replyAdded ,commentDeleted,commentUploading, likeUnlikeComment} from "../slices/CommentSlice";
 import { axiosInstance } from "../../index";
-import { setMessage, setUploading } from "../slices/tweetSlice";
+import { setMessage } from "../slices/tweetSlice";
 
 
 export const tweet_comments = (id) => async (dispatch) => {
@@ -56,7 +56,7 @@ export const tweet_comments = (id) => async (dispatch) => {
       console.log('comment id is ',id)
       dispatch(setMessage("Reply Deleted!"));
     } catch (err) {
-      console.log('comment wrng id is ',id)
+      console.log('comment wrong id is ',id)
       console.log(err);
       dispatch(setMessage("Something went Wrong !"));
     }

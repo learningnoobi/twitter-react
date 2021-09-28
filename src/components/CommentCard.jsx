@@ -41,7 +41,7 @@ const CommentCard = ({ tweetId, user, comment }) => {
           className="dropdownIcon"
           aria-haspopup="true"
           aria-expanded="false"
-          className="dropdownIcon"
+       
         />
 
         <div className="dropdown-menu dropdown-menu-right dropdownMenu">
@@ -136,7 +136,7 @@ export default CommentCard;
 export const DropdownContent = ({ user, comment, setEdit, setCurIndex, dispatch }) => {
   return (
     <>
-      {user.email !== comment.author.email && (
+      {user?.email !== comment?.author.email && (
         <>
           <p>
             <BiUserPlus /> <span>Unfollow Rayos</span>
@@ -147,7 +147,7 @@ export const DropdownContent = ({ user, comment, setEdit, setCurIndex, dispatch 
           </p>
         </>
       )}
-      {user.email === comment.author.email && (
+      {user?.email === comment?.author.email && (
         <>
           <p
             onClick={() => {

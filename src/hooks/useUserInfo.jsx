@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import {useEffect} from 'react'
 import { checkAuthenticated, load_user } from "../redux/asyncActions/UserAsync";
 import { useDispatch,useSelector } from 'react-redux'
 
@@ -11,7 +11,7 @@ const useUserInfo = () => {
     useEffect(() => {
         dispatch(load_user())
         dispatch(checkAuthenticated());
-    }, [])
+    }, [dispatch])
    
     return {user,isAuthenticated}
 }

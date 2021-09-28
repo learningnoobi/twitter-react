@@ -32,7 +32,7 @@ const AddTweet = () => {
   useEffect(() => {
     //bootstrap tooltip
     window.$('[data-toggle="tooltip"]').tooltip();
-  }, []);
+  }, [isAuthenticated]);
 
   const addEmoji = (emoji) => {
     setTweetInput((prev) => prev + emoji.native);
@@ -56,9 +56,7 @@ const AddTweet = () => {
   };
   return (
     <div className="add-tweet">
-      {!isAuthenticated ? (
-        <h4>Login To Add Tweet</h4>
-      ) : (
+
         <>
           <span className="add-tweet-image">
             <Link to={(user && `${user.username}`) || "/"}>
@@ -201,7 +199,7 @@ const AddTweet = () => {
             </div>
           </div>
         </>
-      )}
+      
     </div>
   );
 };

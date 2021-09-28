@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import { Link } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DropDown from "./DropDown";
@@ -8,9 +8,11 @@ import Moment from "moment";
 import { likeTweet } from "../../redux/asyncActions/TweetAsync";
 import { AiFillUnlock } from "react-icons/ai";
 import { BiGlobe } from "react-icons/bi";
-import { FollowInfo } from "../../pages/Profile";
+
+
 import PopInfo from "../PopInfo";
 const TweetPostCard = ({ tweet, dispatch, user }) => {
+  
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
   };

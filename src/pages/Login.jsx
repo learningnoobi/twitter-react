@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useForm from "../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
-import { checkAuthenticated, login } from "../redux/asyncActions/UserAsync";
+import {  login } from "../redux/asyncActions/UserAsync";
 import { useHistory } from "react-router-dom";
 import { RiTwitterFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -16,10 +16,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
-    // dispatch(checkAuthenticated());
     isAuthenticated && history.push("/");
-  }, [history,user.isAuthenticated]);
+  }, [history,isAuthenticated]);
   const loginMe = (e) => {
+
     e.preventDefault();
     dispatch(login(email, password));
 

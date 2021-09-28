@@ -12,26 +12,19 @@ import {
   setMessage,
 } from "../slices/tweetSlice";
 
-
 // check is localstorage for access is present or not
-
-
-
-
-
 
 export const load_tweet = () => async (dispatch) => {
   dispatch(setLoading(true));
- 
+
   try {
     let res;
     if (localStorage.getItem("access")) {
-     res = await axiosInstance.get(`tweets/`);
+      res = await axiosInstance.get(`tweets/`);
+    } else {
+      res = await axios.get(`http://127.0.0.1:8000/tweets/`);
     }
-    else{
-       res = await axios.get(`http://127.0.0.1:8000/tweets/`);
-    }
-   
+
     // console.table('res is ',res.data)
     dispatch(setLoading(false));
     dispatch(tweetSuccess(res.data));
@@ -39,7 +32,6 @@ export const load_tweet = () => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
-
 
 export const tweet_detail = (id) => async (dispatch) => {
   dispatch(setLoading(true));
@@ -65,9 +57,7 @@ export const bookmark_list = () => async (dispatch) => {
 export const tweet_specific_user = (username) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.get(
-      `tweets/specific/${username}/`
-    );
+    const res = await axiosInstance.get(`tweets/specific/${username}/`);
     dispatch(setLoading(false));
     dispatch(tweetSuccess(res.data));
   } catch (err) {
@@ -91,11 +81,9 @@ export const addTweet = (uploadData) => async (dispatch) => {
 };
 
 export const reTweet = (tweetId) => async (dispatch) => {
-
   try {
-    const res = await axiosInstance.post(`tweets/post/retweet/`, {"tweetId":tweetId});
+    await axiosInstance.post(`tweets/post/retweet/`, { tweetId: tweetId });
 
-   
     // dispatch(tweetAdded(res.data));
     dispatch(setMessage(`Re Tweeted !`));
   } catch (err) {
@@ -105,18 +93,23 @@ export const reTweet = (tweetId) => async (dispatch) => {
   }
 };
 
-
-export const deleteTweet = (pk) => async (dispatch) => {
-  try {
-    await axiosInstance.delete(`tweets/${pk}/`);
-    dispatch(deletedSuccess(pk));
-    dispatch(setMessage(`Tweet Deleted !`));
-  } catch (err) {
-    dispatch(tweetFail());
-    console.log(err);
-    dispatch(setMessage(`Something went Wrong !`));
-  }
-};
+export const deleteTweet =
+  (pk, DelRetweet = false) =>
+  async (dispatch) => {
+    try {
+      await axiosInstance.delete(`tweets/${pk}/`);
+      dispatch(deletedSuccess(pk));
+      if (DelRetweet) {
+        dispatch(setMessage(`Retweet Removed !`));
+      } else {
+        dispatch(setMessage(`Tweet Deleted !`));
+      }
+    } catch (err) {
+      dispatch(tweetFail());
+      console.log(err);
+      dispatch(setMessage(`Something went Wrong !`));
+    }
+  };
 export const editTweet = (id, title, isChecked) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
@@ -146,18 +139,15 @@ export const likeTweet = (id) => async (dispatch) => {
   }
 };
 
-
 export const bookmarkTweet = (id) => async (dispatch) => {
   try {
     const res = await axiosInstance.post(`tweets/love/bookmark/`, {
       pk: id,
     });
 
-    {
-      res.data.bookmarked
-        ? dispatch(setMessage(`Saved to Bookmark !`))
-        : dispatch(setMessage(`Removed from Bookmark !`));
-    }
+    res.data.bookmarked
+      ? dispatch(setMessage(`Saved to Bookmark !`))
+      : dispatch(setMessage(`Removed from Bookmark !`));
   } catch (err) {
     console.log(err);
     dispatch(setMessage(`Something went Wrong !`));

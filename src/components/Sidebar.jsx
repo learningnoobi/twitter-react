@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory,Redirect, NavLink } from "react-router-dom";
+import { Link, Redirect, NavLink } from "react-router-dom";
 import { showSidebar } from "../redux/slices/simpleState";
 import {
   RiHome7Fill,
@@ -12,7 +12,7 @@ import {
 import { BiBell, BiBookmark, BiUser, BiLogIn,BiGlobeAlt } from "react-icons/bi";
 import { CgMoreO } from "react-icons/cg";
 import { checkAuthenticated, load_user, logoutAct } from "../redux/asyncActions/UserAsync";
-import useUserInfo from "../hooks/useUserInfo";
+
 
 const Sidebar = () => {
   const userIn = useSelector(
@@ -20,7 +20,7 @@ const Sidebar = () => {
 );
   const sidebarClass = useSelector((state) => state.changeClass.myclass);
   const dispatch = useDispatch();
-  const history = useHistory();
+ 
   const logout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       
@@ -28,6 +28,7 @@ const Sidebar = () => {
       dispatch(load_user());
       dispatch(checkAuthenticated());
     }<Redirect to="/login"></Redirect>
+    window.location.reload();
   };
   const {user,isAuthenticated} = userIn;
 
@@ -96,7 +97,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to={user && `/${user.username}`||'profile'}>
+          <Link to={user && (`/${user.username}`||'profile')}>
             <i>
               <BiUser />
             </i>

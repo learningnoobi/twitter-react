@@ -5,17 +5,18 @@ import { load_tweet } from "../../redux/asyncActions/TweetAsync";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import TweetPostCard from "./TweetPostCard";
-import useUserInfo from "../../hooks/useUserInfo";
+
 const TweetCard = () => {
   const tweetsInfo = useSelector((state) => state.tweetReducer);
   const userIn = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const {user} =userIn
 
+
   useEffect(() => {
     dispatch(load_tweet());
     window.$('[data-toggle="popover"]').popover();
-  }, []);
+  }, [dispatch]);
 
   return tweetsInfo && tweetsInfo.isLoading ? (
     <span className="d-flex justify-content-center mt-4">

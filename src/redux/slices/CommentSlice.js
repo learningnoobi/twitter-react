@@ -9,7 +9,7 @@ const initialState = {
 
 const getParent = (id, comments) => {
   for (const comment of comments) {
-    if (comment.id == id) return comment;
+    if (comment.id === id) return comment;
     else {
       const gotParent = getParent(id, comment.children);
       if (gotParent) return gotParent;
@@ -40,9 +40,7 @@ export const commentReducer = createSlice({
     },
     commentDeleted: (state, { payload }) => {
       const parent = getParent(payload, state.commentList);
-      // parent.body = payload.body;
-
-      state.commentList = state.commentList.filter((i) => i.id !== parent.id);
+      state.commentList =  state.commentList.filter((i) => i.id !== parent.id);
     },
     commentUploading: (state, { payload }) => {
       state.uploading = payload;
