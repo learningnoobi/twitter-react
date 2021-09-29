@@ -41,10 +41,6 @@ export const load_user = () => async (dispatch) => {
     
   }
 };
-// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
-// eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyODExNTM
-// 4LCJqdGkiOiI2MDJkNjA2ZGFhOWI0NmQ1YWYxOGZjM2E2OTY4YzhmMiIsInVzZXJfaWQiOjF9.p27cGRdn345rlRyL5TCBArzW8n0s1SzxsBQGBVA7a-A
-
 
 
 export const refreshToken = () => async (dispatch) => {

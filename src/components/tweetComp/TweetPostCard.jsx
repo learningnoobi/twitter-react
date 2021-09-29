@@ -37,7 +37,7 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
         {tweet.parent ? (
           <div style={{ display: "flex", flexDirection: "column" }}>
             <strong>
-              <Link className="mx-2 side-name" to={`${tweet.author.username}`}>
+              <Link  to={`${tweet.author.username}`||''} className="mx-2 side-name">
                 {tweet.author.username} retweeted !
               </Link>
             </strong>

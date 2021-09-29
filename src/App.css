@@ -181,6 +181,23 @@ body {
 .bottom-menu {
   display: none;
 }
+.notify-div{
+  position: relative;
+}
+.notify-count{
+position: absolute;
+height: 20px;
+width: 20px;
+padding: 12px;
+font-size: medium;
+border-radius: 50%;
+left: 25px;
+top: 3px;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #e0245e;
+}
 .second {
   /* margin-left: 290px; */
   padding: 0;

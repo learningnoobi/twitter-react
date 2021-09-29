@@ -4,16 +4,12 @@ import { removeMesage } from "../redux/slices/tweetSlice";
 import AlertMessage from "../components/alertMessage";
 
 const Home = () => {
-
   const message = useSelector((state) => state.tweetReducer.message);
   const dispatch = useDispatch();
   message &&
     setTimeout(() => {
       dispatch(removeMesage());
     }, 3000);
-
-
- 
 
   return (
     <div>
