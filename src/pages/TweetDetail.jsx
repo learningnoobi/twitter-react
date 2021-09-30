@@ -44,8 +44,6 @@ const TweetDetail = () => {
   useEffect(() => {
     dispatch(tweet_detail(id));
     dispatch(tweet_comments(id));
-   
- 
   }, [dispatch,id]);
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));

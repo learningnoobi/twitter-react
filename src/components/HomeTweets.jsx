@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 const HomeTweets = () => {
   const history = useHistory();
   useEffect(() => {
-    window.$('[data-toggle="tooltip"]').tooltip();
+    // window.$('[data-toggle="tooltip"]').tooltip();
     if (!localStorage.getItem("access")) {
       history.push("/login");
     }

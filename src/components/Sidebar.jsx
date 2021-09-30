@@ -24,6 +24,7 @@ import {
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { removeNotice, tweetNotice } from "../redux/slices/NotificationSlice";
 import AlertMessage from "./alertMessage";
+import { getNotifications } from "../redux/asyncActions/NotificationAsync";
 
 const Sidebar = () => {
   const [isSameUser, setisSameUser] = useState(true);
@@ -63,6 +64,9 @@ const Sidebar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    dispatch(getNotifications())
+  },[])
   const logout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       dispatch(logoutAct());
