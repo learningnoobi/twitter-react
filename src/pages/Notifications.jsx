@@ -76,6 +76,14 @@ const Notifications = () => {
                 type=" followed you"
               />
             )}
+            {list.notification_type === "RT" && (
+              <NotificationCard
+                key={list.id}
+                list={list}
+                icon={<AiOutlineRetweet color="lightgreen" />}
+                type=" retweeted your tweet"
+              />
+            )}
           </div>
         ))
       )}
