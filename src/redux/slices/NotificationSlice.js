@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   message: null,
   count: null,
-  notificationList: null,
+  notificationList: [],
 };
 export const notificationReducer = createSlice({
   name: "notificationReducer",
@@ -13,17 +13,27 @@ export const notificationReducer = createSlice({
       state.message = payload.data;
       state.count = payload.count;
     },
-    removeNotice: (state, { payload }) => {
+    removeNotice: (state) => {
       state.message = null;
-      // state.count = null
     },
     getNotificationslice: (state, { payload }) => {
-      state.notificationList = payload
-      state.count = payload[0].noti_count
+      state.notificationList = payload;
+
+      state.count = payload[0].noti_count;
+    },
+    deletedSuccess: (state, { payload }) => {
+      state.notificationList = state.notificationList.filter(
+        (i) => i.id !== payload
+      );
     },
   },
 });
 
-export const { tweetNotice, removeNotice,getNotificationslice } = notificationReducer.actions;
+export const {
+  tweetNotice,
+  deletedSuccess,
+  removeNotice,
+  getNotificationslice,
+} = notificationReducer.actions;
 
 export default notificationReducer.reducer;

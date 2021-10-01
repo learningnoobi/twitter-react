@@ -13,26 +13,46 @@ import { load_user } from "./redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
 import BookmarkList from "./pages/BookmarkList";
 import Notifications from "./pages/Notifications";
+import { removeNotice, tweetNotice } from "./redux/slices/NotificationSlice";
 
 function App() {
- 
-  const isAuthenticated = useSelector(
-    (state) => state.userReducer.isAuthenticated
-  );
+  const userIn = useSelector((state) => state.userReducer);
+  const isAuthenticated = userIn.isAuthenticated;
   const dispatch = useDispatch();
-  // const client = new W3CWebSocket("ws://127.0.0.1:8000/ws/home/");
+  const noticeInfo = useSelector((state) => state.notificationReducer);
+  const message = noticeInfo.message;
+  let endpoint = "ws://127.0.0.1:8000/ws/home/";
+  const client = new W3CWebSocket(endpoint + "?token=" + userIn.access);
+  message &&
+    setTimeout(() => {
+      dispatch(removeNotice());
+    }, 3000);
+
+  useEffect(() => {
+    client.onopen = function () {
+      console.log("WebSocket Client Connected");
+    };
+
+    client.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      console.log(data);
+
+      dispatch(tweetNotice(data.payload));
+    };
+
+    client.onclose = function () {
+      console.log("WebSocket Client disconnected");
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(load_user());
-    // console.log('loaded user')
+
     !isAuthenticated && <Redirect to="/login"></Redirect>;
- 
   }, [dispatch, isAuthenticated]);
 
   return (
     <BrowserRouter>
-  
- 
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/activate/:uid/:token" exact component={Activate} />

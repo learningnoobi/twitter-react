@@ -27,7 +27,6 @@ import AlertMessage from "./alertMessage";
 import { getNotifications } from "../redux/asyncActions/NotificationAsync";
 
 const Sidebar = () => {
-  const [isSameUser, setisSameUser] = useState(true);
   const userIn = useSelector((state) => state.userReducer);
   const sidebarClass = useSelector((state) => state.changeClass.myclass);
   const noticeInfo = useSelector((state) => state.notificationReducer);
@@ -35,34 +34,7 @@ const Sidebar = () => {
   const noticeCount = noticeInfo.count;
   const message = noticeInfo.message;
 
-  let endpoint = "ws://127.0.0.1:8000/ws/home/";
-  const client = new W3CWebSocket(endpoint + "?token=" + userIn.access);
-  message &&
-    setTimeout(() => {
-      dispatch(removeNotice());
-    }, 3000);
 
-
-  useEffect(() => {
-    client.onopen = function () {
-      console.log("WebSocket Client Connected");
-    };
-
-    client.onmessage = function (event) {
-      const data = JSON.parse(event.data);
-      console.log(data);
-
-      dispatch(tweetNotice(data.payload));
-      if (user?.username === data.payload.from) {
-        setisSameUser(true);
-      }
-      setisSameUser(false);
-    };
-
-    client.onclose = function () {
-      console.log("WebSocket Client disconnected");
-    };
-  }, []);
 
   useEffect(() => {
     dispatch(getNotifications())
@@ -80,7 +52,7 @@ const Sidebar = () => {
 
   return (
     <>
-      {!isSameUser && message && (
+      {message && (
         <AlertMessage
           removeMesage={removeNotice}
           dispatch={dispatch}

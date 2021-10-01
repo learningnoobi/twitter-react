@@ -123,8 +123,6 @@
   display: block;
 }
 
-
-
 #popup {
   opacity: 0;
   z-index: 1000;
@@ -146,7 +144,7 @@
   transition: all 500ms;
 }
 
-.abs-follow{
+.abs-follow {
   position: absolute;
   right: 10px;
 }
@@ -159,13 +157,11 @@
 }
 
 #hover {
+  padding: 6px;
+  display: block;
+  position: relative;
+}
 
-    padding: 6px;
-    display: block;
-    position: relative;
-  
-  }
-  
 .author-image {
   height: 60px;
   width: 60px;
@@ -196,6 +192,15 @@
   max-height: 180px;
   object-fit: cover;
   cursor: pointer;
+}
+.hover:hover {
+  background-color: #223345;
+}
+.innerDiv {
+  padding: 20px;
+  display: flex;
+
+  align-items: center;
 }
 .user-info {
   margin-top: 5%;
@@ -268,7 +273,6 @@
   padding: 7px 20px;
   margin-left: 20px;
   margin-bottom: 2px;
-
 }
 .showHideReply {
   cursor: pointer;
