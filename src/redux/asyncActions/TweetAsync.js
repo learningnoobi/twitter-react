@@ -9,7 +9,9 @@ import {
   tweetDetail,
   setUploading,
   likeUnlikeTweet,
+  setMeta,
   setMessage,
+  loadedMore
 } from "../slices/tweetSlice";
 
 // check is localstorage for access is present or not
@@ -27,9 +29,22 @@ export const load_tweet = () => async (dispatch) => {
 
     // console.table('res is ',res.data)
     dispatch(setLoading(false));
-    dispatch(tweetSuccess(res.data));
+    dispatch(tweetSuccess(res.data.data));
+    dispatch(setMeta(res.data.meta))
   } catch (err) {
     dispatch(setLoading(false));
+  }
+};
+
+
+export const load_more = (pageLink) => async (dispatch) => {
+ 
+  try {
+    const res = await axios.get(`${pageLink}`);
+   dispatch(loadedMore(res.data.data))
+    dispatch(setMeta(res.data.meta));
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -43,6 +58,7 @@ export const tweet_detail = (id) => async (dispatch) => {
     console.log(err);
   }
 };
+
 export const bookmark_list = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {

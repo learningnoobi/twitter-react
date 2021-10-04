@@ -7,8 +7,10 @@ const initialState = {
   isAuthenticated: false,
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
-  message:null,
-  profileUser:null,
+  message: null,
+  profileUser: null,
+  followState: null,
+  followers:null,
 };
 export const userRegister = createSlice({
   name: "userRegister",
@@ -24,9 +26,9 @@ export const userRegister = createSlice({
     },
     refreshSuccess: (state, { payload }) => {
       state.access = localStorage.setItem("access", payload.access);
-      console.log(payload.access)
-      console.log("access is ",localStorage.getItem("access"))
-      state.isAuthenticated = true
+      console.log(payload.access);
+      console.log("access is ", localStorage.getItem("access"));
+      state.isAuthenticated = true;
     },
     userSuccess: (state, action) => {
       state.user = action.payload;
@@ -36,13 +38,14 @@ export const userRegister = createSlice({
       state.profileUser = action.payload;
       state.isAuthenticated = true;
     },
-    followedUnfollowed:(state,action) => {
-      
-      state.profileUser.i_follow = action.payload.follow
-      state.profileUser.followers = action.payload.followers
+    followedUnfollowed: (state, { payload }) => {
+      state.followState = payload.state;
+      state.followers = payload.followers;
+      state.profileUser.i_follow = payload.follow;
+      state.profileUser.followers = payload.followers;
     },
-    removeMesage:state =>{
-      state.message=null
+    removeMesage: (state) => {
+      state.message = null;
     },
     userRegisterSuccess: (state, action) => {
       state.message =
@@ -59,9 +62,9 @@ export const userRegister = createSlice({
     logMeOut: (state) => {
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
-      state.user = null
-      state.access = null
-      state.refresh = null
+      state.user = null;
+      state.access = null;
+      state.refresh = null;
       state.isAuthenticated = false;
     },
   },
@@ -79,7 +82,7 @@ export const {
   logMeOut,
   profileUserSuccess,
   refreshSuccess,
-  followedUnfollowed
+  followedUnfollowed,
 } = userRegister.actions;
 
 export default userRegister.reducer;

@@ -6,6 +6,7 @@ const initialState = {
   singleTweet: {},
   uploading: false,
   message: null,
+  meta:null
 };
 export const tweetReducer = createSlice({
   name: "tweetReducer",
@@ -41,6 +42,12 @@ export const tweetReducer = createSlice({
     deletedSuccess: (state, { payload }) => {
       state.tweets = state.tweets.filter((i) => i.id !== payload);
     },
+    setMeta:(state, { payload }) => {
+      state.meta = payload;
+    },
+    loadedMore:(state, { payload }) => {
+      state.tweets.push(...payload)
+    },
     removeMesage: (state, action) => {
       state.message = null;
     },
@@ -54,9 +61,11 @@ export const tweetReducer = createSlice({
 
 export const {
   setLoading,
+  setMeta,
   tweetSuccess,
   tweetAdded,
   tweetFail,
+  loadedMore,
   deletedSuccess,
   tweetDetail,
   setUploading,

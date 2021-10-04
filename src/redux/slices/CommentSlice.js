@@ -5,6 +5,7 @@ const initialState = {
   commentList: [],
   error: false,
   uploading: false,
+  meta:null
 };
 
 const getParent = (id, comments) => {
@@ -24,11 +25,17 @@ export const commentReducer = createSlice({
     setLoading: (state, { payload }) => {
       state.isLoading = payload;
     },
+    setMeta:(state, { payload }) => {
+      state.meta = payload;
+    },
     commentSuccess: (state, { payload }) => {
       state.commentList = payload;
     },
     commentAdded: (state, { payload }) => {
       state.commentList.unshift(payload);
+    },
+    loadedMoreComment:(state, { payload }) => {
+      state.commentList.push(...payload)
     },
     replyAdded: (state, { payload }) => {
       const parent = getParent(payload.parentId, state.commentList);
@@ -54,11 +61,13 @@ export const commentReducer = createSlice({
 
 export const {
   setLoading,
+  loadedMoreComment,
   commentSuccess,
   commentAdded,
   commentUploading,
   commentDeleted,
   replyAdded,
+  setMeta,
   commentEdit,
   likeUnlikeComment,
 } = commentReducer.actions;

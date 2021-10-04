@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import Second from "../components/Second";
 import TweetHeader from "../components/tweetComp/tweetHeader";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getNotifications,
+  loadMoreNotification,
   seenNotifications,
 } from "../redux/asyncActions/NotificationAsync";
 import { Link } from "react-router-dom";
@@ -13,14 +13,15 @@ import {
   AiFillHeart,
   AiOutlineComment,
   AiOutlineRetweet,
-  AiOutlineUser,
   AiOutlineDelete,
+  AiOutlineUserAdd
 } from "react-icons/ai";
 
 const Notifications = () => {
   const notifyState = useSelector((state) => state.notificationReducer);
   const loading = useSelector((state) => state.tweetReducer.isLoading);
   const notifications = notifyState.notificationList;
+  const meta = notifyState.meta
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getNotifications());
@@ -37,6 +38,13 @@ const Notifications = () => {
   //  }
   // };
 
+  const loadMore = () => {
+    console.log("load more");
+    console.log(meta?.page, meta?.next);
+    if (meta.next !== null) {
+      dispatch(loadMoreNotification(meta.page+1));
+    }
+  };
   return (
     <Second>
       <TweetHeader headerName="Notfications" />
@@ -56,58 +64,83 @@ const Notifications = () => {
               <NotificationCard
                 key={list.id}
                 list={list}
+                tweet={list.tweet}
                 icon={<AiFillHeart color="rgb(235, 58, 91)" />}
-                type=" loved  your tweet ."
+                type=" loved  your tweet "
+                link={`${list.to_user}/tweet/${list.tweet.id}`}
               />
             )}
             {list.notification_type === "R" && (
               <NotificationCard
                 key={list.id}
                 list={list}
+                tweet={list.tweet}
                 icon={<AiOutlineComment color="lightblue" />}
-                type=" replied  your tweet ."
+                type=" replied  your tweet "
+                link={`${list.to_user}/tweet/${list.tweet.id}`}
               />
             )}
             {list.notification_type === "F" && (
               <NotificationCard
                 key={list.id}
                 list={list}
-                icon={<AiOutlineUser color="lightgreen" />}
+                icon={<AiOutlineUserAdd color="orange" />}
                 type=" followed you"
+                link={`${list.from_user.username}`}
+                
               />
             )}
             {list.notification_type === "RT" && (
               <NotificationCard
                 key={list.id}
                 list={list}
+                tweet={list.tweet}
+                comment={list.comment}
                 icon={<AiOutlineRetweet color="lightgreen" />}
-                type=" retweeted your tweet"
+                type=" retweeted your comment"
+                link={`${list.to_user}/tweet/${list.tweet.id}`}
               />
             )}
           </div>
         ))
       )}
+          {meta?.next && <div className="mt-3 d-flex justify-content-center">
+        <button onClick={loadMore} className="link-tweet">
+          Load more
+        </button>
+      </div>}
+  
     </Second>
   );
 };
 
 export default Notifications;
 
-export const NotificationCard = ({ list, type, icon }) => {
+export const NotificationCard = ({ list, type, icon,link,tweet=null,comment=null }) => {
   const dispatch = useDispatch();
   return (
     <div className="comment-card hover">
       <i className="icon dropdownIcon">
         <AiOutlineDelete onClick={() => dispatch(seenNotifications(list.id))} />
       </i>
-      <Link to={`${list.to_user}/tweet/${list.tweet}`}>
+      <Link to={link}>
+        <div className="divnotice">
         <div className="innerDiv">
-          <strong className="icon">{icon}</strong>
+          <strong style={{'fontSize':30}}>{icon}</strong>
 
           <strong className="mx-3">
-            {list.from_user} {type}
-          </strong>
+           <img className="rounded-circle author-image" src={list.from_user.avatar} alt="user avatar" /> <br />
+            {list.from_user.username} {type}
+          <p className="side-name">
+          {comment && comment.body }
+            {tweet?.title}
+          </p>
+          </strong> <br />
+       
         </div>
+        
+        </div>
+  
       </Link>
     </div>
   );

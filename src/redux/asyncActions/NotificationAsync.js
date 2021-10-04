@@ -2,24 +2,39 @@ import { axiosInstance } from "../../index";
 import axios from "axios";
 import {
   getNotificationslice,
+  setMeta,
   deletedSuccess,
+  moreNotification
 } from "../slices/NotificationSlice";
 import { setLoading } from "../slices/userSlice";
 
 export const getNotifications = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.get(`notify/notification_list/`);
+    const res = await axiosInstance.get(`notify/notification_list/`)
+    dispatch(setMeta(res.data.meta));
+    console.log(res)
+    dispatch(getNotificationslice(res.data.data));
 
-   
-      dispatch(getNotificationslice(res.data));
-    
     dispatch(setLoading(false));
   } catch (err) {
     console.log(err);
     dispatch(setLoading(false));
   }
 };
+
+// http://127.0.0.1:8000/notify/notification_list/?page=2
+export const loadMoreNotification = (pageNum) => async (dispatch) => {
+ 
+  try {
+    const res = await axiosInstance.get(`notify/notification_list/?page=${pageNum}`);
+   dispatch(moreNotification(res.data.data))
+    dispatch(setMeta(res.data.meta));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
 export const seenNotifications = (notify_id) => async (dispatch) => {
   try {

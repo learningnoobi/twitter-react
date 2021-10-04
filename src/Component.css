@@ -7,28 +7,7 @@
   position: relative;
   padding-bottom: 5px;
 }
-/* .comment-card::before {
-  content: "";
-  position: absolute;
-  top: 60px;
-  left: 31px;
-  width: 36px;
-  bottom:100px;
-  border-left: 1px solid #2d323f;
-  border-bottom: 1px solid #2d323f;
-}
-.comment-card::after {
-  content: "";
-  position: absolute;
-  left: 64px;
-  bottom: 96px;
 
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 3.5px 0 3.5px 5px;
-  border-color: transparent transparent transparent #c0c0c0;
-} */
 .comment-innerDiv {
   padding: 10px;
   display: flex;
@@ -196,10 +175,11 @@
 .hover:hover {
   background-color: #223345;
 }
-.innerDiv {
+.divnotice{
   padding: 20px;
+}
+.innerDiv {
   display: flex;
-
   align-items: center;
 }
 .user-info {

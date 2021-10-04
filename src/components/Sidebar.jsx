@@ -14,6 +14,7 @@ import {
   BiUser,
   BiLogIn,
   BiGlobeAlt,
+  BiAddToQueue
 } from "react-icons/bi";
 import { CgMoreO } from "react-icons/cg";
 import {
@@ -146,7 +147,9 @@ const Sidebar = () => {
             title="Add Tweet"
           >
             <Link to="/">
-              <i className="fa fa-plus"></i>
+            <i>
+                <BiAddToQueue />
+              </i>
               <span className="link-text">Tweet</span>
             </Link>
           </li>

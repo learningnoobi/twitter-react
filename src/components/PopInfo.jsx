@@ -5,22 +5,25 @@ import { userFollow } from "../redux/asyncActions/UserAsync";
 import { Link } from "react-router-dom";
 
 const PopInfo = ({ tweet }) => {
-  const user = useSelector((state) => state.userReducer.user);
+  const userInfo = useSelector((state) => state.userReducer);
+  const user = userInfo.user
+  const state = userInfo.followState
+  const followers = userInfo.followers
   const dispatch = useDispatch();
 
   return (
     <>
      
-      {tweet?.author.username === user?.username ? (
+      {tweet?.author.username === user?.username ? 
         ""
-      ) : (
+       : 
         <button
           onClick={() => dispatch(userFollow(tweet?.author.username))}
           className="link-tweet abs-follow"
         >
-          {tweet?.author.i_follow ? "Following" : "Follow"}
+          {state ?state:tweet?.author.i_follow ? "Following" : "Follow"}
         </button>
-      )}
+      }
 
       <Link to={`/${tweet?.author.username}`}>
         <img
@@ -39,7 +42,7 @@ const PopInfo = ({ tweet }) => {
       <span className="side-name">@{tweet?.author.nickname}</span>
       <p className="side-name">{tweet?.author.bio}</p>
       <div className="d-flex">
-        <FollowInfo number={tweet.author.followers} followinfo="followers" />
+        <FollowInfo number={followers?followers:tweet.author.followers} followinfo="followers" />
         <FollowInfo number={tweet.author.following} followinfo="following" />
       </div>
     </>

@@ -18,7 +18,7 @@ import AlertMessage from "../components/alertMessage";
 import { TweetOperation } from "../components/SimpleComponents";
 import { TweetContent } from "../components/tweetComp/TweetContent";
 import CommentCard from "../components/CommentCard";
-import { addComment, tweet_comments } from "../redux/asyncActions/CommentAsync";
+import { addComment, load_more_comment, tweet_comments } from "../redux/asyncActions/CommentAsync";
 import ClipLoader from "react-spinners/ClipLoader";
 import AddPicker from "../components/AddPicker";
 
@@ -40,6 +40,8 @@ const TweetDetail = () => {
 
   const message = useSelector((state) => state.tweetReducer.message);
   const comments = useSelector((state) => state.commentReducer);
+  const meta = comments.meta
+
 
   useEffect(() => {
     dispatch(tweet_detail(id));
@@ -61,6 +63,14 @@ const TweetDetail = () => {
   const commentAdd = () => {
     dispatch(addComment(id, commentInput));
     setCommentInput("");
+  };
+  // http://127.0.0.1:8000/tweets/comments/18/?page=2
+
+  const loadMoreComment = () => {
+    console.log(meta?.page, meta?.next);
+    if (meta.next !== null) {
+      dispatch(load_more_comment(id,meta.page+1));
+    }
   };
   return (
     <div>
@@ -195,9 +205,16 @@ const TweetDetail = () => {
                 />
               ))
             )}
+           {!comments.isLoading &&meta?.next && 
+           <div className="mt-3 d-flex justify-content-center">
+           <button onClick={loadMoreComment}  className="link-tweet">
+             Load more
+           </button>
+           </div>}
           </section>
         </Second>
       )}
+     
     </div>
   );
 };
