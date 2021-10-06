@@ -4,6 +4,7 @@ const initialState = {
   message: null,
   count: null,
   notificationList: [],
+  searchQuery:[],
 };
 export const notificationReducer = createSlice({
   name: "notificationReducer",
@@ -18,10 +19,15 @@ export const notificationReducer = createSlice({
     },
     getNotificationslice: (state, { payload }) => {
       state.notificationList = payload;
+      if(payload.length >1){
       state.count = payload[0].noti_count;
+      }
     },
     setMeta:(state, { payload }) => {
       state.meta = payload;
+    },
+    setSearch:(state, { payload }) => {
+      state.searchQuery = payload;
     },
     moreNotification:(state, { payload }) => {
       state.notificationList.push(...payload)
@@ -37,6 +43,7 @@ export const notificationReducer = createSlice({
 export const {
   tweetNotice,
   deletedSuccess,
+  setSearch,
   removeNotice,
   moreNotification,
   setMeta,

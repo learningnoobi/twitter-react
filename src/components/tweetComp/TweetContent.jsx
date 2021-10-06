@@ -26,11 +26,11 @@ export const TweetContent = ({
         <span style={{ display: "flex", alignItems: "center" }}>
           {tweet.author.username}
           
-          <span className="side-names">
+          <span className="mx-2 side-name">
             @ {tweet.author.username} -
              {/* {Moment(tweet.created ).format('MMM Do YY')} */}
-             {Moment(tweet.created).fromNow()}
-            {tweet.is_private ? <AiFillUnlock /> : <BiGlobe />}
+             {Moment(tweet.created).fromNow(true)}
+            {tweet.is_private ? <AiFillUnlock/> : <BiGlobe />}
             {tweet.isEdited && <span className="mx-2">- Edited</span>}
           </span>
         </span>

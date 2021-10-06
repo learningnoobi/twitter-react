@@ -1,0 +1,33 @@
+.resultDiv {
+  position: absolute;
+  /* background-color: rgb(44, 47, 70); */
+  background: linear-gradient(45deg, #131d27, #16222e);
+  box-shadow: 5px -5px 10px #080d11, -5px 5px 10px #223345;
+  width: 80%;
+  margin-top: 48px;
+  padding: 10px;
+  border-radius: 5px;
+  max-height: 400px;
+  overflow-y: scroll;
+  display: none;
+  z-index: 10;
+  cursor: pointer;
+
+}
+.searchinput:focus ,
+.resultDiv {
+  display: block;
+
+}
+.result {
+  padding: 6px;
+}
+.result:hover {
+  background: rgb(34, 38, 59);
+}
+.searchicons {
+  position: absolute;
+  z-index: 10;
+  right: 13%;
+  margin-top: 10px;
+}

@@ -11,8 +11,9 @@ import {
   likeUnlikeTweet,
   setMeta,
   setMessage,
-  loadedMore
+  loadedMore,
 } from "../slices/tweetSlice";
+import { setSearch } from "../slices/NotificationSlice";
 
 // check is localstorage for access is present or not
 
@@ -30,18 +31,16 @@ export const load_tweet = () => async (dispatch) => {
     // console.table('res is ',res.data)
     dispatch(setLoading(false));
     dispatch(tweetSuccess(res.data.data));
-    dispatch(setMeta(res.data.meta))
+    dispatch(setMeta(res.data.meta));
   } catch (err) {
     dispatch(setLoading(false));
   }
 };
 
-
 export const load_more = (pageLink) => async (dispatch) => {
- 
   try {
     const res = await axios.get(`${pageLink}`);
-   dispatch(loadedMore(res.data.data))
+    dispatch(loadedMore(res.data.data));
     dispatch(setMeta(res.data.meta));
   } catch (err) {
     console.log(err);
@@ -166,6 +165,24 @@ export const bookmarkTweet = (id) => async (dispatch) => {
       : dispatch(setMessage(`Removed from Bookmark !`));
   } catch (err) {
     console.log(err);
+    dispatch(setMessage(`Something went Wrong !`));
+  }
+};
+
+// http://127.0.0.1:8000/tweets/search/custom/?search=what
+export const searchTweet = (query) => async (dispatch) => {
+  try {
+    if (query.length > 0) {
+      const res = await axiosInstance.get(
+        `tweets/search/custom/?search=${query}`
+      );
+      dispatch(setSearch(res.data));
+    } else {
+      dispatch(setSearch([]));
+    }
+  } catch (err) {
+    console.log(err);
+
     dispatch(setMessage(`Something went Wrong !`));
   }
 };

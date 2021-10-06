@@ -1,5 +1,4 @@
 import { axiosInstance } from "../../index";
-import axios from "axios";
 import {
   getNotificationslice,
   setMeta,
@@ -13,9 +12,7 @@ export const getNotifications = () => async (dispatch) => {
   try {
     const res = await axiosInstance.get(`notify/notification_list/`)
     dispatch(setMeta(res.data.meta));
-    console.log(res)
     dispatch(getNotificationslice(res.data.data));
-
     dispatch(setLoading(false));
   } catch (err) {
     console.log(err);

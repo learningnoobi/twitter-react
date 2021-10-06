@@ -20,15 +20,17 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  function (config) {
+  config => {
     const token = "JWT " + localStorage.getItem("access");
     if (token) {
       config.headers.authorization = token;
     }
     return config;
+    
   },
-  function (err)  {
+ err =>  {
     console.log(err);
+    console.log('hello')
     return Promise.reject(err);
   }
   // async function (error) {

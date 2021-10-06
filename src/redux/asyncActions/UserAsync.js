@@ -2,7 +2,6 @@ import {
   setLoading,
   loginSuccess,
   userSuccess,
-
   refreshSuccess,
   userFail,
   userRegisterSuccess,
@@ -33,27 +32,30 @@ export const load_user = () => async (dispatch) => {
       );
       dispatch(userSuccess(res.data));
     } catch (err) {
+      const res = err.response.data.code;
+      if (localStorage.getItem("refresh")) {
+        if (res === "token_not_valid") {
+          dispatch(refreshToken());
+        }
+      }
       dispatch(userFail());
-      // console.log(err);
     }
   } else {
     dispatch(userFail());
-    
   }
 };
-
 
 export const refreshToken = () => async (dispatch) => {
   if (localStorage.getItem("refresh")) {
     try {
       const res = await axiosInstance.post(
         `http://127.0.0.1:8000/auth/jwt/refresh/`,
-        {refresh:`JWT ${localStorage.getItem('access')}`}
+        { refresh: localStorage.getItem("refresh") }
       );
       dispatch(refreshSuccess(res.data));
+      console.log("refreshed");
     } catch (err) {
       dispatch(userFail());
-      // console.log(err);
     }
   } else {
     dispatch(userFail());
@@ -102,8 +104,6 @@ export const verify = (uid, token) => async (dispatch) => {
   }
 };
 
-
-
 export const userProfile = (username) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
@@ -122,10 +122,7 @@ export const userProfile = (username) => async (dispatch) => {
 export const userEdit = (username, data) => async (dispatch) => {
   // dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.put(
-      `user/${username}/`,
-      data
-    );
+    const res = await axiosInstance.put(`user/${username}/`, data);
     dispatch(setLoading(false));
     dispatch(profileUserSuccess(res.data));
     dispatch(load_user());
@@ -140,14 +137,11 @@ export const userEdit = (username, data) => async (dispatch) => {
 
 export const userFollow = (username) => async (dispatch) => {
   try {
-    const res = await axiosInstance.post(
-      `user/me/follow_unfollow/`,
-      {
-        username: username,
-      }
-    );
+    const res = await axiosInstance.post(`user/me/follow_unfollow/`, {
+      username: username,
+    });
     dispatch(setLoading(false));
-   
+
     dispatch(followedUnfollowed(res.data));
   } catch (err) {
     dispatch(userFail());
@@ -190,7 +184,6 @@ export const checkAuthenticated = () => async (dispatch) => {
 
       if (res.data.code !== "token_not_valid") {
         dispatch(authSuccess());
-     
       } else {
         dispatch(userFail());
       }

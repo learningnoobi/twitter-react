@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import "./App.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -13,7 +13,8 @@ import { load_user } from "./redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
 import BookmarkList from "./pages/BookmarkList";
 import Notifications from "./pages/Notifications";
-import { removeNotice, tweetNotice } from "./redux/slices/NotificationSlice";
+import { removeNotice, setSearch, tweetNotice } from "./redux/slices/NotificationSlice";
+import Explore from "./pages/Explore";
 
 function App() {
   const userIn = useSelector((state) => state.userReducer);
@@ -43,12 +44,12 @@ function App() {
     client.onclose = function () {
       console.log("WebSocket Client disconnected");
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(load_user());
-
     !isAuthenticated && <Redirect to="/login"></Redirect>;
+    
   }, [dispatch, isAuthenticated]);
 
   return (
@@ -60,6 +61,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/notifications" component={Notifications} />
         <Route path="/bookmark" component={BookmarkList} />
+        <Route path="/explore" component={Explore} />
         <Route path="/:username" exact component={Profile} />
         <Route path="/:username/tweet/:id" component={TweetDetail} />
         <Route path="" component={NotFound} />

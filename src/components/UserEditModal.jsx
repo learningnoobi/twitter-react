@@ -5,7 +5,7 @@ const UserEditModal= ({ user, modalId }) => {
     const dispatch = useDispatch();
     // console.log(user);
     const [bio, setBio] = useState(user?.bio);
-    const [nickname, setNickname] = useState(user?.nickname);
+    const [nickname, setNickname] = useState(user?.nickname||'');
     const inputOpenFileRef = useRef(null);
     const inputAvatarFileRef = useRef(null);
     const [avatar, setAvatar] = useState();

@@ -414,7 +414,7 @@ background-color: #e0245e;
   cursor: pointer;
 }
 #search-bar {
-  margin-left: 20px;
+
   background: var(--trend);
   border-radius: 25px;
   border: none;

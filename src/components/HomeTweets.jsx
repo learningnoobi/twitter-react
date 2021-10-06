@@ -6,21 +6,24 @@ import TweetHeader from "./tweetComp/tweetHeader";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { load_more } from "../redux/asyncActions/TweetAsync";
+import { setSearch } from "../redux/slices/NotificationSlice";
 const HomeTweets = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const tweets = useSelector((state) => state.tweetReducer)
   const meta =tweets.meta
   useEffect(() => {
-    // window.$('[data-toggle="tooltip"]').tooltip();
     if (!localStorage.getItem("access")) {
       history.push("/login");
     }
-  }, [history]);
+    return () =>{
+      dispatch(setSearch([]));
+    
+    };
+  }, [history,dispatch]);
 
   const loadMore = () => {
-    console.log("load more");
-    console.log(meta?.page, meta?.next);
+    
     if (meta.next !== null) {
       dispatch(load_more(meta.next));
     }

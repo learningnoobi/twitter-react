@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Redirect, NavLink } from "react-router-dom";
 import { showSidebar } from "../redux/slices/simpleState";
@@ -22,8 +22,7 @@ import {
   load_user,
   logoutAct,
 } from "../redux/asyncActions/UserAsync";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
-import { removeNotice, tweetNotice } from "../redux/slices/NotificationSlice";
+import { removeNotice } from "../redux/slices/NotificationSlice";
 import AlertMessage from "./alertMessage";
 import { getNotifications } from "../redux/asyncActions/NotificationAsync";
 
@@ -32,14 +31,14 @@ const Sidebar = () => {
   const sidebarClass = useSelector((state) => state.changeClass.myclass);
   const noticeInfo = useSelector((state) => state.notificationReducer);
   const dispatch = useDispatch();
-  const noticeCount = noticeInfo.count;
+  const noticeCount = noticeInfo?.count;
   const message = noticeInfo.message;
 
 
 
   useEffect(() => {
     dispatch(getNotifications())
-  },[])
+  },[dispatch])
   const logout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       dispatch(logoutAct());
@@ -84,7 +83,7 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/explore">
               <i>
                 <BiGlobeAlt />
               </i>

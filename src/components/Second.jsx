@@ -12,6 +12,7 @@ const Second = (props) => {
     <div className="second" id="second">
       <div className="second-tweet">
         {props.children}
+      
       </div>
       <TrendBar />
       <BottomTab />
