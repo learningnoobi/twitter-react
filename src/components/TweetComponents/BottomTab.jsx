@@ -1,21 +1,24 @@
 import React from 'react'
-
+import { BsSearch ,BsHouse ,BsPerson ,BsBell} from "react-icons/bs";
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const BottomTab = () => {
+  const user = useSelector(state => state.userReducer.user?.username)
     return (
         <div className="bottom-menu">
         <ul>
-          <li>
-            <i className="fa fa-home" ></i>
-          </li>
-          <li>
-            <i className="fa fa-search"></i>
-          </li>
-          <li>
-            <i className="fa fa-user"></i>
-          </li>
-          <li>
-            <i className="fa fa-bell"></i>
-          </li>
+          <Link to="/" className="icon">
+            <BsHouse />
+          </Link>
+          <Link to="/explore" className="icon">
+          <BsSearch />
+          </Link>
+          <Link to={`/${user}`} className="icon"> 
+            <BsPerson />
+          </Link>
+          <Link to="/notifications" className="icon">
+           <BsBell />
+          </Link>
         </ul>
       </div>
     )

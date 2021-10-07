@@ -12,22 +12,8 @@ const TrendBar = () => {
   return (
     <div className="second-trend">
       <SideTop />
-
       {showSearch !== "no" && <SearchInput />}
 
-      {/* <div className="trend">
-        <h4 className="h4-title">Trending Posts</h4>
-        <div className="trend-div">
-          <div className="left-20">
-            <Link to="/">
-              <small className="trend-title">Bishal</small>
-            </Link>
-            <Link to="/">
-              <p className="trend-list"># Nie boy</p>
-            </Link>
-          </div>
-        </div>
-      </div> */}
       <div className="follow">
         <h4 className="h4-title">Who to Follow ?</h4>
         {recommendusers?.map((user) => (
@@ -49,24 +35,3 @@ const TrendBar = () => {
 
 export default TrendBar;
 
-// const RecommendUser = ({ user }) => {
-//   return (
-//     <Link  to={`/${user.username}`}>
-//       <span className="position-relative hover trendlist">
-//         <span>
-//           <img alt="img" src={user.avatar} className="authorImage" />
-//         </span>
-//         <span className="left-20">
-//           <Link to="/">
-//             <p className="user-list">{user.username}</p>
-//           </Link>
-//           <span className=" side-name follow-line">
-//             {user.bio || "Need new bio lol "}
-//           </span>
-//         </span>
-//         <button className="link-tweet followbtn">Follow</button>
-//       </span>
-    
-//     </Link>
-//   );
-// };

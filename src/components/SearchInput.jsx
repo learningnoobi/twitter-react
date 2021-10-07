@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { searchTweet } from "../redux/asyncActions/TweetAsync";
 import { useDispatch, useSelector } from "react-redux";
