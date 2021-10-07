@@ -1,24 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { TweetOperation } from "./SimpleComponents";
+import { TweetOperation } from "../TweetOperation";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { AiOutlineDelete } from "react-icons/ai";
+
 import { useDispatch } from "react-redux";
+import { BiCaretUp, BiCaretDown } from "react-icons/bi";
 import {
-  BiUserPlus,
-  BiEditAlt,
-  BiBlock,
-  BiCaretUp,
-  BiCaretDown,
-} from "react-icons/bi";
-import {
-  delComment,
   editComment,
   likeComment,
-} from "../redux/asyncActions/CommentAsync";
+} from "../../redux/asyncActions/CommentAsync";
 import Moment from "moment";
 import ReplyComment from "./ReplyComment";
-import { EditPost } from "./EditPost";
+import { EditPost } from "../EditPost";
+import { DropdownContent } from "./DropDownContent";
 
 const CommentCard = ({ tweetId, user, comment }) => {
   const [curIndex, setCurIndex] = useState(null);
@@ -41,7 +35,6 @@ const CommentCard = ({ tweetId, user, comment }) => {
           className="dropdownIcon"
           aria-haspopup="true"
           aria-expanded="false"
-       
         />
 
         <div className="dropdown-menu dropdown-menu-right dropdownMenu">
@@ -122,8 +115,6 @@ const CommentCard = ({ tweetId, user, comment }) => {
             user={user}
             setEdit={setEdit}
             setCurIndex={setCurIndex}
-
-  
           />
           // <CommentCard tweetId={tweetId} user={user} comment={comment}/>
         ))}
@@ -132,44 +123,3 @@ const CommentCard = ({ tweetId, user, comment }) => {
 };
 
 export default CommentCard;
-
-export const DropdownContent = ({ user, comment, setEdit, setCurIndex, dispatch }) => {
-  return (
-    <>
-      {user?.email !== comment?.author.email && (
-        <>
-          <p>
-            <BiUserPlus /> <span>Unfollow Rayos</span>
-          </p>
-          <p>
-            <BiBlock />
-            <span>Block</span>
-          </p>
-        </>
-      )}
-      {user?.email === comment?.author.email && (
-        <>
-          <p
-            onClick={() => {
-              setEdit(true);
-              setCurIndex(null);
-            }}
-          >
-            <BiEditAlt />
-            <span>Edit Reply</span>
-          </p>
-          <p
-            onClick={() => {
-              dispatch(delComment(comment.id));
-              setCurIndex(null);
-            }}
-          >
-            <AiOutlineDelete color="#e0245e" />
-            <span style={{ color: "#e0245e" }}>Delete Reply</span>
-          </p>
-        </>
-      )}
-    </>
-  );
-};
-

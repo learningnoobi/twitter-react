@@ -1,5 +1,5 @@
 import React,{useEffect,useState,useRef} from 'react'
-import { userEdit,  } from "../redux/asyncActions/UserAsync";
+import { userEdit } from "../../redux/asyncActions/UserAsync";
 import { useDispatch } from "react-redux";
 const UserEditModal= ({ user, modalId }) => {
     const dispatch = useDispatch();

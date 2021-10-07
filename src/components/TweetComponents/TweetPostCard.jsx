@@ -2,7 +2,7 @@ import React  from "react";
 import { Link } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DropDown from "./DropDown";
-import { TweetOperation } from "../SimpleComponents";
+import { TweetOperation } from "../TweetOperation";
 
 import Moment from "moment";
 import { likeTweet } from "../../redux/asyncActions/TweetAsync";

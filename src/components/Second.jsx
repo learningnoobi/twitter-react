@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "./Sidebar";
-import BottomTab from "./tweetComp/BottomTab";
-import TrendBar from "./tweetComp/TrendBar";
+import BottomTab from "./TweetComponents/BottomTab";
+import TrendBar from "./TweetComponents/TrendBar";
 
 
 const Second = (props) => {

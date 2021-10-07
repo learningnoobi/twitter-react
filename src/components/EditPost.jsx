@@ -1,4 +1,4 @@
-import AddPicker from "./AddPicker";
+import AddPicker from "./SmallComponent/AddPicker";
 
 
 export const EditPost = ({

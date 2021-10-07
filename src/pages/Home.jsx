@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import HomeTweets from "../components/HomeTweets";
+import HomeTweets from "../components/TweetComponents/HomeTweets";
 import { removeMesage } from "../redux/slices/tweetSlice";
-import AlertMessage from "../components/alertMessage";
+import AlertMessage from "../components/SmallComponent/alertMessage";
 
 const Home = () => {
   const message = useSelector((state) => state.tweetReducer.message);
   const dispatch = useDispatch();
   message &&
-    setTimeout(() => {
+setTimeout(() => {
       dispatch(removeMesage());
     }, 3000);
 

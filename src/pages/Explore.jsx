@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "../styles/explore.css";
 import SearchInput from "../components/SearchInput";
 import ClipLoader from "react-spinners/ClipLoader";
-import TweetPostCard from "../components/tweetComp/TweetPostCard";
+import TweetPostCard from "../components/TweetComponents/TweetPostCard";
 import { load_tweet } from "../redux/asyncActions/TweetAsync";
 import { setSearch } from "../redux/slices/NotificationSlice";
 import { showSearchBar } from "../redux/slices/tweetSlice";

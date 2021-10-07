@@ -8,19 +8,19 @@ import {
 } from "../redux/asyncActions/TweetAsync";
 
 import Second from "../components/Second";
-import TweetHeader from "../components/tweetComp/tweetHeader";
+import TweetHeader from "../components/TweetComponents/tweetHeader";
 import { Link, useHistory } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiUserPlus, BiEditAlt, BiBlock } from "react-icons/bi";
 import { removeMesage } from "../redux/slices/tweetSlice";
-import AlertMessage from "../components/alertMessage";
-import { TweetOperation } from "../components/SimpleComponents";
-import { TweetContent } from "../components/tweetComp/TweetContent";
-import CommentCard from "../components/CommentCard";
+import AlertMessage from "../components/SmallComponent/alertMessage";
+import { TweetOperation } from "../components/TweetOperation";
+import { TweetContent } from "../components/TweetComponents/TweetContent";
+import CommentCard from "../components/CommentComponent/CommentCard";
 import { addComment, load_more_comment, tweet_comments } from "../redux/asyncActions/CommentAsync";
 import ClipLoader from "react-spinners/ClipLoader";
-import AddPicker from "../components/AddPicker";
+import AddPicker from "../components/SmallComponent/AddPicker";
 
 const TweetDetail = () => {
   const [isOpen, setIsOpen] = useState(false);

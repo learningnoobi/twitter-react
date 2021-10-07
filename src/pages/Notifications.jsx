@@ -1,6 +1,6 @@
 import React, { useEffect} from "react";
 import Second from "../components/Second";
-import TweetHeader from "../components/tweetComp/tweetHeader";
+import TweetHeader from "../components/TweetComponents/tweetHeader";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getNotifications,
@@ -55,7 +55,10 @@ const Notifications = () => {
         </span>
       ) : notifications.length < 1 ? (
         <span className="d-flex justify-content-center mt-4">
-          <strong className="side-icon">No New Notifications</strong>
+       <span>
+       <strong className="side-icon">No Notifications</strong>
+          <p className="side-name">New notifications will be added here .</p>
+       </span>
         </span>
       ) : (
         notifications.map((list) => (

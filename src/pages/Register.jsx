@@ -7,7 +7,7 @@ import { RiTwitterFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { WarningText } from "../GooberStyled/Common";
-import AlertMessage from "../components/alertMessage";
+import AlertMessage from "../components/SmallComponent/alertMessage";
 import { removeMesage } from "../redux/slices/userSlice";
 
 const Register = () => {

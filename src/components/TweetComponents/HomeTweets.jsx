@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import Second from "./Second";
-import AddTweet from "./tweetComp/AddTweet";
-import TweetCard from "./tweetComp/TweetCard";
-import TweetHeader from "./tweetComp/tweetHeader";
+import Second from "../Second";
+import AddTweet from "./AddTweet";
+import TweetCard from "./TweetCard";
+import TweetHeader from "./tweetHeader";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { load_more } from "../redux/asyncActions/TweetAsync";
-import { setSearch } from "../redux/slices/NotificationSlice";
+import { load_more } from "../../redux/asyncActions/TweetAsync";
+import { setSearch } from "../../redux/slices/NotificationSlice";
 const HomeTweets = () => {
   const history = useHistory();
   const dispatch = useDispatch();

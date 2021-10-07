@@ -6,14 +6,15 @@ import Moment from "moment";
 import useUserInfo from "../hooks/useUserInfo";
 import { AiOutlineSchedule, AiOutlineSmile } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import TweetHeader from "../components/tweetComp/tweetHeader";
+import TweetHeader from "../components/TweetComponents/tweetHeader";
 import Viewer from "react-viewer";
 import ClipLoader from "react-spinners/ClipLoader";
 import { tweet_specific_user } from "../redux/asyncActions/TweetAsync";
-import TweetPostCard from "../components/tweetComp/TweetPostCard";
+import TweetPostCard from "../components/TweetComponents/TweetPostCard";
 import { removeMesage } from "../redux/slices/tweetSlice";
-import AlertMessage from "../components/alertMessage";
-import UserEditModal from "../components/UserEditModal";
+import AlertMessage from "../components/SmallComponent/alertMessage";
+import UserEditModal from "../components/UserRelated/UserEditModal";
+import { FollowInfo } from "../components/SmallComponent/FollowInfo";
 
 const Profile = () => {
   const { username } = useParams();
@@ -177,11 +178,3 @@ const Profile = () => {
 
 export default Profile;
 
-export const FollowInfo = ({ number = 0, followinfo = "" }) => {
-  return (
-    <div className="d-flex">
-      <span className="bold-text">{number}</span>
-      <span className="mx-2 side-name">{followinfo}</span>
-    </div>
-  );
-};

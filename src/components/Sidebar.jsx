@@ -23,7 +23,7 @@ import {
   logoutAct,
 } from "../redux/asyncActions/UserAsync";
 import { removeNotice } from "../redux/slices/NotificationSlice";
-import AlertMessage from "./alertMessage";
+import AlertMessage from "./SmallComponent/alertMessage";
 import { getNotifications } from "../redux/asyncActions/NotificationAsync";
 
 const Sidebar = () => {

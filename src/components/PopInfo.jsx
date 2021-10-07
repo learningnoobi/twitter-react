@@ -1,8 +1,9 @@
 import React from "react";
-import { FollowInfo } from "../pages/Profile";
+
 import { useDispatch, useSelector } from "react-redux";
 import { userFollow } from "../redux/asyncActions/UserAsync";
 import { Link } from "react-router-dom";
+import { FollowInfo } from "./SmallComponent/FollowInfo";
 
 const PopInfo = ({ tweet }) => {
   const userInfo = useSelector((state) => state.userReducer);

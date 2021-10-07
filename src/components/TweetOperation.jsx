@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 import Heart from "../GooberStyled/TwitterHeart";
 import { bookmarkTweet, deleteTweet, reTweet } from "../redux/asyncActions/TweetAsync";
 import { addComment } from "../redux/asyncActions/CommentAsync";
+import AddPicker from "./SmallComponent/AddPicker";
 
-import AddPicker from "./AddPicker";
 export const TweetOperation = ({
   bookmark,
   liked,
@@ -28,7 +28,6 @@ export const TweetOperation = ({
   useEffect(() => {
     //bootstrap tooltip
     window.$('[data-toggle="tooltip"]').tooltip();
-
     setClick(liked);
     setBookmarked(bookmark);
   }, [liked, bookmark]);
