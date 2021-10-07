@@ -449,7 +449,8 @@ background-color: #e0245e;
   background: var(--trend);
   width: 80%;
   margin: auto;
-  height: 200px;
+  /* height: 200px; */
+  padding: 10px;
   margin-top: 10px;
 }
 .bottom-menu {
@@ -470,8 +471,9 @@ background-color: #e0245e;
 }
 .trendlist {
   display: flex;
-  padding: 20px;
-  border-bottom: 1px solid var(--border);
+  padding: 6px;
+  margin-bottom: 10px;
+  /* border-bottom: 1px solid var(--border); */
 }
 .left-20 {
   margin-left: 20px;
@@ -486,6 +488,15 @@ background-color: #e0245e;
   right: 40px;
   color: var(--red);
   display: none;
+}
+.followbtn{
+  position: absolute;
+  right: 4px;
+}
+.center{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 @media only screen and (max-width: 1150px) {
   .nav {

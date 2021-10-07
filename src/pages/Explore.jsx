@@ -7,6 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import TweetPostCard from "../components/tweetComp/TweetPostCard";
 import { load_tweet } from "../redux/asyncActions/TweetAsync";
 import { setSearch } from "../redux/slices/NotificationSlice";
+import { showSearchBar } from "../redux/slices/tweetSlice";
 
 const Explore = () => {
   const dispatch = useDispatch();
@@ -15,9 +16,10 @@ const Explore = () => {
   const tweetsInfo = useSelector((state) => state.tweetReducer);
   useEffect(() => {
     dispatch(load_tweet());
+    dispatch(showSearchBar('no'))
     return () =>{
       dispatch(setSearch([]));
-    
+      dispatch(showSearchBar(''))
     };
   }, [dispatch]);
   return (

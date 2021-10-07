@@ -4,6 +4,7 @@ import {
   userSuccess,
   refreshSuccess,
   userFail,
+  recommendUser,
   userRegisterSuccess,
   authSuccess,
   logMeOut,
@@ -17,19 +18,9 @@ const url = "http://127.0.0.1:8000/auth/users/";
 
 export const load_user = () => async (dispatch) => {
   if (localStorage.getItem("access")) {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${localStorage.getItem("access")}`,
-        Accept: "application/json",
-      },
-    };
-
     try {
-      const res = await axios.get(
-        `http://127.0.0.1:8000/auth/users/me/`,
-        config
-      );
+      const res = await axiosInstance.get(
+        `http://127.0.0.1:8000/auth/users/me/`);
       dispatch(userSuccess(res.data));
     } catch (err) {
       const res = err.response.data.code;
@@ -62,8 +53,7 @@ export const refreshToken = () => async (dispatch) => {
   }
 };
 
-export const register =
-  (username, email, password, re_password) => (dispatch) => {
+export const register =(username, email, password, re_password) => (dispatch) => {
     dispatch(setLoading(true));
     axios
       .post(url, {
@@ -198,4 +188,21 @@ export const checkAuthenticated = () => async (dispatch) => {
 export const logoutAct = () => (dispatch) => {
   dispatch(logMeOut());
   // dispatch(load_user());
+};
+
+
+export const recommendMeUser = () => async (dispatch) => {
+  // dispatch(setLoading(true));
+  try {
+    const res = await axiosInstance.get(
+      `http://127.0.0.1:8000/recommend_users/forme/`
+    );
+    // dispatch(setLoading(false));
+    console.log('recommend ',res.data)
+   dispatch(recommendUser(res.data))
+  } catch (err) {
+    dispatch(userFail());
+    // dispatch(setLoading(false));
+    console.log(err);
+  }
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { searchTweet } from "../redux/asyncActions/TweetAsync";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,36 +12,36 @@ const SearchInput = () => {
 
   const searchMe = (e) => {
     e.preventDefault();
-    dispatch(searchTweet(query));
+
+      dispatch(searchTweet(query));
+  
   };
   return (
-    
-      <form
-        autoComplete="off"
-        onSubmit={searchMe}
-        className="mt-2 position-relative d-flex justify-content-center mb-4"
-      >
-        <BsSearch className="searchicons" />
-        <input
-          onChange={(e) => setQuery(e.target.value)}
-          value={query}
-          onKeyUp={searchMe}
-          type="text"
-          className="searchinput"
-          id="search-bar"
-          placeholder="Search Twitter"
-        />
-        {searchResult.length > 0 && (
-          <div className="resultDiv">
-            {searchResult.map((res) => (
-              <Link to={`${res.author.username}/tweet/${res.id}`} key={res.id}>
-                <SearchResult res={res} />
-              </Link>
-            ))}
-          </div>
-        )}
-      </form>
-    
+    <form
+      autoComplete="off"
+      onSubmit={searchMe}
+      className="mt-2 position-relative d-flex justify-content-center mb-4"
+    >
+      <BsSearch className="searchicons" />
+      <input
+        onChange={(e) => setQuery(e.target.value)}
+        value={query}
+        onKeyUp={searchMe}
+        type="text"
+        className="searchinput"
+        id="search-bar"
+        placeholder="Search Twitter"
+      />
+      {searchResult.length > 0 && (
+        <div className="resultDiv">
+          {searchResult.map((res) => (
+            <Link to={`${res.author.username}/tweet/${res.id}`} key={res.id}>
+              <SearchResult res={res} />
+            </Link>
+          ))}
+        </div>
+      )}
+    </form>
   );
 };
 

@@ -46,10 +46,13 @@ export const tweetReducer = createSlice({
       state.meta = payload;
     },
     loadedMore:(state, { payload }) => {
-      state.tweets.push(...payload)
+      state.tweets.push(...payload);
     },
     removeMesage: (state, action) => {
       state.message = null;
+    },
+    showSearchBar:(state,{payload})=> {
+      state.searchBar = payload;
     },
     likeUnlikeTweet:(state,{payload}) => {
       const tweet = state.tweets.find((i) => i.id === payload.id);
@@ -64,6 +67,7 @@ export const {
   setMeta,
   tweetSuccess,
   tweetAdded,
+  showSearchBar,
   tweetFail,
   loadedMore,
   deletedSuccess,

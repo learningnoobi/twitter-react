@@ -9,7 +9,7 @@ import Activate from "./pages/Activate";
 import Profile from "./pages/Profile";
 import TweetDetail from "./pages/TweetDetail";
 import NotFound from "./components/NotFound";
-import { load_user } from "./redux/asyncActions/UserAsync";
+import { load_user, recommendMeUser } from "./redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
 import BookmarkList from "./pages/BookmarkList";
 import Notifications from "./pages/Notifications";
@@ -48,6 +48,7 @@ function App() {
 
   useEffect(() => {
     dispatch(load_user());
+    dispatch(recommendMeUser())
     !isAuthenticated && <Redirect to="/login"></Redirect>;
     
   }, [dispatch, isAuthenticated]);

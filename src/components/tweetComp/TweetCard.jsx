@@ -5,6 +5,7 @@ import { load_tweet } from "../../redux/asyncActions/TweetAsync";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import TweetPostCard from "./TweetPostCard";
+// import { recommendMeUser } from "../../redux/asyncActions/UserAsync";
 
 const TweetCard = () => {
   const tweetsInfo = useSelector((state) => state.tweetReducer);
@@ -15,6 +16,7 @@ const TweetCard = () => {
 
   useEffect(() => {
     dispatch(load_tweet());
+  
     window.$('[data-toggle="popover"]').popover();
   }, [dispatch]);
 

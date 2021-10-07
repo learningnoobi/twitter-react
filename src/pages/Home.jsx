@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <div>
       <HomeTweets />
-    
+
       {message && (
         <AlertMessage
           removeMesage={removeMesage}

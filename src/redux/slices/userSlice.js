@@ -59,6 +59,9 @@ export const userRegister = createSlice({
     authSuccess: (state) => {
       state.isAuthenticated = true;
     },
+    recommendUser:(state, { payload }) => {
+      state.recommendedUser = payload;
+    },
     logMeOut: (state) => {
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
@@ -83,6 +86,7 @@ export const {
   profileUserSuccess,
   refreshSuccess,
   followedUnfollowed,
+  recommendUser,
 } = userRegister.actions;
 
 export default userRegister.reducer;
