@@ -70,7 +70,9 @@ export const load_more = (pageLink) => async (dispatch) => {
 export const tweet_detail = (id) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.get(`tweets/${id}/`);
+    // since we have filtered tweets of only followerd users .
+    //  We are fetching from global which contains all tweets
+    const res = await axiosInstance.get(`tweets/explore/global/${id}/`);
     dispatch(setLoading(false));
     dispatch(tweetDetail(res.data));
   } catch (err) {

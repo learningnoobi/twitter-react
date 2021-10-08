@@ -47,7 +47,7 @@ const SearchInput = () => {
 
 export default SearchInput;
 
-const SearchResult = ({ res }) => {
+export const SearchResult = ({ res }) => {
   return (
     <div className="d-flex result">
       <img className="authorImage" src={res?.avatar} alt="your result" />

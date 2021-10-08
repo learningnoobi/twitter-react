@@ -6,7 +6,6 @@ import {
   RiHome7Fill,
   RiTwitterFill,
   RiMailLine,
-  RiFileListLine,
 } from "react-icons/ri";
 import {
   BiBell,
@@ -100,7 +99,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/messages">
               <i>
                 <RiMailLine />
               </i>
@@ -124,7 +123,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/register">
+            <Link to="/">
               <i>
                 <CgMoreO />
               </i>

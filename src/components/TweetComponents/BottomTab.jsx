@@ -1,5 +1,5 @@
 import React from 'react'
-import { BsSearch ,BsHouse ,BsPerson ,BsBell} from "react-icons/bs";
+import { BsSearch ,BsHouse ,BsPerson } from "react-icons/bs";
 import {BiBell} from "react-icons/bi";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';

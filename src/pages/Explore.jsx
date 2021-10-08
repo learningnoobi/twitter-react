@@ -8,7 +8,7 @@ import TweetPostCard from "../components/TweetComponents/TweetPostCard";
 import { explore_tweet, load_more } from "../redux/asyncActions/TweetAsync";
 import { setSearch } from "../redux/slices/NotificationSlice";
 import { showSearchBar } from "../redux/slices/tweetSlice";
-import { loadMoreNotification } from "../redux/asyncActions/NotificationAsync";
+
 
 const Explore = () => {
   const dispatch = useDispatch();

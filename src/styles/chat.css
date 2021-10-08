@@ -1,0 +1,45 @@
+:root{
+    --border: rgb(62, 64, 82);
+}
+.second-div{
+    display: flex;
+    justify-content: space-around;
+}
+.search-div{
+    width: 35%;
+ 
+    margin: auto;
+    height: 100vh;
+    border-right: 1px solid var(--border);
+}
+.div-mid{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.search-inner{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--border);
+}
+.message-div{
+    width: 65%;
+
+}
+.search-result{
+    padding: 10px;
+}
+.searchroom{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 4px;
+
+}
+.message-info{
+    width: 60%;
+}
