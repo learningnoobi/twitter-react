@@ -9,6 +9,7 @@ import {
   authSuccess,
   logMeOut,
   profileUserSuccess,
+  followRecommendUser,
   followedUnfollowed,
 } from "../slices/userSlice";
 import { setMessage } from "../slices/tweetSlice";
@@ -131,8 +132,8 @@ export const userFollow = (username) => async (dispatch) => {
       username: username,
     });
     dispatch(setLoading(false));
-
     dispatch(followedUnfollowed(res.data));
+    dispatch(followRecommendUser(res.data))
   } catch (err) {
     dispatch(userFail());
     console.log(err);
@@ -197,8 +198,6 @@ export const recommendMeUser = () => async (dispatch) => {
     const res = await axiosInstance.get(
       `http://127.0.0.1:8000/recommend_users/forme/`
     );
-    // dispatch(setLoading(false));
-    console.log('recommend ',res.data)
    dispatch(recommendUser(res.data))
   } catch (err) {
     dispatch(userFail());

@@ -1,18 +1,14 @@
-import React  from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DropDown from "./DropDown";
 import { TweetOperation } from "../TweetOperation";
-
 import Moment from "moment";
 import { likeTweet } from "../../redux/asyncActions/TweetAsync";
-import { AiFillUnlock } from "react-icons/ai";
 import { BiGlobe } from "react-icons/bi";
-
-
+import { FaLock } from "react-icons/fa";
 import PopInfo from "../PopInfo";
 const TweetPostCard = ({ tweet, dispatch, user }) => {
-  
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
   };
@@ -37,7 +33,10 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
         {tweet.parent ? (
           <div style={{ display: "flex", flexDirection: "column" }}>
             <strong>
-              <Link  to={`${tweet.author.username}`||''} className="mx-2 side-name">
+              <Link
+                to={`${tweet.author.username}` || ""}
+                className="mx-2 side-name"
+              >
                 {tweet.author.username} retweeted !
               </Link>
             </strong>
@@ -106,10 +105,11 @@ const TweetHasParentOrNot = ({ tweet }) => {
             <span className="d-flex">
               {tweet?.author.username}
               <span className="side-name">
-                @ {tweet?.author.nickname} | {Moment(tweet?.created).fromNow(true)}
+                @ {tweet?.author.nickname} |{" "}
+                {Moment(tweet?.created).fromNow(true)}
                 <span className="mx-2">
-                {tweet?.is_private ? <AiFillUnlock /> : <BiGlobe />}
-                {tweet?.isEdited && <span className="mx-2">- Edited</span>}
+                  {tweet?.is_private ? <FaLock /> : <BiGlobe />}
+                  {tweet?.isEdited && <span className="mx-2">- Edited</span>}
                 </span>
               </span>
             </span>
@@ -134,5 +134,3 @@ const TweetHasParentOrNot = ({ tweet }) => {
     </>
   );
 };
-
-

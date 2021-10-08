@@ -46,7 +46,7 @@ const Sidebar = () => {
       dispatch(checkAuthenticated());
     }
     <Redirect to="/login"></Redirect>;
-    window.location.reload();
+
   };
   const { user, isAuthenticated } = userIn;
 
@@ -113,14 +113,6 @@ const Sidebar = () => {
                 <BiBookmark />
               </i>
               <span className="link-text">Bookmarks</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/">
-              <i>
-                <RiFileListLine />
-              </i>
-              <span className="link-text">Lists</span>
             </Link>
           </li>
           <li>

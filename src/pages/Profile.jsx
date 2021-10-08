@@ -115,7 +115,7 @@ const Profile = () => {
                   {userprofile?.i_follow ? (
                     <button
                       onClick={() => dispatch(userFollow(userprofile.username))}
-                      className="link-tweet"
+                      className="link-tweet "
                     >
                       Unfollow
                     </button>

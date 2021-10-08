@@ -88,13 +88,13 @@ body {
 .mains {
   display: flex;
 }
-.heart-parent{
+.heart-parent {
   position: relative;
   transform: scale(0.76);
-  margin-top:-6.2%;
+  margin-top: -6.2%;
   margin-bottom: -35px;
 }
-.count{
+.count {
   position: absolute;
   top: 35px;
   right: 5px;
@@ -102,7 +102,9 @@ body {
 .setPublic {
   color: var(--red);
   font-weight: bolder;
-  border-bottom: 1px solid rgb(50, 114, 138);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  /* border-bottom: 1px solid rgb(50, 114, 138); */
 }
 
 .setPublic:hover {
@@ -144,7 +146,7 @@ body {
   margin-top: 20px;
 }
 .navbar-nav li:first-child:hover {
-  background-color:transparent;
+  background-color: transparent;
   color: var(--red) !important;
   border-radius: 30px;
 }
@@ -181,22 +183,22 @@ body {
 .bottom-menu {
   display: none;
 }
-.notify-div{
+.notify-div {
   position: relative;
 }
-.notify-count{
-position: absolute;
-height: 20px;
-width: 20px;
-padding: 12px;
-font-size: medium;
-border-radius: 50%;
-left: 25px;
-top: 3px;
-display: flex;
-justify-content: center;
-align-items: center;
-background-color: #e0245e;
+.notify-count {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  padding: 12px;
+  font-size: medium;
+  border-radius: 50%;
+  left: 25px;
+  top: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0245e;
 }
 .second {
   /* margin-left: 290px; */
@@ -213,7 +215,7 @@ background-color: #e0245e;
   cursor: pointer;
   font-size: 22px;
   color: rgb(168, 157, 157);
-  font-family:Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .tweetIcons:hover {
   color: var(--red);
@@ -267,6 +269,7 @@ background-color: #e0245e;
   width: 100%;
   margin-left: 20px;
 }
+
 .add-icon {
   display: flex;
   cursor: pointer;
@@ -317,17 +320,31 @@ background-color: #e0245e;
   outline: 0 !important;
   cursor: pointer;
 }
-.link-tweet.outline{
+.border-only-btn {
+  border-radius: 34px;
+  min-width: 70px;
+  padding: 8px 16px;
+  color: #fff;
+  outline: 0 !important;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1.3px solid var(--red);
+  transition: 300ms ease-in-out;
+}
+.border-only-btn:hover{
+  background-color: var(--red);
+}
+.link-tweet.outline {
   background-color: rgb(79, 115, 186);
 }
-.link-tweet.outline:hover{
+.link-tweet.outline:hover {
   background-color: rgb(47, 77, 138);
 }
-.btn-outline{
+.btn-outline {
   background-color: var(--background);
   border: 1px solid var(--red);
   width: 40px;
-  height:40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -401,7 +418,7 @@ background-color: #e0245e;
   padding-top: 10px;
   right: 10px;
   top: 40px;
-  color:white;
+  color: white;
 }
 .dropdownMenu p {
   padding: 5px 10px;
@@ -414,7 +431,6 @@ background-color: #e0245e;
   cursor: pointer;
 }
 #search-bar {
-
   background: var(--trend);
   border-radius: 25px;
   border: none;
@@ -489,11 +505,11 @@ background-color: #e0245e;
   color: var(--red);
   display: none;
 }
-.followbtn{
+.followbtn {
   position: absolute;
   right: 4px;
 }
-.center{
+.center {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -600,7 +616,15 @@ background-color: #e0245e;
   .nav li {
     margin-left: 40px;
   }
-
+  .notify-count {
+    position: absolute;
+    height: 11px;
+    width: 11px;
+    padding: 9px;
+    font-size: small;
+    left: 12px;
+    top: 0px;
+  }
   .second {
     margin-left: 0;
   }
@@ -656,10 +680,10 @@ background-color: #e0245e;
     max-height: 230px;
     width: 300px;
   }
-  .heart-parent{
+  .heart-parent {
     position: relative;
     transform: scale(0.66);
-    margin-top:-11.2%;
+    margin-top: -11.2%;
     margin-bottom: -35px;
   }
 }

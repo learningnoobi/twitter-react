@@ -41,6 +41,7 @@ export const userRegister = createSlice({
     followedUnfollowed: (state, { payload }) => {
       state.followState = payload.state;
       state.followers = payload.followers;
+      
       state.profileUser.i_follow = payload.follow;
       state.profileUser.followers = payload.followers;
     },
@@ -61,6 +62,10 @@ export const userRegister = createSlice({
     },
     recommendUser:(state, { payload }) => {
       state.recommendedUser = payload;
+    },
+    followRecommendUser:(state, { payload }) => {
+      const user = state.recommendedUser.find(user => user.username ===payload.username)
+      user.i_follow= payload.follow
     },
     logMeOut: (state) => {
       localStorage.removeItem("access");
@@ -87,6 +92,7 @@ export const {
   refreshSuccess,
   followedUnfollowed,
   recommendUser,
+  followRecommendUser
 } = userRegister.actions;
 
 export default userRegister.reducer;

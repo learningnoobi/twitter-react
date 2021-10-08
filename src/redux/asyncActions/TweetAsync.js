@@ -37,6 +37,26 @@ export const load_tweet = () => async (dispatch) => {
   }
 };
 
+export const explore_tweet = () => async (dispatch) => {
+  dispatch(setLoading(true));
+
+  try {
+    let res;
+    if (localStorage.getItem("access")) {
+      res = await axiosInstance.get(`tweets/explore/global/`);
+    } else {
+      res = await axios.get(`http://127.0.0.1:8000/tweets/explore/global/`);
+    }
+
+    // console.table('res is ',res.data)
+    dispatch(setLoading(false));
+    dispatch(tweetSuccess(res.data.data));
+    dispatch(setMeta(res.data.meta));
+  } catch (err) {
+    dispatch(setLoading(false));
+  }
+};
+
 export const load_more = (pageLink) => async (dispatch) => {
   try {
     const res = await axios.get(`${pageLink}`);

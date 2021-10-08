@@ -35,7 +35,7 @@ const SearchInput = () => {
       {searchResult.length > 0 && (
         <div className="resultDiv">
           {searchResult.map((res) => (
-            <Link to={`${res.author.username}/tweet/${res.id}`} key={res.id}>
+            <Link to={`${res.username}`} key={res.id}>
               <SearchResult res={res} />
             </Link>
           ))}
@@ -50,10 +50,10 @@ export default SearchInput;
 const SearchResult = ({ res }) => {
   return (
     <div className="d-flex result">
-      <img className="authorImage" src={res?.author.avatar} alt="your result" />
+      <img className="authorImage" src={res?.avatar} alt="your result" />
       <div className="mx-3">
-        <strong>{res.author.username}</strong>
-        <p className="side-name">{res.title}</p>
+        <strong>{res.username}</strong>
+        <p className="side-name">{res.bio}</p>
       </div>
     </div>
   );

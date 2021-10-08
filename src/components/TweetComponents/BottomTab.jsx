@@ -1,9 +1,12 @@
 import React from 'react'
 import { BsSearch ,BsHouse ,BsPerson ,BsBell} from "react-icons/bs";
+import {BiBell} from "react-icons/bi";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const BottomTab = () => {
   const user = useSelector(state => state.userReducer.user?.username)
+  const noticeInfo = useSelector((state) => state.notificationReducer);
+  const noticeCount = noticeInfo?.count;
     return (
         <div className="bottom-menu">
         <ul>
@@ -16,9 +19,20 @@ const BottomTab = () => {
           <Link to={`/${user}`} className="icon"> 
             <BsPerson />
           </Link>
-          <Link to="/notifications" className="icon">
+          {/* <Link to="/notifications" className="icon">
            <BsBell />
-          </Link>
+          </Link> */}
+          <li className="notify-div">
+            <Link to="/notifications">
+              {noticeCount && <div className="notify-count">{noticeCount}</div>}
+              <i>
+              <BiBell className="icon"/>
+              </i>
+         
+              
+            
+            </Link>
+          </li>
         </ul>
       </div>
     )
