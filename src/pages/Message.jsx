@@ -20,11 +20,11 @@ const Message = (props) => {
           <div className="search-inner">
             <TweetHeader headerName="Message" />
             <input
-              id="search-bar"
+              
               autoComplete="off"
               type="text"
               placeholder="search for people"
-              className="searchroom"
+              className="chat-input searchroom"
             />
           </div>
           <div className="search-result">

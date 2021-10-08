@@ -59,21 +59,10 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        {/* <Route path="/" exact component={Home} />
-        <Route path="/activate/:uid/:token" exact component={Activate} />
-        <Route path="/login" component={Login} />
-        <Route path="/messages" component={ChatMessage} />
-        <Route path="/register" component={Register} />
-        <Route path="/notifications" component={Notifications} />
-        <Route path="/bookmark" component={BookmarkList} />
-        <Route path="/explore" component={Explore} />
-        <Route path="/:username" exact component={Profile} />
-        <Route path="/:username/tweet/:id"  component={TweetDetail} />
-        <Route path="/messages/w/:username"  component={PrivateRoomChat} />
-        <Route path="" component={NotFound} /> */}
          <Route path="/" exact component={Home} />
         <Route path="/activate/:uid/:token" exact component={Activate} />
         <Route path="/login" component={Login} />
+        <Route path="/messages/w/:username"  component={PrivateRoomChat} />
         <Route path="/messages" component={ChatMessage} />
         <Route path="/register" component={Register} />
         <Route path="/notifications" component={Notifications} />
