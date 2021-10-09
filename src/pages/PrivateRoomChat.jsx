@@ -7,7 +7,7 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { useSelector, useDispatch } from "react-redux";
 import { getChatMessage } from "../redux/asyncActions/ChatAsync";
 import { addMsg } from "../redux/slices/ChatSlice";
-import ReconnectingWebSocket from 'reconnecting-websocket';
+import ReconnectingWebSocket from "reconnecting-websocket";
 
 const PrivateRoomChat = () => {
   const [msgInput, setMsgInput] = useState("");
@@ -17,9 +17,11 @@ const PrivateRoomChat = () => {
   // const me = userIn.user.username;
   const dispatch = useDispatch();
   let endpoint = `ws://127.0.0.1:8000/ws/chat/${username}/`;
-const me = userIn.user?.username
+  const me = userIn.user?.username;
   const chats = useSelector((state) => state.chatReducer.chatMessage);
-  const client = new ReconnectingWebSocket(endpoint + "?token=" + userIn.access);
+  const client = new ReconnectingWebSocket(
+    endpoint + "?token=" + userIn.access
+  );
 
   useEffect(() => {
     client.onopen = function () {
@@ -52,7 +54,7 @@ const me = userIn.user?.username
       JSON.stringify({
         command: "private_chat",
         message: msgInput,
-        username:me,
+        username: me,
       })
     );
     setMsgInput("");
@@ -82,15 +84,15 @@ const me = userIn.user?.username
                   />
                 )}
 
-                <span
+                <div
                   className={
                     msg.sender.username === username
                       ? "msg-txt"
                       : "msg-txt right"
                   }
                 >
-                  {msg.text}
-                </span>
+                 {msg.text}
+                </div>
               </div>
             ))}
         </div>
