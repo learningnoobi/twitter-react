@@ -27,7 +27,7 @@ export const TweetOperation = ({
 
   useEffect(() => {
     //bootstrap tooltip
-    window.$('[data-toggle="tooltip"]').tooltip();
+    // window.$('[data-toggle="tooltip"]').tooltip();
     setClick(liked);
     setBookmarked(bookmark);
   }, [liked, bookmark]);

@@ -5,7 +5,7 @@ import userRegister from './slices/userSlice'
 import tweetReducer from './slices/tweetSlice'
 import commentReducer  from './slices/CommentSlice'
 import notificationReducer  from './slices/NotificationSlice'
-
+import chatReducer  from './slices/ChatSlice'
 
 const store = configureStore({
   reducer: {
@@ -13,7 +13,8 @@ const store = configureStore({
       userReducer:userRegister,
       tweetReducer:tweetReducer,
       commentReducer:commentReducer,
-      notificationReducer:notificationReducer
+      notificationReducer:notificationReducer,
+      chatReducer:chatReducer
   },
 })
 

@@ -65,6 +65,7 @@ body {
   font-size: 1rem;
   font-family: var(--monst);
   overflow-x: hidden;
+
 }
 #nav::-webkit-scrollbar {
   width: 5px;

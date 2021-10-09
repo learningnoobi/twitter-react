@@ -16,7 +16,7 @@ const TweetCard = () => {
   useEffect(() => {
     dispatch(load_tweet());
 
-    window.$('[data-toggle="popover"]').popover();
+    // window.$('[data-toggle="popover"]').popover();
   }, [dispatch]);
 
   return (

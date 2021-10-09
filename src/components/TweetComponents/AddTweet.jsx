@@ -31,7 +31,7 @@ const AddTweet = () => {
 
   useEffect(() => {
     //bootstrap tooltip
-    window.$('[data-toggle="tooltip"]').tooltip();
+    // window.$('[data-toggle="tooltip"]').tooltip();
   }, [isAuthenticated]);
 
   const addEmoji = (emoji) => {
