@@ -6,6 +6,7 @@ import {
   RiHome7Fill,
   RiTwitterFill,
   RiMailLine,
+  RiGithubFill,
 } from "react-icons/ri";
 import {
   BiBell,
@@ -13,7 +14,7 @@ import {
   BiUser,
   BiLogIn,
   BiGlobeAlt,
-  BiAddToQueue
+  BiAddToQueue,
 } from "react-icons/bi";
 import { CgMoreO } from "react-icons/cg";
 import {
@@ -34,23 +35,24 @@ const Sidebar = () => {
   const message = noticeInfo.message;
 
   useEffect(() => {
-    dispatch(getNotifications())
+    dispatch(getNotifications());
     return () => {
-      dispatch(showSidebar(""))
-    }
-  }, [dispatch])
+      dispatch(showSidebar(""));
+    };
+  }, [dispatch]);
 
   const logout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       dispatch(logoutAct());
       dispatch(load_user());
       dispatch(checkAuthenticated());
-  }
+    }
     <Redirect to="/login"></Redirect>;
-
   };
   const { user, isAuthenticated } = userIn;
-
+  const goOut = () => {
+    window.location.href = "http://github.com/learningnoobi/twitter-react";
+  };
   return (
     <>
       {message && (
@@ -124,13 +126,11 @@ const Sidebar = () => {
               <span className="link-text">Profile</span>
             </Link>
           </li>
-          <li>
-            <Link to="/">
-              <i>
-                <CgMoreO />
-              </i>
-              <span className="link-text">More</span>
-            </Link>
+          <li className="ml-2" >
+          <i onClick={goOut}>
+              <RiGithubFill />
+            </i>
+            <span className="link-text">GitHub</span>
           </li>
           <li
             className="link-tweets"
@@ -139,7 +139,7 @@ const Sidebar = () => {
             title="Add Tweet"
           >
             <Link to="/">
-            <i>
+              <i>
                 <BiAddToQueue />
               </i>
               <span className="link-text">Tweet</span>

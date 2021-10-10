@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
 import "../styles/chat.css";
@@ -7,8 +7,8 @@ import { getRooms } from "../redux/asyncActions/ChatAsync";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 
-
 const Message = (props) => {
+  const [query, setQuery] = useState("");
   const dispatch = useDispatch();
   const chatstate = useSelector((state) => state.chatReducer);
   const chatrooms = chatstate.chatRoom;
@@ -16,7 +16,16 @@ const Message = (props) => {
   useEffect(() => {
     console.log("room are ,", chatrooms);
     dispatch(getRooms());
-  }, []);
+  }, [dispatch]);
+
+
+  const searchRoom = () => {
+    let debouncer;
+    clearTimeout(debouncer);
+    debouncer = setTimeout(()=>{
+      dispatch(getRooms(query))
+    }, 1000);
+  };
 
   return (
     <>
@@ -27,20 +36,20 @@ const Message = (props) => {
             <TweetHeader headerName="Message" />
             <input
               autoComplete="off"
+              value={query}
+              onKeyUp={searchRoom}
               type="text"
+              onChange={(e) => setQuery(e.target.value)}
               placeholder="search for people"
               className="chat-input searchroom"
             />
           </div>
           <div className="search-result">
-            {/* <Link to="/messages/w/gintoki">
-             
-            </Link> */}
-            {chatrooms.isLoading?
-          (  <span className="d-flex justify-content-center mt-4">
-            <ClipLoader color="#f44" loading={true} size={23} />
-          </span>)
-            :
+            {chatrooms.isLoading ? (
+              <span className="d-flex justify-content-center mt-4">
+                <ClipLoader color="#f44" loading={true} size={23} />
+              </span>
+            ) : (
               chatrooms.map((room) => (
                 <div key={room.id}>
                   <RoomResult
@@ -51,7 +60,8 @@ const Message = (props) => {
                     }
                   />
                 </div>
-              ))}
+              ))
+            )}
           </div>
         </div>
 
