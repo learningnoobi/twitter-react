@@ -68,9 +68,7 @@ body {
 #nav::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-#nav{
-  z-index: 90000;
-}
+
 .mains {
   display: flex;
 }

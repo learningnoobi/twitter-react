@@ -14,6 +14,7 @@ import {
   BiUser,
   BiLogIn,
   BiGlobeAlt,
+  BiHash,
   BiAddToQueue,
 } from "react-icons/bi";
 import { CgMoreO } from "react-icons/cg";
@@ -88,7 +89,7 @@ const Sidebar = () => {
           <li>
             <Link to="/explore">
               <i>
-                <BiGlobeAlt />
+                <BiHash />
               </i>
               <span className="link-text">Explore</span>
             </Link>

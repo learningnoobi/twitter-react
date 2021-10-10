@@ -18,6 +18,7 @@ export const TweetOperation = ({
   like_count,
   comid = null,
   reply,
+  NoRetweetMark=false,
 }) => {
   const [isclicked, setClick] = useState(null);
   const dispatch = useDispatch();
@@ -27,7 +28,8 @@ export const TweetOperation = ({
 
   useEffect(() => {
     //bootstrap tooltip
-    // window.$('[data-toggle="tooltip"]').tooltip();
+    //i regret  not using  react-bootstrap instead of cdn
+    window.$('[data-toggle="tooltip"]').tooltip();
     setClick(liked);
     setBookmarked(bookmark);
   }, [liked, bookmark]);
@@ -126,7 +128,7 @@ export const TweetOperation = ({
         </div>
       )}
 
-     { retweet ? <i data-toggle="tooltip" title="Remove reTweet" className="tweetIcons">
+     {NoRetweetMark ?null:retweet ? <i data-toggle="tooltip" title="Remove reTweet" className="tweetIcons">
         <AiOutlineRetweet
          color="lightgreen"
           onClick={() => dispatch(deleteTweet(oriId,true)) }/>
@@ -145,7 +147,7 @@ export const TweetOperation = ({
 
         <span className="count">{like_count}</span>
       </i>
-      {bookmarked ? (
+      { NoRetweetMark ?null:bookmarked ? (
         <i
           data-html="true"
           data-toggle="tooltip"

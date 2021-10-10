@@ -81,7 +81,7 @@ const ReplyComment = ({ childCom, parentCom, tweetId, user, setCurIndex }) => {
         liked={childCom.iliked}
         likeTweetD={likeTweetD}
         like_count={childCom.like_count}
-        // bookmark = {tweet.i_bookmarked}
+        NoRetweetMark={true} //don't show retwet or bookmark for comment
       />
       {childCom.children.length > 0 && (
         <strong

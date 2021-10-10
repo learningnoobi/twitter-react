@@ -84,7 +84,7 @@ const CommentCard = ({ tweetId, user, comment }) => {
         liked={comment.iliked}
         likeTweetD={likeTweetD}
         like_count={comment.like_count}
-        // bookmark = {tweet.i_bookmarked}
+        NoRetweetMark={true} //don't show retwet or bookmark for comment
       />
       {comment.children.length > 0 && (
         <strong

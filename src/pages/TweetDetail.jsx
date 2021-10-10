@@ -18,7 +18,11 @@ import AlertMessage from "../components/SmallComponent/alertMessage";
 import { TweetOperation } from "../components/TweetOperation";
 import { TweetContent } from "../components/TweetComponents/TweetContent";
 import CommentCard from "../components/CommentComponent/CommentCard";
-import { addComment, load_more_comment, tweet_comments } from "../redux/asyncActions/CommentAsync";
+import {
+  addComment,
+  load_more_comment,
+  tweet_comments,
+} from "../redux/asyncActions/CommentAsync";
 import ClipLoader from "react-spinners/ClipLoader";
 import AddPicker from "../components/SmallComponent/AddPicker";
 
@@ -31,22 +35,19 @@ const TweetDetail = () => {
   const [editTitle, setEditTitle] = useState("");
   const tweet = useSelector((state) => state.tweetReducer.singleTweet);
   const [commentInput, setCommentInput] = useState("");
-  const userIn = useSelector(
-    (state) => state.userReducer
-  );
- 
+  const userIn = useSelector((state) => state.userReducer);
+
   const { id } = useParams();
-  const { user } =userIn;
+  const { user } = userIn;
 
   const message = useSelector((state) => state.tweetReducer.message);
   const comments = useSelector((state) => state.commentReducer);
-  const meta = comments.meta
-
+  const meta = comments.meta;
 
   useEffect(() => {
     dispatch(tweet_detail(id));
     dispatch(tweet_comments(id));
-  }, [dispatch,id]);
+  }, [dispatch, id]);
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
   };
@@ -69,7 +70,7 @@ const TweetDetail = () => {
   const loadMoreComment = () => {
     console.log(meta?.page, meta?.next);
     if (meta.next !== null) {
-      dispatch(load_more_comment(id,meta.page+1));
+      dispatch(load_more_comment(id, meta.page + 1));
     }
   };
   return (
@@ -97,35 +98,33 @@ const TweetDetail = () => {
                   aria-haspopup="true"
                   aria-expanded="false"
                 />
-               
-                 
-                  <div className="dropdown-menu dropdown-menu-right dropdownMenu">
-                    <p>
-                      <BiUserPlus /> <span>Unfollow Rayos</span>
-                    </p>
-                    <p>
-                      <BiBlock />
-                      <span>Block</span>
-                    </p>
-                    {user?.email === tweet?.author.email && (
-                      <>
-                        <p onClick={editpost}>
-                          <BiEditAlt />
-                          <span>Edit Post</span>
-                        </p>
-                        <p
-                          onClick={() => {
-                            dispatch(deleteTweet(tweet.id));
-                            history.push("/");
-                          }}
-                        >
-                          <AiOutlineDelete color="#e0245e" />
-                          <span style={{ color: "#e0245e" }}>Delete Post</span>
-                        </p>
-                      </>
-                    )}
-                  </div>
-                
+
+                <div className="dropdown-menu dropdown-menu-right dropdownMenu">
+                  <p>
+                    <BiUserPlus /> <span>Unfollow Rayos</span>
+                  </p>
+                  <p>
+                    <BiBlock />
+                    <span>Block</span>
+                  </p>
+                  {user?.email === tweet?.author.email && (
+                    <>
+                      <p onClick={editpost}>
+                        <BiEditAlt />
+                        <span>Edit Post</span>
+                      </p>
+                      <p
+                        onClick={() => {
+                          dispatch(deleteTweet(tweet.id));
+                          history.push("/");
+                        }}
+                      >
+                        <AiOutlineDelete color="#e0245e" />
+                        <span style={{ color: "#e0245e" }}>Delete Post</span>
+                      </p>
+                    </>
+                  )}
+                </div>
               </span>
               <span className="add-tweet-image">
                 <Link to={`/${tweet.author.username}`}>
@@ -150,13 +149,13 @@ const TweetDetail = () => {
               />
             </div>
             <TweetOperation
-            user = {user}
+              user={user}
               id={parseInt(id)}
               liked={tweet.iliked}
               likeTweetD={likeTweetD}
               like_count={tweet.like_count}
               tweet={tweet}
-              bookmark = {tweet.i_bookmarked}
+              bookmark={tweet.i_bookmarked}
             />
           </div>
           {/* comment lists */}
@@ -177,7 +176,7 @@ const TweetDetail = () => {
                 placeholder="Tweet your Reply"
               ></textarea>
 
-              <AddPicker setInput={setCommentInput}/>
+              <AddPicker setInput={setCommentInput} />
               <button
                 disabled={!commentInput}
                 onClick={commentAdd}
@@ -201,20 +200,19 @@ const TweetDetail = () => {
                   user={user}
                   key={comment.id}
                   comment={comment}
-
                 />
               ))
             )}
-           {!comments.isLoading &&meta?.next && 
-           <div className="mt-3 d-flex justify-content-center">
-           <button onClick={loadMoreComment}  className="link-tweet">
-             Load more
-           </button>
-           </div>}
+            {!comments.isLoading && meta?.next && (
+              <div className="mt-3 d-flex justify-content-center">
+                <button onClick={loadMoreComment} className="link-tweet">
+                  Load more
+                </button>
+              </div>
+            )}
           </section>
         </Second>
       )}
-     
     </div>
   );
 };

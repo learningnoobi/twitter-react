@@ -5,12 +5,14 @@ import {
   setLoading,
   tweetAdded,
   tweetFail,
+  deletedMarkSuccess,
   deletedSuccess,
   tweetDetail,
   setUploading,
   likeUnlikeTweet,
   setMeta,
   setMessage,
+  tweetMarkSuccess,
   loadedMore,
 } from "../slices/tweetSlice";
 import { setSearch } from "../slices/NotificationSlice";
@@ -85,7 +87,8 @@ export const bookmark_list = () => async (dispatch) => {
   try {
     const res = await axiosInstance.get(`tweets/love/bookmarkList/`);
     dispatch(setLoading(false));
-    dispatch(tweetSuccess(res.data));
+
+    dispatch(tweetMarkSuccess(res.data));
   } catch (err) {
     console.log(err);
   }
@@ -102,6 +105,7 @@ export const tweet_specific_user = (username) => async (dispatch) => {
     console.log(err);
   }
 };
+
 export const addTweet = (uploadData) => async (dispatch) => {
   dispatch(setUploading(true));
   try {
@@ -182,9 +186,12 @@ export const bookmarkTweet = (id) => async (dispatch) => {
       pk: id,
     });
 
-    res.data.bookmarked
-      ? dispatch(setMessage(`Saved to Bookmark !`))
-      : dispatch(setMessage(`Removed from Bookmark !`));
+    if (res.data.bookmarked) {
+      dispatch(setMessage(`Saved to Bookmark !`));
+    } else {
+      dispatch(setMessage(`Removed from Bookmark !`));
+      dispatch(deletedMarkSuccess(id));
+    }
   } catch (err) {
     console.log(err);
     dispatch(setMessage(`Something went Wrong !`));

@@ -6,7 +6,8 @@ const initialState = {
   singleTweet: {},
   uploading: false,
   message: null,
-  meta:null
+  meta:null,
+  bookmarksList:[]
 };
 export const tweetReducer = createSlice({
   name: "tweetReducer",
@@ -26,6 +27,9 @@ export const tweetReducer = createSlice({
     tweetSuccess: (state, { payload }) => {
       state.tweets = payload;
     },
+    tweetMarkSuccess: (state, { payload }) => {
+      state.bookmarksList = payload;
+    },
     tweetFail: (state) => {
       state.error = true;
     },
@@ -41,6 +45,9 @@ export const tweetReducer = createSlice({
     },
     deletedSuccess: (state, { payload }) => {
       state.tweets = state.tweets.filter((i) => i.id !== payload);
+    },
+    deletedMarkSuccess: (state, { payload }) => {
+      state.bookmarksList = state.bookmarksList.filter((i) => i.id !== payload);
     },
     setMeta:(state, { payload }) => {
       state.meta = payload;
@@ -71,10 +78,12 @@ export const {
   tweetFail,
   loadedMore,
   deletedSuccess,
+  deletedMarkSuccess,
   tweetDetail,
   setUploading,
   setMessage,
   removeMesage,
+  tweetMarkSuccess,
   tweetUser,
   likeUnlikeTweet
   

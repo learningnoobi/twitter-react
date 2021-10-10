@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import Second from "../components/Second";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,35 +14,27 @@ import {
   AiOutlineComment,
   AiOutlineRetweet,
   AiOutlineDelete,
-  AiOutlineUserAdd
+  AiOutlineUserAdd,
 } from "react-icons/ai";
 
 const Notifications = () => {
   const notifyState = useSelector((state) => state.notificationReducer);
-  const loading = useSelector((state) => state.tweetReducer.isLoading);
+  const tweetState = useSelector((state) => state.tweetReducer);
   const notifications = notifyState.notificationList;
-  const meta = notifyState.meta
+  const meta = notifyState.meta;
+  const loading = tweetState.isLoading;
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getNotifications());
     dispatch(seenNotifications());
   }, [dispatch]);
-  // const sendMessage = () => {
-  //  if(msg){
-  //   client.send(
-  //       JSON.stringify({
-  //         command: "like",
-  //         message: msg
-  //       })
-  //     );
-  //  }
-  // };
 
   const loadMore = () => {
     console.log("load more");
     console.log(meta?.page, meta?.next);
     if (meta.next !== null) {
-      dispatch(loadMoreNotification(meta.page+1));
+      dispatch(loadMoreNotification(meta.page + 1));
     }
   };
   return (
@@ -55,10 +47,10 @@ const Notifications = () => {
         </span>
       ) : notifications.length < 1 ? (
         <span className="d-flex justify-content-center mt-4">
-       <span>
-       <strong className="side-icon">No Notifications</strong>
-          <p className="side-name">New notifications will be added here .</p>
-       </span>
+          <span>
+            <strong className="side-icon">No Notifications</strong>
+            <p className="side-name">New notifications will be added here .</p>
+          </span>
         </span>
       ) : (
         notifications.map((list) => (
@@ -90,7 +82,6 @@ const Notifications = () => {
                 icon={<AiOutlineUserAdd color="orange" />}
                 type=" followed you"
                 link={`${list.from_user.username}`}
-                
               />
             )}
             {list.notification_type === "RT" && (
@@ -107,19 +98,27 @@ const Notifications = () => {
           </div>
         ))
       )}
-          {meta?.next && <div className="mt-3 d-flex justify-content-center">
-        <button onClick={loadMore} className="link-tweet">
-          Load more
-        </button>
-      </div>}
-  
+      {meta?.next && (
+        <div className="mt-3 d-flex justify-content-center">
+          <button onClick={loadMore} className="link-tweet">
+            Load more
+          </button>
+        </div>
+      )}
     </Second>
   );
 };
 
 export default Notifications;
 
-export const NotificationCard = ({ list, type, icon,link,tweet=null,comment=null }) => {
+export const NotificationCard = ({
+  list,
+  type,
+  icon,
+  link,
+  tweet = null,
+  comment = null,
+}) => {
   const dispatch = useDispatch();
   return (
     <div className="comment-card hover">
@@ -128,22 +127,24 @@ export const NotificationCard = ({ list, type, icon,link,tweet=null,comment=null
       </i>
       <Link to={link}>
         <div className="divnotice">
-        <div className="innerDiv">
-          <strong style={{'fontSize':30}}>{icon}</strong>
-
-          <strong className="mx-3">
-           <img className="rounded-circle author-image" src={list.from_user.avatar} alt="user avatar" /> <br />
-            {list.from_user.username} {type}
-          <p className="side-name">
-          {comment && comment.body }
-            {tweet?.title}
-          </p>
-          </strong> <br />
-       
+          <div className="innerDiv">
+            <strong style={{ fontSize: 30 }}>{icon}</strong>
+            <strong className="mx-3">
+              <img
+                className="rounded-circle author-image"
+                src={list.from_user.avatar}
+                alt="user avatar"
+              />{" "}
+              <br />
+              {list.from_user.username} {type}
+              <p className="side-name">
+                {comment && comment.body}
+                {tweet?.title}
+              </p>
+            </strong>{" "}
+            <br />
+          </div>
         </div>
-        
-        </div>
-  
       </Link>
     </div>
   );

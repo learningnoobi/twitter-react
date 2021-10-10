@@ -12,7 +12,7 @@ import {
 import { addMsg } from "../redux/slices/ChatSlice";
 import ReconnectingWebSocket from "reconnecting-websocket";
 import AddPicker from "../components/SmallComponent/AddPicker";
-
+import { Link } from "react-router-dom";
 const PrivateRoomChat = () => {
   const [msgInput, setMsgInput] = useState("");
   const [istyping, setIstyping] = useState(null);
@@ -116,7 +116,7 @@ const PrivateRoomChat = () => {
         <div ref={msgDivRef} id="msg-scoll" className="msg-div">
           {meta?.next && (
            
-              <i  onClick={loadMore} className="largeicon center">
+              <i  onClick={loadMore} className="largeicon center" title="load more">
               <BiUpArrowCircle />
               </i>
          
@@ -134,6 +134,7 @@ const PrivateRoomChat = () => {
                   }
                 >
                   {msg?.sender?.username === username && (
+                  <Link to={`/${msg?.sender.username}`}>
                     <img
                       src={
                         msg?.sender.avatar.includes("http://")
@@ -143,6 +144,7 @@ const PrivateRoomChat = () => {
                       alt="profile"
                       className="authorImage"
                     />
+                  </Link>
                   )}
 
                   <div
