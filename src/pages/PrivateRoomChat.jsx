@@ -9,6 +9,8 @@ import { getChatMessage } from "../redux/asyncActions/ChatAsync";
 import { addMsg } from "../redux/slices/ChatSlice";
 import ReconnectingWebSocket from "reconnecting-websocket";
 import ScrollableFeed from "react-scrollable-feed";
+import AddPicker from "../components/SmallComponent/AddPicker";
+import { FaToiletPaper } from "react-icons/fa";
 
 const PrivateRoomChat = () => {
   const [msgInput, setMsgInput] = useState("");
@@ -25,10 +27,9 @@ const PrivateRoomChat = () => {
     endpoint + "?token=" + userIn.access
   );
 
-  const msgDivRef = useRef();
+  const msgDivRef = useRef(null);
 
   useEffect(() => {
-    // msgDivRef.current.scrollIntoView({ behavior: 'smooth' });
     client.onopen = function () {
       console.log("Chat Websoket Connected");
     };
@@ -38,12 +39,13 @@ const PrivateRoomChat = () => {
 
       if (data.command === "private_chat") {
         dispatch(addMsg(data));
+        msgDivRef.current.scrollTop = msgDivRef.current.scrollHeight;
         console.log(data);
       }
       if (data.command === "is_typing") {
         setTypingUser(data.user);
         setIstyping(data.text);
-       timer =  setTimeout(() => {
+        timer = setTimeout(() => {
           setIstyping(null);
         }, 2000);
       }
@@ -52,6 +54,11 @@ const PrivateRoomChat = () => {
       console.log("WebSocket Client disconnected");
     };
   }, [dispatch]);
+
+  useEffect(()=> {
+    msgDivRef.current.scrollTop = msgDivRef.current.scrollHeight;
+  },[chats])
+
   const EnterKey = (e) => {
     if (e.key === "Enter" || e.keyCode === 13) {
       if (msgInput.length !== 0) {
@@ -62,7 +69,7 @@ const PrivateRoomChat = () => {
 
   useEffect(() => {
     dispatch(getChatMessage(username));
-  }, []);
+  }, [dispatch, username]);
   const sendChat = (e) => {
     e.preventDefault();
     client.send(
@@ -91,49 +98,51 @@ const PrivateRoomChat = () => {
       <TweetHeader headerName={username} />
 
       <div className="main-div">
-        <div className="msg-div">
-          <ScrollableFeed>
-            {chats &&
-              chats.map((msg) => (
+        <div ref={msgDivRef} id="msg-scoll" className="msg-div">
+          {/* <ScrollableFeed> */}
+          {chats &&
+            chats.map((msg) => (
+              <div
+                key={msg.id}
+                className={
+                  msg?.sender?.username === username ? "msg-chat" : "rightby"
+                }
+              >
+                {msg?.sender?.username === username && (
+                  <img
+                    src={
+                      msg?.sender.avatar.includes("http://")
+                        ? msg?.sender.avatar
+                        : `http://127.0.0.1:8000${msg?.sender.avatar}`
+                    }
+                    alt="profile"
+                    className="authorImage"
+                  />
+                )}
+
                 <div
-                  key={msg.id}
                   className={
-                    msg?.sender?.username === username ? "msg-chat" : "rightby"
+                    msg.sender?.username === username
+                      ? "msg-txt"
+                      : "msg-txt right"
                   }
                 >
-                  {msg?.sender?.username === username && (
-                    <img
-                      src={
-                        msg?.sender.avatar.includes("http://")
-                          ? msg?.sender.avatar
-                          : `http://127.0.0.1:8000${msg?.sender.avatar}`
-                      }
-                      alt="profile"
-                      className="authorImage"
-                    />
-                  )}
-
-                  <div
-                    className={
-                      msg.sender?.username === username
-                        ? "msg-txt"
-                        : "msg-txt right"
-                    }
-                  >
-                    {msg.text}
-                  </div>
+                  {msg.text}
                 </div>
-              ))}
-          </ScrollableFeed>
+              </div>
+            ))}
+          {/* </ScrollableFeed> */}
         </div>
 
-   
         <div className="bottom-input">
-        {typingUser !== me && (
-          <span style={{position:'absolute',left:10,bottom:50}} className="ml-4">
-            {istyping}
-          </span>
-        )}
+          {typingUser !== me && (
+            <span
+              style={{ position: "absolute", left: 10, bottom: 50 }}
+              className="ml-4"
+            >
+              {istyping}
+            </span>
+          )}
           <input
             type="text"
             value={msgInput}
@@ -144,7 +153,8 @@ const PrivateRoomChat = () => {
             className="chat-input"
           />
 
-          <span>
+          <span className="d-flex">
+            <AddPicker classNem="chatEmoji" position="up" setInput={setMsgInput} />
             <BiSend onClick={sendChat} className="largeicon mx-2" />
           </span>
         </div>

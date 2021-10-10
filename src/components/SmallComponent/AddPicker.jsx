@@ -3,7 +3,7 @@ import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 import { AiOutlineSmile } from "react-icons/ai";
 
-const AddPicker = ({ setInput,classNem='' }) => {
+const AddPicker = ({ setInput, classNem = "",position="down" }) => {
   const [showEmoji, setShowEmoji] = useState(false);
   const addEmoji = (emoji) => {
     setInput((prev) => prev + emoji.native);
@@ -20,12 +20,12 @@ const AddPicker = ({ setInput,classNem='' }) => {
             showPreview={true}
             onSelect={addEmoji}
             style={{
-              // position: "absolute",
-              // marginTop:28,
-              // marginLeft:-200,
               display: `${showEmoji}`,
-              // zIndex: 10,
+              position:`${position === "up"?'absolute':'relative'}`,
+              marginTop:`${position === "up"? '-440px' :0}`
+              // marginTop:-440,
             }}
+
           />
         </div>
       )}

@@ -211,6 +211,7 @@
 .picker-class {
   position: absolute;
   margin-top: 10px;
+  transform: scale(0.9);
   margin-left: -240px;
   z-index: 10;
 }
@@ -297,7 +298,7 @@
   .picker-class {
     margin-top: -60px;
     margin-left: -180px;
-    transform: scale(0.7);
+    transform: scale(0.6);
   }
   .picker-comment {
     margin-left: -60px;
