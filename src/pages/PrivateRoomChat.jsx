@@ -8,9 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getChatMessage } from "../redux/asyncActions/ChatAsync";
 import { addMsg } from "../redux/slices/ChatSlice";
 import ReconnectingWebSocket from "reconnecting-websocket";
-import ScrollableFeed from "react-scrollable-feed";
 import AddPicker from "../components/SmallComponent/AddPicker";
-import { FaToiletPaper } from "react-icons/fa";
 
 const PrivateRoomChat = () => {
   const [msgInput, setMsgInput] = useState("");
@@ -39,7 +37,7 @@ const PrivateRoomChat = () => {
 
       if (data.command === "private_chat") {
         dispatch(addMsg(data));
-        msgDivRef.current.scrollTop = msgDivRef.current.scrollHeight;
+        // msgDivRef.current.scrollTop = msgDivRef.current.scrollHeight;
         console.log(data);
       }
       if (data.command === "is_typing") {

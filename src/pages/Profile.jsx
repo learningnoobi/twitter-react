@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Second from "../components/Second";
 import Moment from "moment";
 import useUserInfo from "../hooks/useUserInfo";
-import { AiOutlineSchedule, AiOutlineSmile } from "react-icons/ai";
+import { AiOutlineSchedule } from "react-icons/ai";
+import { BiSend } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
 import Viewer from "react-viewer";
@@ -107,11 +109,13 @@ const Profile = () => {
                 </div>
               ) : (
                 <div className="follow-or-edit">
-                  <button className="mx-2 btn-outline">
-                    <i className="icon">
-                      <AiOutlineSmile />
+             
+                 <Link to={`/messages/w/${userprofile?.username}`}>
+                 <i className="largeicon mx-3 ">
+                      <BiSend />
                     </i>
-                  </button>
+                 </Link>
+                
                   {userprofile?.i_follow ? (
                     <button
                       onClick={() => dispatch(userFollow(userprofile.username))}

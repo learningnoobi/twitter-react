@@ -33,17 +33,19 @@ const Sidebar = () => {
   const noticeCount = noticeInfo?.count;
   const message = noticeInfo.message;
 
-
-
   useEffect(() => {
     dispatch(getNotifications())
-  },[dispatch])
+    return () => {
+      dispatch(showSidebar(""))
+    }
+  }, [dispatch])
+
   const logout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       dispatch(logoutAct());
       dispatch(load_user());
       dispatch(checkAuthenticated());
-    }
+  }
     <Redirect to="/login"></Redirect>;
 
   };

@@ -30,24 +30,7 @@
   max-width: 1600px;
   scroll-behavior: smooth;
 }
-#nav::-webkit-scrollbar {
-  width: 5px;
-}
 
-/* Track */
-#nav::-webkit-scrollbar-track {
-  background: var(--border);
-}
-
-/* Handle */
-#nav::-webkit-scrollbar-thumb {
-  background: rgb(136, 136, 136);
-}
-
-/* Handle on hover */
-#nav::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
 a {
   text-decoration: none;
   color: var(--text-color);
@@ -85,7 +68,9 @@ body {
 #nav::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
+#nav{
+  z-index: 90000;
+}
 .mains {
   display: flex;
 }
@@ -379,10 +364,9 @@ body {
 }
 .actual-tweet {
   display: flex;
-
   position: relative;
   border-top: 1px solid var(--border);
-  padding: 1rem;
+  padding: 5px 10px;
 }
 
 .tweetCard:hover {

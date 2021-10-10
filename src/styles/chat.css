@@ -121,7 +121,7 @@
   margin-right: 10px;
   margin-top: 24px;
   max-width: 60%;
-  margin-right: 20px;
+  margin-right: 0px;
   float: right;
   clear: both;
 }
@@ -154,7 +154,9 @@
   color: rgb(192, 36, 109);
   font-size: 27px;
 }
-
+.room-div{
+display: none;
+}
 @media only screen and (max-width: 1150px) {
   .msg-txt {
     padding: 11px;
@@ -162,6 +164,12 @@
 }
 @media only screen and (max-width: 850px) {
   .search-div {
+    display: none;
+  }
+  .room-div{
+    display: block;
+  }
+  .div-mid {
     display: none;
   }
   .message-div {

@@ -79,8 +79,7 @@ const TweetHasParentOrNot = ({ tweet }) => {
     <>
       <span className="d-flex">
         <span className="add-tweet-image ">
-          <div id="hover">
-            {/* to={`/${tweet?.author.username}`} */}
+          <Link to={`/${tweet?.author.username}`}>
             <img
               alt="img"
               // for some reason image path is different ..
@@ -94,15 +93,14 @@ const TweetHasParentOrNot = ({ tweet }) => {
               width="60px"
               height="60px"
             />
-            <div id="popup">
-              <PopInfo tweet={tweet} />
-            </div>
-          </div>
+          </Link>
         </span>
-
+        {/* <div id="popup">
+          <PopInfo tweet={tweet} />
+        </div> */}
         <Link to={`${tweet?.author.username}/tweet/${tweet?.id}`}>
           <div className="tweet-content">
-            <span className="d-flex">
+            <span id="hover" className="d-flex">
               {tweet?.author.username}
               <span className="side-name">
                 @ {tweet?.author.nickname} |{" "}

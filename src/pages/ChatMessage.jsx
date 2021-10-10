@@ -1,20 +1,46 @@
 import React from "react";
-import Message from "./Message";
+import Message, { RoomResult } from "./Message";
 import "../styles/chat.css";
+import { useDispatch, useSelector } from "react-redux";
+import TweetHeader from "../components/TweetComponents/tweetHeader";
 
 const ChatMessage = () => {
+  const dispatch = useDispatch();
+  const chatstate = useSelector((state) => state.chatReducer);
+  const chatrooms = chatstate.chatRoom;
+  const me = useSelector((state) => state.userReducer.user?.username);
   return (
-    
     <Message>
-     <div className="div-mid">
-     <div className="message-info">
-        <h1>You don't have Message Selected .</h1>
-        <p className="side-name">
-          Choose one from your existing messages, or start a new one.
-        </p>
-        <button className="link-tweet">New Message</button>
+      <div className="mt-4 div-mid">
+        <div className="message-info">
+          <strong>
+            <h1>You don't have Message Selected .</h1>
+          </strong>
+          <p className="side-name">
+            Choose one from your existing messages, or start a new one.
+          </p>
+          <button className="link-tweet">New Message</button>
+        </div>
       </div>
-     </div>
+
+      <div className="room-div">
+        <TweetHeader headerName="Rooms" />
+        <input
+          autoComplete="off"
+          type="text"
+          placeholder="search for people"
+          className="chat-input searchroom"
+        />
+        {chatrooms.map((room) => (
+          <div key={room.id}>
+            <RoomResult
+              me={me}
+              res={room}
+              otheruser={room?.user1?.username === me ? room.user2 : room.user1}
+            />
+          </div>
+        ))}
+      </div>
     </Message>
   );
 };
