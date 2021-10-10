@@ -6,9 +6,9 @@ This backend of this project is made with Django Rest Framework [Api Repo](https
 ## Features of this project
 
 - ### `Real Time Notification`( love, comment , reply , message)
-<img src="https://user-images.githubusercontent.com/64244098/136673326-e4185133-6699-47f8-9906-ab4732ca6ab8.gif" height="400" /> </br>
+<img src="https://user-images.githubusercontent.com/64244098/136682695-2ea5116c-7393-42ec-847d-364d77b6c2df.gif" height="400" /> </br>
 - ### `Real Time Private Chat`
-<img src="https://user-images.githubusercontent.com/64244098/136673283-462bbd50-2e25-4952-bb13-45fbf7c1bdfa.gif" height="400" /></br>
+<img src="https://user-images.githubusercontent.com/64244098/136682756-71ff89b5-f470-48bb-a786-2d28aad42ba8.gif" height="400" /></br>
 - Love Tweet </br>
 - ReTweet Tweet</br>
 - Bookmark Tweet</br>
