@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Message from "./Message";
 import { useParams } from "react-router";
-import { BiSend,BiUpArrowCircle } from "react-icons/bi";
+import { BiSend, BiUpArrowCircle } from "react-icons/bi";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,7 +20,7 @@ const PrivateRoomChat = () => {
   const { username } = useParams();
   const userIn = useSelector((state) => state.userReducer);
   // const me = userIn.user.username;
-  const [noScroll, setNoScroll] = useState(true)
+  const [noScroll, setNoScroll] = useState(true);
   const dispatch = useDispatch();
   let endpoint = `ws://127.0.0.1:8000/ws/chat/${username}/`;
   const me = userIn.user?.username;
@@ -51,7 +51,7 @@ const PrivateRoomChat = () => {
         setIstyping(data.text);
         timer = setTimeout(() => {
           setIstyping(null);
-        }, 2000);
+        }, 500);
       }
     };
     client.onclose = function () {
@@ -59,14 +59,11 @@ const PrivateRoomChat = () => {
     };
   }, [dispatch]);
 
-  
-    useEffect(() => {
-      if(noScroll){
+  useEffect(() => {
+    if (noScroll) {
       msgDivRef.current.scrollTop = msgDivRef.current.scrollHeight;
-      }
-    }, [chats]);
-  
-
+    }
+  }, [chats]);
 
   const EnterKey = (e) => {
     if (e.key === "Enter" || e.keyCode === 13) {
@@ -101,31 +98,35 @@ const PrivateRoomChat = () => {
       })
     );
   };
-  const loadMore = () => {
-    if (meta?.next) {
-      setNoScroll(false)
-      dispatch(loadMoreMessage(meta.next));
 
+  function loadMore() {
+    if(meta?.next ){
+      setNoScroll(false);
+      dispatch(loadMoreMessage(meta.next));
     }
-  };
+
+  }
+  // if (meta?.next && msgDivRef.current && msgDivRef.current.scrollTop < 40) {
+  //   loadMore();
+  // }
   return (
     <Message>
       <TweetHeader headerName={username} />
 
       <div className="main-div">
         <div ref={msgDivRef} id="msg-scoll" className="msg-div">
-          {meta?.next && (
+        {meta?.next && (
            
-              <i  onClick={loadMore} className="largeicon center" title="load more">
-              <BiUpArrowCircle />
-              </i>
-         
-          )}
+           <i  onClick={loadMore} className="largeicon center" title="load more">
+           <BiUpArrowCircle />
+           </i>
+      
+       )}
           {/* <ScrollableFeed> */}
           {chats &&
             chats
               .slice()
-              .reverse()
+              .reverse() //revrsing array
               .map((msg) => (
                 <div
                   key={msg.id}
@@ -134,17 +135,17 @@ const PrivateRoomChat = () => {
                   }
                 >
                   {msg?.sender?.username === username && (
-                  <Link to={`/${msg?.sender.username}`}>
-                    <img
-                      src={
-                        msg?.sender.avatar.includes("http://")
-                          ? msg?.sender.avatar
-                          : `http://127.0.0.1:8000${msg?.sender.avatar}`
-                      }
-                      alt="profile"
-                      className="authorImage"
-                    />
-                  </Link>
+                    <Link to={`/${msg?.sender.username}`}>
+                      <img
+                        src={
+                          msg?.sender.avatar.includes("http://")
+                            ? msg?.sender.avatar
+                            : `http://127.0.0.1:8000${msg?.sender.avatar}`
+                        }
+                        alt="profile"
+                        className="authorImage"
+                      />
+                    </Link>
                   )}
 
                   <div

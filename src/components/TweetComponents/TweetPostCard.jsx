@@ -37,7 +37,8 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
                 to={`${tweet.author.username}` || ""}
                 className="mx-2 side-name"
               >
-                {tweet.author.username} retweeted !
+                {tweet?.author.username===user?.username?'You ':
+                tweet.author.username} retweeted !
               </Link>
             </strong>
 
@@ -56,7 +57,7 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
           bookmark={tweet.myparent.i_bookmarked}
           id={tweet.myparent.id}
           oriId={tweet.id}
-          retweet={true}
+          retweet={tweet?.author.username===user?.username?true:false}
         />
       ) : (
         <TweetOperation
@@ -66,6 +67,7 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
           tweet={tweet}
           bookmark={tweet.i_bookmarked}
           id={tweet.id}
+         
         />
       )}
     </div>

@@ -18,9 +18,9 @@ export const notificationReducer = createSlice({
       state.message = null;
     },
     getNotificationslice: (state, { payload }) => {
-      state.notificationList = payload;
+      state.notificationList = payload.data;
       if(payload.length >1){
-      state.count = payload[0].noti_count;
+      state.count = payload.noti_count;
       }
     },
     setMeta:(state, { payload }) => {
