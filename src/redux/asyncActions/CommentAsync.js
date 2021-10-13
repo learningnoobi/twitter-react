@@ -12,11 +12,11 @@ import {
 } from "../slices/CommentSlice";
 import { axiosInstance } from "../../index";
 import { setMessage } from "../slices/tweetSlice";
-
+import axios from 'axios'
 export const tweet_comments = (id) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axiosInstance.get(`tweets/comments/${id}/`);
+    const res = await axios.get(`http://127.0.0.1:8000/tweets/comments/${id}/`);
     dispatch(setLoading(false));
     dispatch(setMeta(res.data.meta));
     dispatch(commentSuccess(res.data.data));

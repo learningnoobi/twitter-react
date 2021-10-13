@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
 import "./App.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./pages/Login";
@@ -12,7 +11,7 @@ import NotFound from "./components/NotFound";
 import { load_user, recommendMeUser } from "./redux/asyncActions/UserAsync";
 import { useDispatch, useSelector } from "react-redux";
 import BookmarkList from "./pages/BookmarkList";
-import Message from "./pages/Message";
+import ReconnectingWebSocket from "reconnecting-websocket";
 import Notifications from "./pages/Notifications";
 import { removeNotice, tweetNotice } from "./redux/slices/NotificationSlice";
 import Explore from "./pages/Explore";
@@ -26,43 +25,47 @@ function App() {
   const noticeInfo = useSelector((state) => state.notificationReducer);
   const message = noticeInfo.message;
   let endpoint = "ws://127.0.0.1:8000/ws/home/";
-  const client = new W3CWebSocket(endpoint + "?token=" + userIn.access);
+
+    const client =  new ReconnectingWebSocket(endpoint + "?token=" + userIn.access);
+  
+
   message &&
     setTimeout(() => {
       dispatch(removeNotice());
     }, 3000);
 
   useEffect(() => {
-    client.onopen = function () {
-      console.log("WebSocket Client Connected");
-    };
+    
+      client.onopen = function () {
+        console.log("WebSocket Client Connected");
+      };
 
-    client.onmessage = function (event) {
-      const data = JSON.parse(event.data);
-    console.log(data);
+      client.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        console.log(data);
 
-      dispatch(tweetNotice(data.payload));
-    };
+        dispatch(tweetNotice(data.payload));
+      };
 
-    client.onclose = function () {
-      console.log("WebSocket Client disconnected");
-    };
+      client.onclose = function () {
+        console.log("WebSocket Client disconnected");
+      };
+    
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(load_user());
-    dispatch(recommendMeUser())
+    dispatch(recommendMeUser());
     !isAuthenticated && <Redirect to="/login"></Redirect>;
-    
   }, [dispatch, isAuthenticated]);
 
   return (
     <BrowserRouter>
       <Switch>
-         <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Home} />
         <Route path="/activate/:uid/:token" exact component={Activate} />
         <Route path="/login" component={Login} />
-        <Route path="/messages/w/:username"  component={PrivateRoomChat} />
+        <Route path="/messages/w/:username" component={PrivateRoomChat} />
         <Route path="/messages" component={ChatMessage} />
         <Route path="/register" component={Register} />
         <Route path="/notifications" component={Notifications} />

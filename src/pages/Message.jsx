@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
 import "../styles/chat.css";
-import { Link } from "react-router-dom";
+import { Link,useHistory} from "react-router-dom";
 import { getRooms } from "../redux/asyncActions/ChatAsync";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -12,18 +12,27 @@ const Message = (props) => {
   const dispatch = useDispatch();
   const chatstate = useSelector((state) => state.chatReducer);
   const chatrooms = chatstate.chatRoom;
-  const me = useSelector((state) => state.userReducer.user?.username);
-  useEffect(() => {
-    console.log("room are ,", chatrooms);
-    dispatch(getRooms());
-  }, [dispatch]);
+  const userIn = useSelector((state) => state.userReducer);
+  const isAuthenticated = userIn.isAuthenticated;
+  const me = userIn.user?.username;
+  const userprofile = userIn.profileUser;
+  const history = useHistory()
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getRooms());
+    }
+
+    if(!isAuthenticated){
+      history.push('/login')
+    }
+  }, [dispatch,history]);
 
   const searchRoom = () => {
     let debouncer;
     clearTimeout(debouncer);
-    debouncer = setTimeout(()=>{
-      dispatch(getRooms(query))
+    debouncer = setTimeout(() => {
+      dispatch(getRooms(query));
     }, 1000);
   };
 

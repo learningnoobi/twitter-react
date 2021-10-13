@@ -65,6 +65,7 @@ export const tweetReducer = createSlice({
       const tweet = state.tweets.find((i) => i.id === payload.id);
       if (tweet) tweet.like_count = payload.count;
       state.singleTweet.like_count=payload.count
+     
     }
   },
 });

@@ -3,7 +3,7 @@ import Message from "./Message";
 import { useParams } from "react-router";
 import { BiSend, BiUpArrowCircle } from "react-icons/bi";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   getChatMessage,
@@ -19,7 +19,6 @@ const PrivateRoomChat = () => {
   const [typingUser, setTypingUser] = useState(null);
   const { username } = useParams();
   const userIn = useSelector((state) => state.userReducer);
-  // const me = userIn.user.username;
   const [noScroll, setNoScroll] = useState(true);
   const dispatch = useDispatch();
   let endpoint = `ws://127.0.0.1:8000/ws/chat/${username}/`;

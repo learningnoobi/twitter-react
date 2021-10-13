@@ -36,7 +36,10 @@ const Sidebar = () => {
   const message = noticeInfo.message;
 
   useEffect(() => {
-    dispatch(getNotifications());
+    if(isAuthenticated){
+      dispatch(getNotifications());
+    }     
+    
     return () => {
       dispatch(showSidebar(""));
     };
@@ -47,8 +50,9 @@ const Sidebar = () => {
       dispatch(logoutAct());
       dispatch(load_user());
       dispatch(checkAuthenticated());
+     
     }
-    <Redirect to="/login"></Redirect>;
+
   };
   const { user, isAuthenticated } = userIn;
   const goOut = () => {
@@ -103,6 +107,7 @@ const Sidebar = () => {
               <span className="link-text">Notifications</span>
             </Link>
           </li>
+          {isAuthenticated && 
           <li>
             <Link to="/messages">
               <i>
@@ -110,7 +115,7 @@ const Sidebar = () => {
               </i>
               <span className="link-text">Messages</span>
             </Link>
-          </li>
+          </li>}
           <li>
             <Link to="/bookmark">
               <i>
@@ -119,33 +124,24 @@ const Sidebar = () => {
               <span className="link-text">Bookmarks</span>
             </Link>
           </li>
-          <li>
-            <Link to={(user && `/${user.username}`) || "profile"}>
-              <i>
-                <BiUser />
-              </i>
-              <span className="link-text">Profile</span>
-            </Link>
-          </li>
-          <li className="ml-2" >
+          {isAuthenticated && 
+           <li>
+           <Link to={(user && `/${user.username}`) || "profile"}>
+             <i>
+               <BiUser />
+             </i>
+             <span className="link-text">Profile</span>
+           </Link>
+         </li>
+          }
+         
+          <li style={{cursor:'pointer'}} className="ml-2 p-1" >
           <i onClick={goOut}>
               <RiGithubFill />
             </i>
-            <span className="link-text">GitHub</span>
+            <span  className="link-text">GitHub</span>
           </li>
-          <li
-            className="link-tweets"
-            data-toggle="tooltip"
-            data-placement="top"
-            title="Add Tweet"
-          >
-            <Link to="/">
-              <i>
-                <BiAddToQueue />
-              </i>
-              <span className="link-text">Tweet</span>
-            </Link>
-          </li>
+      
           <li>
             {isAuthenticated ? (
               <Link to="/" onClick={logout}>

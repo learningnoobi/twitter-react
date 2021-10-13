@@ -16,7 +16,6 @@ import {
   loadedMore,
 } from "../slices/tweetSlice";
 import { setSearch } from "../slices/NotificationSlice";
-
 // check is localstorage for access is present or not
 
 export const load_tweet = () => async (dispatch) => {
@@ -74,7 +73,7 @@ export const tweet_detail = (id) => async (dispatch) => {
   try {
     // since we have filtered tweets of only followerd users .
     //  We are fetching from global which contains all tweets
-    const res = await axiosInstance.get(`tweets/explore/global/${id}/`);
+    const res = await axios.get(`http://127.0.0.1:8000/tweets/explore/global/${id}/`);
     dispatch(setLoading(false));
     dispatch(tweetDetail(res.data));
   } catch (err) {
@@ -123,9 +122,9 @@ export const addTweet = (uploadData) => async (dispatch) => {
 
 export const reTweet = (tweetId) => async (dispatch) => {
   try {
-    await axiosInstance.post(`tweets/post/retweet/`, { tweetId: tweetId });
+    const res = await axiosInstance.post(`tweets/post/retweet/`, { tweetId: tweetId });
 
-    // dispatch(tweetAdded(res.data));
+    dispatch(tweetAdded(res.data));
     dispatch(setMessage(`Re Tweeted !`));
   } catch (err) {
     dispatch(tweetFail());
@@ -134,8 +133,7 @@ export const reTweet = (tweetId) => async (dispatch) => {
   }
 };
 
-export const deleteTweet =
-  (pk, DelRetweet = false) =>
+export const deleteTweet =(pk, DelRetweet = false) =>
   async (dispatch) => {
     try {
       await axiosInstance.delete(`tweets/${pk}/`);
@@ -173,7 +171,8 @@ export const likeTweet = (id) => async (dispatch) => {
     const res = await axiosInstance.post(`tweets/love/like-unlike/`, {
       pk: id,
     });
-    dispatch(likeUnlikeTweet({ ...res.data, id: parseInt(id) }));
+    dispatch(likeUnlikeTweet({ ...res.data, id: id }));
+
   } catch (err) {
     console.log(err);
     dispatch(setMessage(`Something went Wrong !`));
@@ -198,14 +197,23 @@ export const bookmarkTweet = (id) => async (dispatch) => {
   }
 };
 
-// http://127.0.0.1:8000/tweets/search/custom/?search=what
-export const searchTweet = (query) => async (dispatch) => {
+
+export const searchTweet = (query,isAuthenticated) => async (dispatch) => {
   try {
     if (query.length > 0) {
-      const res = await axiosInstance.get(
-        `tweets/search/custom/?search=${query}`
-      );
-      dispatch(setSearch(res.data));
+      if(isAuthenticated){
+        const res = await axiosInstance.get(
+          `tweets/search/custom/?search=${query}`
+        );
+        dispatch(setSearch(res.data));
+      }
+      else{
+        const res = await axios.get(
+          `tweets/search/custom/?search=${query}`
+        );
+        dispatch(setSearch(res.data));
+      }
+     
     } else {
       dispatch(setSearch([]));
     }

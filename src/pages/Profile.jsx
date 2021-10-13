@@ -6,7 +6,7 @@ import Moment from "moment";
 import useUserInfo from "../hooks/useUserInfo";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { BiSend } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link ,useHistory} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
 import Viewer from "react-viewer";
@@ -26,19 +26,28 @@ const Profile = () => {
   const [covervisible, setCoverVisible] = useState(false);
   const dispatch = useDispatch();
   const userIn = useSelector((state) => state.userReducer);
+  const isAuthenticated = userIn.isAuthenticated;
   const tweetsInfo = useSelector((state) => state.tweetReducer);
   const tweets = tweetsInfo.tweets;
   const message = tweetsInfo.message;
   const userprofile = userIn.profileUser;
+  const history = useHistory()
 
   message &&
     setTimeout(() => {
       dispatch(removeMesage());
     }, 3000);
   useEffect(() => {
-    dispatch(userProfile(username));
-    dispatch(tweet_specific_user(username));
-  }, [dispatch,username]);
+    if(isAuthenticated){
+      dispatch(userProfile(username));
+      dispatch(tweet_specific_user(username));
+    }
+    if(!isAuthenticated){
+      history.push('/login')
+    }
+    
+    
+  }, [dispatch,username,history]);
 
   return (
     <div>

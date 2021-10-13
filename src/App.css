@@ -128,6 +128,13 @@ body {
 
 .navbar-nav li:last-child {
   margin-top: 20px;
+  background-color: var(--red);
+  border-radius: 30px;
+
+}
+.navbar-nav li:last-child:hover{
+  background-color: var(--red);
+  filter: brightness(1.3);
 }
 .navbar-nav li:first-child:hover {
   background-color: transparent;
@@ -140,11 +147,7 @@ body {
   color: var(--red) !important;
   border-radius: 30px;
 }
-.navbar-nav li:nth-child(10) {
-  background-color: var(--red);
-  border-radius: 30px;
-  margin-top: 10px;
-}
+
 .navbar-nav a {
   text-decoration: none;
   color: var(--text-color);
@@ -493,6 +496,7 @@ body {
   position: absolute;
   right: 4px;
 }
+
 .center {
   display: flex;
   justify-content: center;
@@ -507,6 +511,10 @@ body {
     transition: 0.5s;
     padding-top: 30px;
     z-index: 2;
+  }
+  .navbar-nav li:last-child:hover{
+    background-color: var(--red);
+    filter: brightness(1.3);
   }
   .image {
     max-height: 300px;
@@ -565,6 +573,10 @@ body {
     max-height: 290px;
     width: 450px;
   }
+  .navbar-nav li:last-child:hover{
+    background-color: var(--red);
+    filter: brightness(1.3);
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -609,6 +621,10 @@ body {
     font-size: small;
     left: 12px;
     top: 0px;
+  }
+  .navbar-nav li:last-child:hover{
+    background-color: var(--red);
+    filter: brightness(1.3);
   }
   .second {
     margin-left: 0;
@@ -677,6 +693,10 @@ body {
     max-height: 230px;
     width: 240px;
   }
+}
+.navbar-nav li:last-child:hover{
+  background-color: var(--red);
+  filter: brightness(1.3);
 }
 @media only screen and (max-width: 250px) {
   .image {

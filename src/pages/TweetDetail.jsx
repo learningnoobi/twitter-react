@@ -38,7 +38,7 @@ const TweetDetail = () => {
   const userIn = useSelector((state) => state.userReducer);
 
   const { id } = useParams();
-  const { user } = userIn;
+  const { user,isAuthenticated } = userIn;
 
   const message = useSelector((state) => state.tweetReducer.message);
   const comments = useSelector((state) => state.commentReducer);
@@ -90,7 +90,7 @@ const TweetDetail = () => {
           <TweetHeader headerName="Detail" />
           <div className="tweetCard">
             <div className="actual-tweet">
-              <span>
+             { isAuthenticated && <span>
                 <FiMoreHorizontal
                   data-toggle="dropdown"
                   className="dropdownIcon"
@@ -125,7 +125,7 @@ const TweetDetail = () => {
                     </>
                   )}
                 </div>
-              </span>
+              </span>}
               <span className="add-tweet-image">
                 <Link to={`/${tweet.author.username}`}>
                   <img
@@ -149,7 +149,7 @@ const TweetDetail = () => {
               />
             </div>
             <TweetOperation
-              user={user}
+              user={isAuthenticated ? user:''}
               id={parseInt(id)}
               liked={tweet.iliked}
               likeTweetD={likeTweetD}
@@ -160,35 +160,35 @@ const TweetDetail = () => {
           </div>
           {/* comment lists */}
           <section className="comment-list">
-            <div className="commentDiv">
-              <img
-                src={
-                  (user && user.avatar) ||
-                  "https://qph.fs.quoracdn.net/main-qimg-92e5c1d46505b34638aafd281449dabc"
-                }
-                alt="comment-author"
-                className="authorImage"
-              />
-              <textarea
-                value={commentInput}
-                onChange={(e) => setCommentInput(e.target.value)}
-                className="commentInput"
-                placeholder="Tweet your Reply"
-              ></textarea>
+        {isAuthenticated &&  <div className="commentDiv">
+            <img
+              src={
+                (user && user.avatar) ||
+                "https://qph.fs.quoracdn.net/main-qimg-92e5c1d46505b34638aafd281449dabc"
+              }
+              alt="comment-author"
+              className="authorImage"
+            />
+            <textarea
+              value={commentInput}
+              onChange={(e) => setCommentInput(e.target.value)}
+              className="commentInput"
+              placeholder="Tweet your Reply"
+            ></textarea>
 
-              <AddPicker setInput={setCommentInput} />
-              <button
-                disabled={!commentInput}
-                onClick={commentAdd}
-                className="link-tweet"
-              >
-                {comments.uploading ? (
-                  <ClipLoader color="white" loading={true} size={18} />
-                ) : (
-                  "Reply"
-                )}
-              </button>
-            </div>
+            <AddPicker setInput={setCommentInput} />
+            <button
+              disabled={!commentInput}
+              onClick={commentAdd}
+              className="link-tweet"
+            >
+              {comments.uploading ? (
+                <ClipLoader color="white" loading={true} size={18} />
+              ) : (
+                "Reply"
+              )}
+            </button>
+          </div>}
             {comments && comments.isLoading ? (
               <span className="d-flex justify-content-center mt-4">
                 <ClipLoader color="#f44" loading={true} size={23} />
@@ -197,7 +197,7 @@ const TweetDetail = () => {
               comments?.commentList.map((comment) => (
                 <CommentCard
                   tweetId={tweet.id}
-                  user={user}
+                  user={isAuthenticated ? user:''}
                   key={comment.id}
                   comment={comment}
                 />

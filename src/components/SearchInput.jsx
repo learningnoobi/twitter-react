@@ -9,11 +9,13 @@ const SearchInput = () => {
   const dispatch = useDispatch();
   const tweetsInfo = useSelector((state) => state.notificationReducer);
   const searchResult = tweetsInfo.searchQuery;
-
+  const isAuthenticated = useSelector(
+    (state) => state.userReducer.isAuthenticated
+  );
   const searchMe = (e) => {
     e.preventDefault();
 
-      dispatch(searchTweet(query));
+      dispatch(searchTweet(query,isAuthenticated));
   
   };
   return (

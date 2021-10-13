@@ -100,6 +100,12 @@ const Register = () => {
           <span className="link-go mx-3">Login</span>
         </Link>
       </p>
+      <p className="help-text">
+       Want to browse without login ?
+        <Link to="/explore">
+          <span className="link-go mx-3">Explore</span>
+        </Link>
+      </p>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
+import loadingGif from '../../loading.gif'; // 
 import {
   AiOutlinePicture,
   AiOutlineGif,
@@ -70,8 +71,8 @@ const AddTweet = () => {
             <img
               alt="img"
               src={
-                (user && user.avatar) ||
-                "https://qph.fs.quoracdn.net/main-qimg-92e5c1d46505b34638aafd281449dabc"
+                (user && user.avatar) ||loadingGif
+              
               }
               className="rounded-circle author-image"
               width="60px"

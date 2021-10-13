@@ -23,11 +23,16 @@ const Notifications = () => {
   const notifications = notifyState.notificationList;
   const meta = notifyState.meta;
   const loading = tweetState.isLoading;
+  const userIn = useSelector((state) => state.userReducer);
+  const isAuthenticated = userIn.isAuthenticated;
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getNotifications());
-    dispatch(seenNotifications());
+    if(isAuthenticated){
+      dispatch(getNotifications());
+      dispatch(seenNotifications());
+    }
+    
   }, [dispatch]);
 
   const loadMore = () => {
