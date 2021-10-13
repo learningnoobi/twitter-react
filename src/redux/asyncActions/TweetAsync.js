@@ -17,7 +17,7 @@ import {
 } from "../slices/tweetSlice";
 import { setSearch } from "../slices/NotificationSlice";
 // check is localstorage for access is present or not
-
+const url = process.env.REACT_APP_DOMAIN
 export const load_tweet = () => async (dispatch) => {
   dispatch(setLoading(true));
 
@@ -26,7 +26,7 @@ export const load_tweet = () => async (dispatch) => {
     if (localStorage.getItem("access")) {
       res = await axiosInstance.get(`tweets/`);
     } else {
-      res = await axios.get(`http://127.0.0.1:8000/tweets/`);
+      res = await axios.get(`${url}tweets/`);
     }
 
     // console.table('res is ',res.data)
@@ -46,7 +46,7 @@ export const explore_tweet = () => async (dispatch) => {
     if (localStorage.getItem("access")) {
       res = await axiosInstance.get(`tweets/explore/global/`);
     } else {
-      res = await axios.get(`http://127.0.0.1:8000/tweets/explore/global/`);
+      res = await axios.get(`${url}tweets/explore/global/`);
     }
 
     // console.table('res is ',res.data)
@@ -73,7 +73,7 @@ export const tweet_detail = (id) => async (dispatch) => {
   try {
     // since we have filtered tweets of only followerd users .
     //  We are fetching from global which contains all tweets
-    const res = await axios.get(`http://127.0.0.1:8000/tweets/explore/global/${id}/`);
+    const res = await axios.get(`${url}tweets/explore/global/${id}/`);
     dispatch(setLoading(false));
     dispatch(tweetDetail(res.data));
   } catch (err) {

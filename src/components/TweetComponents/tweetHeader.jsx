@@ -14,7 +14,9 @@ const TweetHeader = ({ headerName, back = true }) => {
             <AiOutlineArrowLeft onClick={()=>history.goBack()}/>
           </i>
         )}
-        <h4 className="mx-2">{headerName}</h4>
+        <h4 className="mx-2">{headerName}
+        
+        </h4>
       </div>
       <button className="btns" onClick={() => dispatch(showSidebar("sidebar"))}>
         ☰

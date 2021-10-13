@@ -7,8 +7,10 @@ import Moment from "moment";
 import { likeTweet } from "../../redux/asyncActions/TweetAsync";
 import { BiGlobe } from "react-icons/bi";
 import { FaLock } from "react-icons/fa";
-import PopInfo from "../PopInfo";
+
+
 const TweetPostCard = ({ tweet, dispatch, user }) => {
+  
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
   };
@@ -77,6 +79,7 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
 export default TweetPostCard;
 
 const TweetHasParentOrNot = ({ tweet }) => {
+  const url = process.env.REACT_APP_DOMAIN
   return (
     <>
       <span className="d-flex">
@@ -89,7 +92,7 @@ const TweetHasParentOrNot = ({ tweet }) => {
               src={
                 tweet?.author.avatar.includes("http://")
                   ? tweet?.author.avatar
-                  : `http://127.0.0.1:8000${tweet?.author.avatar}`
+                  : `${url}${tweet?.author.avatar}`
               }
               className="rounded-circle author-image "
               width="60px"
@@ -97,9 +100,7 @@ const TweetHasParentOrNot = ({ tweet }) => {
             />
           </Link>
         </span>
-        {/* <div id="popup">
-          <PopInfo tweet={tweet} />
-        </div> */}
+  
         <Link to={`${tweet?.author.username}/tweet/${tweet?.id}`}>
           <div className="tweet-content">
             <span id="hover" className="d-flex">
@@ -123,7 +124,7 @@ const TweetHasParentOrNot = ({ tweet }) => {
                 src={
                   tweet?.image.includes("http://")
                     ? tweet?.image
-                    : `http://127.0.0.1:8000${tweet?.image}`
+                    : `${url}${tweet?.image}`
                 }
                 className="image img"
               />

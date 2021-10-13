@@ -3,7 +3,7 @@ import Message from "./Message";
 import { useParams } from "react-router";
 import { BiSend, BiUpArrowCircle } from "react-icons/bi";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
-import Pop from '../pop.mp3'
+import Pop from "../pop.mp3";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getChatMessage,
@@ -21,18 +21,19 @@ const PrivateRoomChat = () => {
   const userIn = useSelector((state) => state.userReducer);
   const [noScroll, setNoScroll] = useState(true);
   const dispatch = useDispatch();
-  let endpoint = `ws://127.0.0.1:8000/ws/chat/${username}/`;
+  let endpoint = process.env.REACT_APP_WS_DOMAIN;
   const me = userIn.user?.username;
   const chatState = useSelector((state) => state.chatReducer);
   const chats = chatState.chatMessage;
   const meta = chatState.meta;
   const client = new ReconnectingWebSocket(
-    endpoint + "?token=" + userIn.access
+    endpoint + "ws/chat/" + username + "/" + "?token=" + userIn.access
   );
-    const audioRef = useRef(null);
+  const audioRef = useRef(null);
   const msgDivRef = useRef(null);
 
   useEffect(() => {
+    console.log(endpoint);
     client.onopen = function () {
       console.log("Chat Websoket Connected");
     };
@@ -42,11 +43,11 @@ const PrivateRoomChat = () => {
 
       if (data.command === "private_chat") {
         dispatch(addMsg(data));
-        if(audioRef.current){
-          audioRef.current.play()
+        if (audioRef.current) {
+          audioRef.current.play();
         }
         // msgDivRef.current.scrollTop = msgDivRef.current.scrollHeight;
-        console.log(data);
+        // console.log(data);
       }
       if (data.command === "is_typing") {
         setTypingUser(data.user);
@@ -68,6 +69,7 @@ const PrivateRoomChat = () => {
   }, [chats]);
 
   const EnterKey = (e) => {
+    //hit enter key in input
     if (e.key === "Enter" || e.keyCode === 13) {
       if (msgInput.length !== 0) {
         sendChat(e);
@@ -78,15 +80,20 @@ const PrivateRoomChat = () => {
   useEffect(() => {
     dispatch(getChatMessage(username));
   }, [dispatch, username]);
+
   const sendChat = (e) => {
     e.preventDefault();
-    client.send(
-      JSON.stringify({
-        command: "private_chat",
-        message: msgInput,
-        username: me,
-      })
-    );
+    if (!msgInput){alert('cannot be blank !')}
+    
+    else{
+      client.send(
+        JSON.stringify({
+          command: "private_chat",
+          message: msgInput,
+          username: me,
+        })
+      );
+    }
     setMsgInput("");
   };
   let timer;
@@ -102,11 +109,10 @@ const PrivateRoomChat = () => {
   };
 
   function loadMore() {
-    if(meta?.next ){
+    if (meta?.next) {
       setNoScroll(false);
       dispatch(loadMoreMessage(meta.next));
     }
-
   }
   // if (meta?.next && msgDivRef.current && msgDivRef.current.scrollTop < 40) {
   //   loadMore();
@@ -118,13 +124,15 @@ const PrivateRoomChat = () => {
       <div className="main-div">
         <audio ref={audioRef} src={Pop}></audio>
         <div ref={msgDivRef} id="msg-scoll" className="msg-div">
-        {meta?.next && (
-           
-           <i  onClick={loadMore} className="largeicon center" title="load more">
-           <BiUpArrowCircle />
-           </i>
-      
-       )}
+          {meta?.next && (
+            <i
+              onClick={loadMore}
+              className="largeicon center"
+              title="load more"
+            >
+              <BiUpArrowCircle />
+            </i>
+          )}
           {/* <ScrollableFeed> */}
           {chats &&
             chats

@@ -25,7 +25,7 @@ function App() {
   const dispatch = useDispatch();
   const noticeInfo = useSelector((state) => state.notificationReducer);
   const message = noticeInfo.message;
-  let endpoint = "ws://127.0.0.1:8000/ws/home/";
+  let endpoint = `${process.env.REACT_APP_WS_DOMAIN}ws/home/`
 
     const client =  new ReconnectingWebSocket(endpoint + "?token=" + userIn.access);
   
@@ -36,7 +36,7 @@ function App() {
     }, 3000);
 
   useEffect(() => {
-    
+
       client.onopen = function () {
         console.log("WebSocket Client Connected");
       };

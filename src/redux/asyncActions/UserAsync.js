@@ -19,13 +19,14 @@ import {
 import { setMessage } from "../slices/tweetSlice";
 import axios from "axios";
 import { axiosInstance } from "../../index";
-const url = "http://127.0.0.1:8000/auth/users/";
+const url = process.env.REACT_APP_DOMAIN
+
 
 export const load_user = () => async (dispatch) => {
   if (localStorage.getItem("access")) {
     try {
       const res = await axiosInstance.get(
-        `http://127.0.0.1:8000/auth/users/me/`
+        `${url}auth/users/me/`
       );
       dispatch(userSuccess(res.data));
     } catch (err) {
@@ -46,7 +47,7 @@ export const refreshToken = () => async (dispatch) => {
   if (localStorage.getItem("refresh")) {
     try {
       const res = await axiosInstance.post(
-        `http://127.0.0.1:8000/auth/jwt/refresh/`,
+        `${url}auth/jwt/refresh/`,
         { refresh: localStorage.getItem("refresh") }
       );
       dispatch(refreshSuccess(res.data));
@@ -63,7 +64,7 @@ export const register =
   (username, email, password, re_password) => (dispatch) => {
     dispatch(setLoading(true));
     axios
-      .post(url, {
+      .post(`${url}auth/users/`, {
         username,
         email,
         password,
@@ -89,7 +90,7 @@ export const register =
 export const verify = (uid, token) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    await axios.post("http://127.0.0.1:8000/auth/users/activation/", {
+    await axios.post("${url}auth/users/activation/", {
       uid,
       token,
     });
@@ -105,7 +106,7 @@ export const userProfile = (username) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const res = await axiosInstance.get(
-      `http://127.0.0.1:8000/user/${username}/`
+      `${url}user/${username}/`
     );
     dispatch(setLoading(false));
     dispatch(profileUserSuccess(res.data));
@@ -149,7 +150,7 @@ export const userFollow = (username) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axios.post("http://127.0.0.1:8000/auth/jwt/create/", {
+    const res = await axios.post("${url}auth/jwt/create/", {
       email,
       password,
     });
@@ -175,7 +176,7 @@ export const checkAuthenticated = () => async (dispatch) => {
 
     try {
       const res = await axios.post(
-        "http://127.0.0.1:8000/auth/jwt/verify/",
+        "${url}auth/jwt/verify/",
         body,
         config
       );
@@ -202,7 +203,7 @@ export const recommendMeUser = () => async (dispatch) => {
   // dispatch(setLoading(true));
   try {
     const res = await axiosInstance.get(
-      `http://127.0.0.1:8000/recommend_users/forme/`
+      `${url}recommend_users/forme/`
     );
     dispatch(recommendUser(res.data));
   } catch (err) {
@@ -216,7 +217,7 @@ export const followUserList = () => async (dispatch) => {
   // dispatch(setLoading(true));
   try {
     const res = await axiosInstance.get(
-      `http://127.0.0.1:8000/recommend_users/userlist/`
+      `${url}recommend_users/userlist/`
     );
     dispatch(followuserList(res.data.data));
     dispatch(setMeta(res.data.meta));

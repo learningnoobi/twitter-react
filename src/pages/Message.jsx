@@ -81,12 +81,13 @@ const Message = (props) => {
 export default Message;
 
 export const RoomResult = ({ res, me, otheruser }) => {
+  const url = process.env.REACT_APP_DOMAINNO
   return (
     <Link to={`/messages/w/${otheruser.username}`}>
       <div key={res.id} className="d-flex result">
         <img
           className="authorImage"
-          src={`http://127.0.0.1:8000${otheruser.avatar} `}
+          src={`${url}${otheruser.avatar} `}
           alt="your result"
         />
 

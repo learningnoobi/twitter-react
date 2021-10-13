@@ -1,7 +1,7 @@
 import { getMessage, addChatRoom,moreMessage, setLoading, setMeta } from "../slices/ChatSlice";
 
 import { axiosInstance } from "../../index";
-const url = "http://127.0.0.1:8000/chat/";
+
 
 export const getChatMessage = (username) => async (dispatch) => {
   try {
@@ -10,7 +10,7 @@ export const getChatMessage = (username) => async (dispatch) => {
     dispatch(getMessage(res.data.data));
     dispatch(setMeta(res.data.meta))
   } catch (err) {
-    console.log(err);
+    
   }
 };
 
@@ -21,7 +21,7 @@ export const getRooms = (other_user) => async (dispatch) => {
       const res = await axiosInstance.post("chats/get_rooms/", {
         other_user: other_user,
       });
-      console.log("qery are ", res.data);
+
       dispatch(addChatRoom(res.data));
     } else {
       const res = await axiosInstance.get("chats/get_rooms/");
@@ -32,7 +32,7 @@ export const getRooms = (other_user) => async (dispatch) => {
 
     // dispatch(setLoading(false))
   } catch (err) {
-    console.log(err);
+  
     dispatch(setLoading(false));
   }
 };
@@ -44,6 +44,6 @@ export const loadMoreMessage= (nextPage) => async (dispatch) => {
    dispatch(moreMessage(res.data.data))
     dispatch(setMeta(res.data.meta));
   } catch (err) {
-    console.log(err);
+    
   }
 };

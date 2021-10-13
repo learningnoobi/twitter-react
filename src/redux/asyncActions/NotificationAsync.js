@@ -20,7 +20,6 @@ export const getNotifications = () => async (dispatch) => {
   }
 };
 
-// http://127.0.0.1:8000/notify/notification_list/?page=2
 export const loadMoreNotification = (pageNum) => async (dispatch) => {
  
   try {

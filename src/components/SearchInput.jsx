@@ -4,6 +4,7 @@ import { searchTweet } from "../redux/asyncActions/TweetAsync";
 import { useDispatch, useSelector } from "react-redux";
 import "../styles/explore.css";
 import { Link } from "react-router-dom";
+
 const SearchInput = () => {
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
