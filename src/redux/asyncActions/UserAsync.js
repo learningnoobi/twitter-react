@@ -90,7 +90,7 @@ export const register =
 export const verify = (uid, token) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    await axios.post("${url}auth/users/activation/", {
+    await axios.post(`${url}auth/users/activation/`, {
       uid,
       token,
     });
@@ -150,7 +150,7 @@ export const userFollow = (username) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axios.post("${url}auth/jwt/create/", {
+    const res = await axios.post(`${url}auth/jwt/create/`, {
       email,
       password,
     });
@@ -176,7 +176,7 @@ export const checkAuthenticated = () => async (dispatch) => {
 
     try {
       const res = await axios.post(
-        "${url}auth/jwt/verify/",
+        `${url}auth/jwt/verify/`,
         body,
         config
       );

@@ -23,6 +23,9 @@ export const notificationReducer = createSlice({
       state.count = payload.noti_count;
       }
     },
+    setCount:(state)=> {
+      state.count = null;
+    },
     setMeta:(state, { payload }) => {
       state.meta = payload;
     },
@@ -42,6 +45,7 @@ export const notificationReducer = createSlice({
 
 export const {
   tweetNotice,
+  setCount,
   deletedSuccess,
   setSearch,
   removeNotice,

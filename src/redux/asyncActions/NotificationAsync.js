@@ -2,6 +2,7 @@ import { axiosInstance } from "../../index";
 import {
   getNotificationslice,
   setMeta,
+  setCount,
   deletedSuccess,
   moreNotification
 } from "../slices/NotificationSlice";
@@ -41,6 +42,7 @@ export const seenNotifications = (notify_id) => async (dispatch) => {
       dispatch(deletedSuccess(notify_id));
     } else {
       await axiosInstance.get(`notify/notification_seen_delete/`);
+      dispatch(setCount())
     }
   } catch (err) {
     console.log(err);
