@@ -4,13 +4,17 @@ import {
   userSuccess,
   refreshSuccess,
   userFail,
+  loadedMoreUser,
+  followList,
   recommendUser,
   userRegisterSuccess,
+  followuserList,
   authSuccess,
   logMeOut,
   profileUserSuccess,
   followRecommendUser,
   followedUnfollowed,
+  setMeta,
 } from "../slices/userSlice";
 import { setMessage } from "../slices/tweetSlice";
 import axios from "axios";
@@ -21,7 +25,8 @@ export const load_user = () => async (dispatch) => {
   if (localStorage.getItem("access")) {
     try {
       const res = await axiosInstance.get(
-        `http://127.0.0.1:8000/auth/users/me/`);
+        `http://127.0.0.1:8000/auth/users/me/`
+      );
       dispatch(userSuccess(res.data));
     } catch (err) {
       const res = err.response.data.code;
@@ -54,7 +59,8 @@ export const refreshToken = () => async (dispatch) => {
   }
 };
 
-export const register =(username, email, password, re_password) => (dispatch) => {
+export const register =
+  (username, email, password, re_password) => (dispatch) => {
     dispatch(setLoading(true));
     axios
       .post(url, {
@@ -132,8 +138,9 @@ export const userFollow = (username) => async (dispatch) => {
       username: username,
     });
     dispatch(setLoading(false));
+    dispatch(followList(username));
     dispatch(followedUnfollowed(res.data));
-    dispatch(followRecommendUser(res.data))
+    dispatch(followRecommendUser(res.data));
   } catch (err) {
     dispatch(userFail());
     console.log(err);
@@ -191,17 +198,41 @@ export const logoutAct = () => (dispatch) => {
   // dispatch(load_user());
 };
 
-
 export const recommendMeUser = () => async (dispatch) => {
   // dispatch(setLoading(true));
   try {
     const res = await axiosInstance.get(
       `http://127.0.0.1:8000/recommend_users/forme/`
     );
-   dispatch(recommendUser(res.data))
+    dispatch(recommendUser(res.data));
   } catch (err) {
     dispatch(userFail());
     // dispatch(setLoading(false));
+    console.log(err);
+  }
+};
+
+export const followUserList = () => async (dispatch) => {
+  // dispatch(setLoading(true));
+  try {
+    const res = await axiosInstance.get(
+      `http://127.0.0.1:8000/recommend_users/userlist/`
+    );
+    dispatch(followuserList(res.data.data));
+    dispatch(setMeta(res.data.meta));
+  } catch (err) {
+    dispatch(userFail());
+    // dispatch(setLoading(false));
+    console.log(err);
+  }
+};
+
+export const load_more_user = (pageNum) => async (dispatch) => {
+  try {
+    const res = await axiosInstance.get(`recommend_users/userlist/?page=${pageNum}`);
+    dispatch(loadedMoreUser(res.data.data));
+    dispatch(setMeta(res.data.meta));
+  } catch (err) {
     console.log(err);
   }
 };

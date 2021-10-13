@@ -3,7 +3,7 @@ import Message from "./Message";
 import { useParams } from "react-router";
 import { BiSend, BiUpArrowCircle } from "react-icons/bi";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
-
+import Pop from '../pop.mp3'
 import { useSelector, useDispatch } from "react-redux";
 import {
   getChatMessage,
@@ -29,7 +29,7 @@ const PrivateRoomChat = () => {
   const client = new ReconnectingWebSocket(
     endpoint + "?token=" + userIn.access
   );
-
+    const audioRef = useRef(null);
   const msgDivRef = useRef(null);
 
   useEffect(() => {
@@ -42,6 +42,9 @@ const PrivateRoomChat = () => {
 
       if (data.command === "private_chat") {
         dispatch(addMsg(data));
+        if(audioRef.current){
+          audioRef.current.play()
+        }
         // msgDivRef.current.scrollTop = msgDivRef.current.scrollHeight;
         console.log(data);
       }
@@ -113,6 +116,7 @@ const PrivateRoomChat = () => {
       <TweetHeader headerName={username} />
 
       <div className="main-div">
+        <audio ref={audioRef} src={Pop}></audio>
         <div ref={msgDivRef} id="msg-scoll" className="msg-div">
         {meta?.next && (
            

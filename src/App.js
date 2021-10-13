@@ -17,6 +17,7 @@ import { removeNotice, tweetNotice } from "./redux/slices/NotificationSlice";
 import Explore from "./pages/Explore";
 import ChatMessage from "./pages/ChatMessage";
 import PrivateRoomChat from "./pages/PrivateRoomChat";
+import FollowUser from "./pages/FollowUser";
 
 function App() {
   const userIn = useSelector((state) => state.userReducer);
@@ -70,6 +71,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/notifications" component={Notifications} />
         <Route path="/bookmark" component={BookmarkList} />
+        <Route path="/follow-users" component={FollowUser} />
         <Route path="/explore" component={Explore} />
         <Route path="/:username" exact component={Profile} />
         <Route path="/:username/tweet/:id" component={TweetDetail} />

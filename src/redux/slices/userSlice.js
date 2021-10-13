@@ -11,6 +11,7 @@ const initialState = {
   profileUser: null,
   followState: null,
   followers:null,
+  userList:[]
 };
 export const userRegister = createSlice({
   name: "userRegister",
@@ -63,9 +64,18 @@ export const userRegister = createSlice({
     recommendUser:(state, { payload }) => {
       state.recommendedUser = payload;
     },
+    followuserList:(state, { payload }) => {
+      state.userList = payload;
+    },
     followRecommendUser:(state, { payload }) => {
       const user = state.recommendedUser.find(user => user.username ===payload.username)
       user.i_follow= payload.follow
+    },
+    followList:(state, { payload }) => {
+      state.userList = state.userList.filter(u => u.username !== payload)
+    },
+    setMeta:(state, { payload }) => {
+      state.meta = payload;
     },
     logMeOut: (state) => {
       localStorage.removeItem("access");
@@ -75,15 +85,22 @@ export const userRegister = createSlice({
       state.refresh = null;
       state.isAuthenticated = false;
     },
+    loadedMoreUser:(state, { payload }) => {
+      state.userList.push(...payload);
+    },
   },
 });
 
 export const {
   setLoading,
   loginSuccess,
+  followList,
   userSuccess,
+  followuserList,
+  loadedMoreUser,
   authFail,
   userFail,
+  setMeta,
   removeMesage,
   authSuccess,
   userRegisterSuccess,

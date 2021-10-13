@@ -21,6 +21,10 @@ const TrendBar = () => {
           {recommendusers?.map((user) => (
             <RecommendUser key={user.username} user={user} />
           ))}
+         <Link 
+         to="/follow-users"> 
+         <span className="side-name">
+           More User</span></Link>
         </div>
       ) : (
         <div className="follow">

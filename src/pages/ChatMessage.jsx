@@ -1,14 +1,24 @@
-import React from "react";
+import React,{useState} from "react";
 import Message, { RoomResult } from "./Message";
 import "../styles/chat.css";
 import { useDispatch, useSelector } from "react-redux";
 import TweetHeader from "../components/TweetComponents/tweetHeader";
+import { getRooms } from "../redux/asyncActions/ChatAsync";
 
 const ChatMessage = () => {
+  const [query, setQuery] = useState("");
   const dispatch = useDispatch();
   const chatstate = useSelector((state) => state.chatReducer);
   const chatrooms = chatstate.chatRoom;
   const me = useSelector((state) => state.userReducer.user?.username);
+  const searchRoom = () => {
+    let debouncer;
+    clearTimeout(debouncer);
+    debouncer = setTimeout(() => {
+      dispatch(getRooms(query));
+    }, 1000);
+  };
+
   return (
     <Message>
       <div className="mt-4 div-mid">
@@ -19,18 +29,21 @@ const ChatMessage = () => {
           <p className="side-name">
             Choose one from your existing messages, or start a new one.
           </p>
-          <button className="link-tweet">New Message</button>
+          <button className="link-tweet">Select One</button>
         </div>
       </div>
 
       <div className="room-div">
         <TweetHeader headerName="Rooms" />
         <input
-          autoComplete="off"
-          type="text"
-          placeholder="search for people"
-          className="chat-input searchroom"
-        />
+              autoComplete="off"
+              value={query}
+              onKeyUp={searchRoom}
+              type="text"
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="search for people"
+              className="chat-input searchroom"
+            />
         {chatrooms.map((room) => (
           <div key={room.id}>
             <RoomResult

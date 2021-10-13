@@ -249,7 +249,7 @@ body {
   display: flex;
   width: 100%;
   margin: auto;
-  padding: 1rem;
+  padding:5px 1rem;
   border-bottom: 9px solid #50626e;
 }
 .add-tweet-input {
@@ -294,6 +294,7 @@ body {
   background-color: transparent;
   color: rgb(177, 196, 235);
   width: 100%;
+
 }
 .add-tweet-input textarea::placeholder {
   color: rgb(177, 196, 235);
@@ -480,10 +481,13 @@ body {
 }
 .left-20 {
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+
 }
 .follow-line {
-  position: absolute;
-  margin-top: -20px;
+  position: relative;
+
 }
 
 .close {
@@ -495,6 +499,7 @@ body {
 .followbtn {
   position: absolute;
   right: 4px;
+ 
 }
 
 .center {

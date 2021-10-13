@@ -14,10 +14,10 @@ const RecommendUser = ({ user }) => {
         </span>
         <span className="left-20">
         
-            <p className="user-list">{user.username}</p>
+            <span className="user-list">{user.username}</span>
        
           <span className=" side-name follow-line">
-            {user.bio || "Need new bio lol "}
+            {user.bio || "Anonymous bio"}
           </span>
         </span> </Link>
         {user.i_follow ? 

@@ -19,13 +19,9 @@ const Message = (props) => {
   const history = useHistory()
 
   useEffect(() => {
-    if (isAuthenticated) {
+   
       dispatch(getRooms());
-    }
-
-    if(!isAuthenticated){
-      history.push('/login')
-    }
+    
   }, [dispatch,history]);
 
   const searchRoom = () => {
@@ -35,6 +31,8 @@ const Message = (props) => {
       dispatch(getRooms(query));
     }, 1000);
   };
+
+
 
   return (
     <>
@@ -77,7 +75,7 @@ const Message = (props) => {
         <div className="message-div">{props.children}</div>
       </div>
     </>
-  );
+  )
 };
 
 export default Message;
