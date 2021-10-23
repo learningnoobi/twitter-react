@@ -10,7 +10,7 @@ const RecommendUser = ({ user }) => {
       <span className="position-relative hover trendlist">
          <Link className="d-flex"  to={`/${user.username}`}>
         <span>
-          <img alt="img" src={user.avatar} className="authorImage" />
+          <img alt="img" src={user?.avatar} className="authorImage" />
         </span>
         <span className="left-20">
         

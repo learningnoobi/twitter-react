@@ -8,9 +8,7 @@ import { likeTweet } from "../../redux/asyncActions/TweetAsync";
 import { BiGlobe } from "react-icons/bi";
 import { FaLock } from "react-icons/fa";
 
-
 const TweetPostCard = ({ tweet, dispatch, user }) => {
-  
   const likeTweetD = (id) => {
     dispatch(likeTweet(id));
   };
@@ -39,8 +37,10 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
                 to={`${tweet.author.username}` || ""}
                 className="mx-2 side-name"
               >
-                {tweet?.author.username===user?.username?'You ':
-                tweet.author.username} retweeted !
+                {tweet?.author.username === user?.username
+                  ? "You "
+                  : tweet.author.username}{" "}
+                retweeted !
               </Link>
             </strong>
 
@@ -59,7 +59,7 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
           bookmark={tweet.myparent.i_bookmarked}
           id={tweet.myparent.id}
           oriId={tweet.id}
-          retweet={tweet?.author.username===user?.username?true:false}
+          retweet={tweet?.author.username === user?.username ? true : false}
         />
       ) : (
         <TweetOperation
@@ -69,7 +69,6 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
           tweet={tweet}
           bookmark={tweet.i_bookmarked}
           id={tweet.id}
-         
         />
       )}
     </div>
@@ -79,7 +78,7 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
 export default TweetPostCard;
 
 const TweetHasParentOrNot = ({ tweet }) => {
-  const url = process.env.REACT_APP_DOMAIN
+  const url = process.env.REACT_APP_DOMAIN;
   return (
     <>
       <span className="d-flex">
@@ -87,20 +86,14 @@ const TweetHasParentOrNot = ({ tweet }) => {
           <Link to={`/${tweet?.author.username}`}>
             <img
               alt="img"
-              // for some reason image path is different ..
-              //some have http://http://127.0.0.1:8000 while don't
-              src={
-                tweet?.author.avatar.includes("http://")
-                  ? tweet?.author.avatar
-                  : `${url}${tweet?.author.avatar}`
-              }
+              src={tweet?.author.avatar}
               className="rounded-circle author-image "
               width="60px"
               height="60px"
             />
           </Link>
         </span>
-  
+
         <Link to={`${tweet?.author.username}/tweet/${tweet?.id}`}>
           <div className="tweet-content">
             <span id="hover" className="d-flex">
@@ -119,15 +112,7 @@ const TweetHasParentOrNot = ({ tweet }) => {
               {tweet?.title} {tweet?.body}
             </p>
             {tweet?.image && (
-              <img
-                alt="img"
-                src={
-                  tweet?.image.includes("http://")
-                    ? tweet?.image
-                    : `${url}${tweet?.image}`
-                }
-                className="image img"
-              />
+              <img alt="img" src={tweet?.image} className="image img" />
             )}
           </div>
         </Link>

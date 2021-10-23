@@ -42,12 +42,12 @@ const Profile = () => {
       dispatch(userProfile(username));
       dispatch(tweet_specific_user(username));
     }
-    if(!isAuthenticated){
-      history.push('/login')
-    }
     
+    // if(!isAuthenticated){
+    //   history.push('/login')
+    // }
     
-  }, [dispatch,username,history]);
+  }, [dispatch,username,history,isAuthenticated]);
 
   return (
     <div>

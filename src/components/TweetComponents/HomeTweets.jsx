@@ -10,20 +10,20 @@ import { setSearch } from "../../redux/slices/NotificationSlice";
 const HomeTweets = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const tweets = useSelector((state) => state.tweetReducer)
-  const meta =tweets.meta
+  const tweets = useSelector((state) => state.tweetReducer);
+  const meta = tweets.meta;
+  const access = localStorage.getItem("access")
   useEffect(() => {
-    if (!localStorage.getItem("access")) {
+    
+    if (!access) {
       history.push("/login");
     }
-    return () =>{
+    return () => {
       dispatch(setSearch([]));
-    
     };
-  }, [history,dispatch]);
+  }, [history, dispatch,access]);
 
   const loadMore = () => {
-    
     if (meta.next !== null) {
       dispatch(load_more(meta.next));
     }
@@ -35,11 +35,13 @@ const HomeTweets = () => {
       <TweetCard />
       {/* load more button */}
 
-      {meta?.next && <div className="mt-3 d-flex justify-content-center">
-        <button onClick={loadMore} className="link-tweet">
-          Load more
-        </button>
-      </div>}
+      {meta?.next && (
+        <div className="mt-3 d-flex justify-content-center">
+          <button onClick={loadMore} className="link-tweet">
+            Load more
+          </button>
+        </div>
+      )}
     </Second>
   );
 };

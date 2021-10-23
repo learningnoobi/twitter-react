@@ -149,9 +149,7 @@ const PrivateRoomChat = () => {
                     <Link to={`/${msg?.sender.username}`}>
                       <img
                         src={
-                          msg?.sender.avatar.includes("http://")
-                            ? msg?.sender.avatar
-                            : `http://127.0.0.1:8000${msg?.sender.avatar}`
+                         msg?.sender.avatar
                         }
                         alt="profile"
                         className="authorImage"
