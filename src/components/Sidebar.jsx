@@ -34,12 +34,8 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const noticeCount = noticeInfo?.count;
   const message = noticeInfo.message;
-
+  
   useEffect(() => {
-    if(isAuthenticated){
-      dispatch(getNotifications());
-    }     
-    
     return () => {
       dispatch(showSidebar(""));
     };
@@ -50,9 +46,7 @@ const Sidebar = () => {
       dispatch(logoutAct());
       dispatch(load_user());
       dispatch(checkAuthenticated());
-     
     }
-
   };
   const { user, isAuthenticated } = userIn;
   const goOut = () => {
@@ -107,15 +101,17 @@ const Sidebar = () => {
               <span className="link-text">Notifications</span>
             </Link>
           </li>
-          {isAuthenticated && 
-          <li>
-            <Link to="/messages">
-              <i>
-                <RiMailLine />
-              </i>
-              <span className="link-text">Messages</span>
-            </Link>
-          </li>}
+          {isAuthenticated && (
+            <li className="notify-div">
+              <Link to="/messages">
+              {noticeInfo.msgNotiExist && <div className="notify-count sm"></div>}
+                <i>
+                  <RiMailLine />
+                </i>
+                <span className="link-text">Messages</span>
+              </Link>
+            </li>
+          )}
           <li>
             <Link to="/bookmark">
               <i>
@@ -124,24 +120,24 @@ const Sidebar = () => {
               <span className="link-text">Bookmarks</span>
             </Link>
           </li>
-          {isAuthenticated && 
-           <li>
-           <Link to={(user && `/${user.username}`) || "profile"}>
-             <i>
-               <BiUser />
-             </i>
-             <span className="link-text">Profile</span>
-           </Link>
-         </li>
-          }
-         
-          <li style={{cursor:'pointer'}} className="ml-2 p-1" >
-          <i onClick={goOut}>
+          {isAuthenticated && (
+            <li>
+              <Link to={(user && `/${user.username}`) || "profile"}>
+                <i>
+                  <BiUser />
+                </i>
+                <span className="link-text">Profile</span>
+              </Link>
+            </li>
+          )}
+
+          <li style={{ cursor: "pointer" }} className="ml-2 p-1">
+            <i onClick={goOut}>
               <RiGithubFill />
             </i>
-            <span  className="link-text">GitHub</span>
+            <span className="link-text">GitHub</span>
           </li>
-      
+
           <li>
             {isAuthenticated ? (
               <Link to="/" onClick={logout}>

@@ -14,13 +14,21 @@ import { axiosInstance } from "../../index";
 import { setMessage } from "../slices/tweetSlice";
 import axios from "axios";
 const url = process.env.REACT_APP_DOMAIN;
+
+
 export const tweet_comments = (id) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const res = await axios.get(`${url}tweets/comments/${id}/`);
-    dispatch(setLoading(false));
-    dispatch(setMeta(res.data.meta));
-    dispatch(commentSuccess(res.data.data));
+    if(localStorage.getItem("access")){
+      const res = await axiosInstance.get(`${url}tweets/comments/${id}/`);
+      dispatch(setLoading(false));
+      dispatch(setMeta(res.data.meta));
+      dispatch(commentSuccess(res.data.data));
+    }
+    else{
+      await axios.get(`${url}tweets/comments/${id}/`);
+    }
+ 
   } catch (err) {
     // dispatch(userFail());
   }
@@ -28,7 +36,7 @@ export const tweet_comments = (id) => async (dispatch) => {
 
 export const load_more_comment = (id, nextPage) => async (dispatch) => {
   try {
-    const res = await axiosInstance.get(
+    const res = await axios.get(
       `tweets/comments/${id}/?page=${nextPage}`
     );
 
@@ -37,8 +45,7 @@ export const load_more_comment = (id, nextPage) => async (dispatch) => {
   } catch (err) {}
 };
 
-export const addComment =
-  (id, body, comid, reply = false) =>
+export const addComment =(id, body, comid, reply = false) =>
   async (dispatch) => {
     dispatch(commentUploading(true));
     try {

@@ -187,6 +187,15 @@ body {
   align-items: center;
   background-color: #e0245e;
 }
+.notify-count.sm{
+
+  height: 6px;
+  width: 6px;
+  padding:7px;
+  left: 29px;
+  top: 7px;
+  background-color: #e0245e;
+}
 .second {
   /* margin-left: 290px; */
   padding: 0;
@@ -627,6 +636,7 @@ body {
     left: 12px;
     top: 0px;
   }
+
   .navbar-nav li:last-child:hover{
     background-color: var(--red);
     filter: brightness(1.3);

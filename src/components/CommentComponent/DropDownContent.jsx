@@ -13,13 +13,10 @@ export const DropdownContent = ({ user, comment, setEdit, setCurIndex, dispatch 
       <>
         {user?.email !== comment?.author.email && (
           <>
-            <p>
-              <BiUserPlus /> <span>Unfollow Rayos</span>
-            </p>
-            <p>
-              <BiBlock />
-              <span>Block</span>
-            </p>
+              <p>
+              <BiBlock color="#e0245e"/> <span>Not your's Boi</span>
+          </p>
+           
           </>
         )}
         {user?.email === comment?.author.email && (

@@ -22,7 +22,7 @@ export const TweetOperation = ({
   like_count,
   comid = null,
   reply,
-
+  comment_count = null,
   NoRetweetMark = false,
 }) => {
   const [isclicked, setClick] = useState(null);
@@ -66,10 +66,12 @@ export const TweetOperation = ({
         <i
           data-toggle="tooltip"
           title="Add Reply"
-          className="tweetIcons"
+          className="tweetIcons d-flex justify-content-center align-items-center"
           onClick={() => setId(id)}
         >
           <AiOutlineComment data-toggle="modal" data-target="#what" />
+
+          <span className="side-name mx-1">{comment_count}</span>
         </i>
 
         {comId && (

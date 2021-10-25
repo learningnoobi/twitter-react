@@ -21,12 +21,9 @@ const DropDown = ({ tweetId, user, tweet, target }) => {
       ) : (
         <>
           <p>
-            <BiUserPlus /> <span>Unfollow Rayon</span>
+            <BiBlock color="#e0245e"/> <span>Not your's Boi</span>
           </p>
-          <p>
-            <BiBlock />
-            <span>Block</span>
-          </p>
+          
         </>
       )}
     </div>

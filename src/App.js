@@ -18,6 +18,7 @@ import Explore from "./pages/Explore";
 import ChatMessage from "./pages/ChatMessage";
 import PrivateRoomChat from "./pages/PrivateRoomChat";
 import FollowUser from "./pages/FollowUser";
+import { getNotifications } from "./redux/asyncActions/NotificationAsync";
 
 function App() {
   const userIn = useSelector((state) => state.userReducer);
@@ -25,9 +26,11 @@ function App() {
   const dispatch = useDispatch();
   const noticeInfo = useSelector((state) => state.notificationReducer);
   const message = noticeInfo.message;
-  let endpoint = `${process.env.REACT_APP_WS_DOMAIN}ws/home/`
+  let endpoint = `${process.env.REACT_APP_WS_DOMAIN}ws/home/`;
 
-    
+  const client = new ReconnectingWebSocket(
+    endpoint + "?token=" + userIn.access
+  );
 
   message &&
     setTimeout(() => {
@@ -35,28 +38,33 @@ function App() {
     }, 3000);
 
   useEffect(() => {
-    const client =  new ReconnectingWebSocket(endpoint + "?token=" + userIn.access);
-  
-      client.onopen = function () {
-        console.log("WebSocket Client Connected");
-      };
+    client.onopen = function () {
+      console.log("WebSocket Client Connected");
+    };
 
-      client.onmessage = function (event) {
-        const data = JSON.parse(event.data);
-        console.log(data);
+    client.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      console.log(data);
 
-        dispatch(tweetNotice(data.payload));
-      };
+      dispatch(tweetNotice(data.payload));
+    };
 
-      client.onclose = function () {
-        console.log("WebSocket Client disconnected");
-      };
-    
+    client.onclose = function () {
+      console.log("WebSocket Client disconnected");
+    };
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(load_user());
-    dispatch(recommendMeUser());
+    // if(isAuthenticated){
+
+    // }
+
+    if (isAuthenticated) {
+      dispatch(recommendMeUser());
+      dispatch(getNotifications());
+    }
+
     !isAuthenticated && <Redirect to="/login"></Redirect>;
   }, [dispatch, isAuthenticated]);
 

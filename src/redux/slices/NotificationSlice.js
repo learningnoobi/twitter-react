@@ -5,6 +5,7 @@ const initialState = {
   count: null,
   notificationList: [],
   searchQuery:[],
+
 };
 export const notificationReducer = createSlice({
   name: "notificationReducer",
@@ -19,9 +20,17 @@ export const notificationReducer = createSlice({
     },
     getNotificationslice: (state, { payload }) => {
       state.notificationList = payload.data;
-      if(payload.length >1){
+      if(payload.data.length >0){
       state.count = payload.noti_count;
       }
+      const msgNoti = state.notificationList.find(i=> i.notification_type=="M")
+      if (msgNoti){
+        state.msgNotiExist = true
+      }
+
+    },
+    setMsgNoti:state => {
+      state.msgNotiExist = false
     },
     setCount:(state)=> {
       state.count = null;
@@ -49,6 +58,7 @@ export const {
   deletedSuccess,
   setSearch,
   removeNotice,
+  setMsgNoti,
   moreNotification,
   setMeta,
   getNotificationslice,

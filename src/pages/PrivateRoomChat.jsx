@@ -13,6 +13,7 @@ import { addMsg } from "../redux/slices/ChatSlice";
 import ReconnectingWebSocket from "reconnecting-websocket";
 import AddPicker from "../components/SmallComponent/AddPicker";
 import { Link } from "react-router-dom";
+import { setMsgNoti } from "../redux/slices/NotificationSlice";
 const PrivateRoomChat = () => {
   const [msgInput, setMsgInput] = useState("");
   const [istyping, setIstyping] = useState(null);
@@ -36,6 +37,7 @@ const PrivateRoomChat = () => {
     console.log(endpoint);
     client.onopen = function () {
       console.log("Chat Websoket Connected");
+      dispatch(setMsgNoti())
     };
 
     client.onmessage = function (event) {

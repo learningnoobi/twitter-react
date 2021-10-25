@@ -69,6 +69,7 @@ const TweetPostCard = ({ tweet, dispatch, user }) => {
           tweet={tweet}
           bookmark={tweet.i_bookmarked}
           id={tweet.id}
+          comment_count={tweet.comment_count}
         />
       )}
     </div>

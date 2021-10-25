@@ -17,7 +17,7 @@ import {
 } from "../slices/tweetSlice";
 import { setSearch } from "../slices/NotificationSlice";
 // check is localstorage for access is present or not
-const url = process.env.REACT_APP_DOMAIN
+const url = process.env.REACT_APP_DOMAIN;
 export const load_tweet = () => async (dispatch) => {
   dispatch(setLoading(true));
 
@@ -71,11 +71,12 @@ export const load_more = (pageLink) => async (dispatch) => {
 export const tweet_detail = (id) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    // since we have filtered tweets of only followerd users .
-    //  We are fetching from global which contains all tweets
-    const res = await axios.get(`${url}tweets/explore/global/${id}/`);
-    dispatch(setLoading(false));
-    dispatch(tweetDetail(res.data));
+    if (localStorage.getItem("access")) {
+      const res = await axiosInstance.get(`${url}tweets/explore/global/${id}/`);
+      dispatch(setLoading(false));
+      dispatch(tweetDetail(res.data));
+    }
+    await axios.get(`${url}tweets/explore/global/${id}/`);
   } catch (err) {
     console.log(err);
   }
@@ -122,7 +123,9 @@ export const addTweet = (uploadData) => async (dispatch) => {
 
 export const reTweet = (tweetId) => async (dispatch) => {
   try {
-    const res = await axiosInstance.post(`tweets/post/retweet/`, { tweetId: tweetId });
+    const res = await axiosInstance.post(`tweets/post/retweet/`, {
+      tweetId: tweetId,
+    });
 
     dispatch(tweetAdded(res.data));
     dispatch(setMessage(`Re Tweeted !`));
@@ -133,7 +136,8 @@ export const reTweet = (tweetId) => async (dispatch) => {
   }
 };
 
-export const deleteTweet =(pk, DelRetweet = false) =>
+export const deleteTweet =
+  (pk, DelRetweet = false) =>
   async (dispatch) => {
     try {
       await axiosInstance.delete(`tweets/${pk}/`);
@@ -172,7 +176,6 @@ export const likeTweet = (id) => async (dispatch) => {
       pk: id,
     });
     dispatch(likeUnlikeTweet({ ...res.data, id: id }));
-
   } catch (err) {
     console.log(err);
     dispatch(setMessage(`Something went Wrong !`));
@@ -197,23 +200,18 @@ export const bookmarkTweet = (id) => async (dispatch) => {
   }
 };
 
-
-export const searchTweet = (query,isAuthenticated) => async (dispatch) => {
+export const searchTweet = (query, isAuthenticated) => async (dispatch) => {
   try {
     if (query.length > 0) {
-      if(isAuthenticated){
+      if (isAuthenticated) {
         const res = await axiosInstance.get(
           `tweets/search/custom/?search=${query}`
         );
         dispatch(setSearch(res.data));
-      }
-      else{
-        const res = await axios.get(
-          `tweets/search/custom/?search=${query}`
-        );
+      } else {
+        const res = await axios.get(`tweets/search/custom/?search=${query}`);
         dispatch(setSearch(res.data));
       }
-     
     } else {
       dispatch(setSearch([]));
     }

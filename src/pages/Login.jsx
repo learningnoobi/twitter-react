@@ -40,7 +40,7 @@ const Login = () => {
           <RiTwitterFill color="#1da1f2" />
         </i>
       </Link>
-      <h1 className="heading">Log in to Twitter</h1>
+      <h1 className="heading">Log in to Twitters</h1>
       <form onSubmit={loginMe}>
         <input
           value={email || ""}

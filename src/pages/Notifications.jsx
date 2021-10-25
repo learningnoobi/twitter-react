@@ -100,6 +100,16 @@ const Notifications = () => {
                 link={`${list.to_user}/tweet/${list.tweet.id}`}
               />
             )}
+            {list.notification_type === "LR" && (
+              <NotificationCard
+                key={list.id}
+                list={list}
+                comment={list.comment}
+                icon={<AiFillHeart color="lightgreen" />}
+                type="loved your comment"
+                link={`${list.to_user}/tweet/${list.comment.tweet_id}`}
+              />
+            )}
           </div>
         ))
       )}
