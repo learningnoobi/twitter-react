@@ -196,6 +196,20 @@ body {
   top: 7px;
   background-color: #e0245e;
 }
+.is-online{
+  height: 10px;
+  width: 10px;
+  padding: 7px;
+  background-color: #24e092;
+  border-radius: 50%;
+}
+.not-online{
+  height: 10px;
+  width: 10px;
+  padding: 7px;
+  background-color: #4d4957;
+  border-radius: 50%;
+}
 .second {
   /* margin-left: 290px; */
   padding: 0;

@@ -44,18 +44,15 @@ export const TweetOperation = ({
   };
   const setId = (ia) => {
     setComId(ia);
-    console.log("clicked id is :", ia);
   };
 
   const commentAdd = (ia) => {
     dispatch(addComment(ia, commentInput, comid, reply));
     setCommentInput("");
     setComId(null);
-    console.log("aded on ", ia);
   };
   const sendReTweet = (ia) => {
     dispatch(reTweet(ia));
-    console.log("retweeted ", ia);
   };
   const alertToLog = () => {
     alert("You have to be logged in for this !");

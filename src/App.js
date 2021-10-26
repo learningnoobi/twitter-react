@@ -27,17 +27,10 @@ function App() {
   const noticeInfo = useSelector((state) => state.notificationReducer);
   const message = noticeInfo.message;
   let endpoint = `${process.env.REACT_APP_WS_DOMAIN}ws/home/`;
+  let client;
 
-  const client = new ReconnectingWebSocket(
-    endpoint + "?token=" + userIn.access
-  );
-
-  message &&
-    setTimeout(() => {
-      dispatch(removeNotice());
-    }, 3000);
-
-  useEffect(() => {
+  function websocketCon() {
+    client = new ReconnectingWebSocket(endpoint + "?token=" + userIn.access);
     client.onopen = function () {
       console.log("WebSocket Client Connected");
     };
@@ -52,14 +45,20 @@ function App() {
     client.onclose = function () {
       console.log("WebSocket Client disconnected");
     };
+  }
+  message &&
+    setTimeout(() => {
+      dispatch(removeNotice());
+    }, 3000);
+
+  useEffect(() => {
+    if (localStorage.getItem("access")) {
+      websocketCon();
+    }
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(load_user());
-    // if(isAuthenticated){
-
-    // }
-
     if (isAuthenticated) {
       dispatch(recommendMeUser());
       dispatch(getNotifications());

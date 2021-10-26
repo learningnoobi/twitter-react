@@ -23,7 +23,7 @@ export const notificationReducer = createSlice({
       if(payload.data.length >0){
       state.count = payload.noti_count;
       }
-      const msgNoti = state.notificationList.find(i=> i.notification_type=="M")
+      const msgNoti = state.notificationList.find(i=> i.notification_type==="M")
       if (msgNoti){
         state.msgNotiExist = true
       }

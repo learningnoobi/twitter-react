@@ -27,41 +27,45 @@ const PrivateRoomChat = () => {
   const chatState = useSelector((state) => state.chatReducer);
   const chats = chatState.chatMessage;
   const meta = chatState.meta;
-  const client = new ReconnectingWebSocket(
-    endpoint + "ws/chat/" + username + "/" + "?token=" + userIn.access
-  );
+  const [onlineStatus, setOnlineStatus] = useState(null);
   const audioRef = useRef(null);
   const msgDivRef = useRef(null);
 
+  const client = new ReconnectingWebSocket(
+    endpoint + "ws/chat/" + username + "/" + "?token=" + userIn.access
+  );
+
   useEffect(() => {
-    console.log(endpoint);
-    client.onopen = function () {
-      console.log("Chat Websoket Connected");
-      dispatch(setMsgNoti())
-    };
+    if (localStorage.getItem("access")) {
+      client.onopen = function () {
+        console.log("Chat Websoket Connected");
+        dispatch(setMsgNoti());
+      };
 
-    client.onmessage = function (event) {
-      const data = JSON.parse(event.data);
+      client.onmessage = function (event) {
+        const data = JSON.parse(event.data);
 
-      if (data.command === "private_chat") {
-        dispatch(addMsg(data));
-        if (audioRef.current) {
-          audioRef.current.play();
+   
+        if (data.command === "private_chat") {
+          dispatch(addMsg(data));
+          if (audioRef.current) {
+            audioRef.current.play();
+          }
+          // msgDivRef.current.scrollTop = msgDivRef.current.scrollHeight;
+          // console.log(data);
         }
-        // msgDivRef.current.scrollTop = msgDivRef.current.scrollHeight;
-        // console.log(data);
-      }
-      if (data.command === "is_typing") {
-        setTypingUser(data.user);
-        setIstyping(data.text);
-        timer = setTimeout(() => {
-          setIstyping(null);
-        }, 500);
-      }
-    };
-    client.onclose = function () {
-      console.log("WebSocket Client disconnected");
-    };
+        if (data.command === "is_typing") {
+          setTypingUser(data.user);
+          setIstyping(data.text);
+          timer = setTimeout(() => {
+            setIstyping(null);
+          }, 500);
+        }
+      };
+      client.onclose = function () {
+        console.log("WebSocket Client disconnected");
+      };
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -85,9 +89,9 @@ const PrivateRoomChat = () => {
 
   const sendChat = (e) => {
     e.preventDefault();
-    if (!msgInput){alert('cannot be blank !')}
-    
-    else{
+    if (!msgInput) {
+      alert("cannot be blank !");
+    } else {
       client.send(
         JSON.stringify({
           command: "private_chat",
@@ -121,7 +125,7 @@ const PrivateRoomChat = () => {
   // }
   return (
     <Message>
-      <TweetHeader headerName={username} />
+      <TweetHeader headerName={username}  />
 
       <div className="main-div">
         <audio ref={audioRef} src={Pop}></audio>
@@ -150,9 +154,7 @@ const PrivateRoomChat = () => {
                   {msg?.sender?.username === username && (
                     <Link to={`/${msg?.sender.username}`}>
                       <img
-                        src={
-                         msg?.sender.avatar
-                        }
+                        src={msg?.sender.avatar}
                         alt="profile"
                         className="authorImage"
                       />
