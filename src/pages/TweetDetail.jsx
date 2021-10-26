@@ -101,10 +101,7 @@ const TweetDetail = () => {
                   />
 
                   <div className="dropdown-menu dropdown-menu-right dropdownMenu">
-                    <p>
-                      <BiBlock color="#e0245e"/> <span>Not your's Boi</span>
-                    </p>
-                    {user?.email === tweet?.author.email && (
+                    {user?.email === tweet?.author.email ? (
                       <>
                         <p onClick={editpost}>
                           <BiEditAlt />
@@ -120,6 +117,10 @@ const TweetDetail = () => {
                           <span style={{ color: "#e0245e" }}>Delete Post</span>
                         </p>
                       </>
+                    ) : (
+                      <p>
+                        <BiBlock color="#e0245e" /> <span>Not your's Boi</span>
+                      </p>
                     )}
                   </div>
                 </span>
